@@ -1,0 +1,163 @@
+#banner {
+  padding: 0 50px;
+  background-image: url("../../../assets/coffee_background.jpg");
+  height: 50vh;
+  background-size: cover;
+  background-position: center;
+}
+
+#banner::before {
+  content: "";
+  background: rgba(77, 77, 92, 0.85);
+  position: absolute;
+  width: 100%;
+  height: 50vh;
+  left: 0;
+}
+
+.banner-content {
+  position: relative;
+  color: #fff;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.banner-content h3 {
+  font-size: 40px;
+  font-weight: 400px;
+  padding: 10px 0px;
+  text-transform: uppercase;
+}
+
+.banner-content h3 span {
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.variables {
+  text-decoration: none;
+  color: #fff;
+  padding: 20px 40px;
+  font-size: 25px;
+  align-self: baseline;
+  border: solid 1px #fff;
+  border-radius: 25px;
+  text-transform: uppercase;
+}
+
+.variables:hover {
+  background: rgba(255, 219, 199, 0.6);
+  color: #000;
+  border-color: #000;
+  transition: all 0.4s;
+}
+
+.curious {
+  padding: 10px 10px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.curious img {
+  height: 30%;
+}
+
+.curious div {
+  padding: 30px 10px;
+  flex: 1;
+  border-right: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.curious div h4 {
+  color: #ffdbc7;
+  font-size: 50px;
+}
+
+.curious div p {
+  color: #fff;
+  font-size: 30px;
+  padding: 20px 40px;
+}
+
+.icons {
+  padding: 0px 50px;
+  background: rgba(77, 77, 92, 0.6);
+}
+
+.icons-content {
+  padding: 50px 50px 0px 50px;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.icons-content div {
+  flex: 1;
+  margin: 20px 0px;
+  border-right: 2px solid rgba(255, 255, 255, 0.2);
+  padding-right: 0px 20px;
+}
+
+#last {
+  border: none;
+}
+
+.icons-content i {
+  color: #ffdbc7;
+  font-size: 80px;
+}
+
+.icons-content div h6 {
+  color: #fff;
+  font-size: 30px;
+  font-weight: 100;
+  margin: 10px 0px;
+}
+
+.icons-content div p {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 17px;
+}
+
+/* Responsive */
+@media (max-width: 1080px) {
+  #banner {
+    padding: 0 22px;
+  }
+
+  .banner-content h3 {
+    font-size: 30px;
+  }
+
+  .variables {
+    font-size: 18px;
+  }
+
+  .curious {
+    flex-direction: column;
+  }
+
+  .curious img {
+    width: 50%;
+  }
+
+  .curious div p {
+    font-size: 20px;
+    padding: 0px 0px;
+  }
+
+  .curious div h4 {
+    font-size: 40px;
+  }
+
+  .icons-content {
+    flex-direction: column;
+  }
+
+  .icons-content div {
+    border-right: none;
+  }
+}

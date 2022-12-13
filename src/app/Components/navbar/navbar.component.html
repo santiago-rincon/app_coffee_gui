@@ -1,0 +1,15 @@
+<header>
+    <h2 class="logo">Coffee Gui</h2>
+    <input type="checkbox" id="check">
+    <label for="check" class="show-menu">
+        <i class="fa-solid fa-bars"></i>
+    </label>
+    <nav class="menu">
+        <a routerLink="/home" (click)="changeMenu()">Inicio</a>
+        <a routerLink="/variables" (click)="changeMenu()">Variables</a>
+        <a routerLink="/login" (click)="changeMenu()">Login</a>
+        <label for="check" class="hide-menu">
+            <i class="fa-solid fa-xmark"></i>
+        </label>
+    </nav>
+</header>

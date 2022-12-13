@@ -1,4 +1,15 @@
-body{
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+.color1 {color: #00738d;}
+.color2 {color: #008f25;}
+.color3 {color: #85b200;}
+.color4 {color: #ffca66;}
+.color5 {color: #ffdbc7;}
+* {
     margin: 0;
     padding: 0;
+    font-family: 'Roboto', sans-serif;
+}   
+
+body{
+    background: #2c3e4c;
 }
