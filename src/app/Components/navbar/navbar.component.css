@@ -39,7 +39,7 @@ header{
 }
 
 .menu a:hover, .show-menu:hover, .hide-menu:hover{
-    background: #ffdbc7;
+    background: rgba(255, 255, 255, 0.8);
     color: #000;
     border-color: #000;
 }

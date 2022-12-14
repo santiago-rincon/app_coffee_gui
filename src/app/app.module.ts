@@ -9,6 +9,7 @@ import { VariablesComponent } from './Pages/variables/variables.component';
 import { ErrorComponent } from './Pages/error/error.component';
 import { NavbarComponent } from './Components/navbar/navbar.component';
 import { FooterComponent } from './Components/footer/footer.component';
+import { CardComponent } from './Components/card/card.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { FooterComponent } from './Components/footer/footer.component';
     VariablesComponent,
     ErrorComponent,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,19 @@
+.main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+h3 {
+  text-align: center;
+  font-weight: bold;
+  font-size: 50px;
+  color: #ffdbc7;
+  text-shadow: -1px 0 #000, 0 1px #000, 4px 0 #000, 0 -1px #000;
+  padding: 30px 0;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+}

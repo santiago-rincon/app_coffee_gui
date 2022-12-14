@@ -34,6 +34,7 @@
 .banner-content h3 span {
   font-weight: 600;
   text-transform: uppercase;
+  letter-spacing: 3px;
 }
 
 .variables {
