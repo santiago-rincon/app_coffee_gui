@@ -3,13 +3,19 @@ import { RouterModule, Routes } from '@angular/router';
 import { ErrorComponent } from './Pages/error/error.component';
 import { HomeComponent } from './Pages/home/home.component';
 import { LoginComponent } from './Pages/login/login.component';
+import { RecoverComponent } from './Pages/recover/recover.component';
+import { RegisterComponent } from './Pages/register/register.component';
 import { VariablesComponent } from './Pages/variables/variables.component';
+import { VerifyComponent } from './Pages/verify/verify.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'variables', component: VariablesComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'recover', component: RecoverComponent },
+  { path: 'verify', component: VerifyComponent },
   { path: '**', component: ErrorComponent }
 ];
 

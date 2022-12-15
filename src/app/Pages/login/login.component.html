@@ -1,1 +1,76 @@
-<p>login works!</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-1"></div>
+    <div class="col-10">
+      <div class="container bgc my-5 rounded-5 shadow">
+        <div class="row align-items-stretch">
+          <div class="col bg rounded-5 d-none d-md-block"></div>
+          <div class="col px-4 py-2">
+            <div class="text-end">
+              <img src="../../../assets/main_icon.png" width="70px" alt="" />
+            </div>
+            <h2 class="fw-bold text-center py-3">
+              BIENVENIDO<br />Inicia Sesión
+            </h2>
+            <!-- Login -->
+            <form action="#">
+              <div class="mb-4">
+                <label for="email" class="form-label">Correo Electrónico</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  name="email"
+                  placeholder="ejemplo@.gmail.com"
+                />
+              </div>
+              <div class="mb-4">
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" name="password" />
+              </div>
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary">
+                  Iniciar Sesión
+                </button>
+              </div>
+              <div class="my-3">
+                <span>¿No tienes cuenta? <a routerLink="/register">Registrate</a></span>
+                <br/><br/>
+                <span>¿Has olvidado tu contraseña?<a routerLink="/recover">Recuperar contraseña</a></span>
+              </div>
+            </form>
+            <!-- Inicio de sesión alternativo -->
+            <div class="container w-100 my-5">
+              <div class="row text-center">
+                <div class="col-12 mb-3"><h6>Inicia sesión con</h6></div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <button class="btn btn-outline-primary w-100 my-1">
+                    <div class="row align-items-center">
+                      <div class="col-2 d-none d-md-block">
+                        <i class="fa-brands fa-facebook"></i>
+                      </div>
+                      <div class="col-10 text-center">Facebook</div>
+                    </div>
+                  </button>
+                </div>
+                <div class="col">
+                  <button class="btn btn-outline-danger w-100 my-1">
+                    <div class="row align-items-center">
+                      <div class="col-2 d-none d-md-block">
+                        <i class="fa-brands fa-google"></i>
+                      </div>
+                      <div class="col text-center">Google</div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- fin inicio alternativo -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-1"></div>
+  </div>
+</div>

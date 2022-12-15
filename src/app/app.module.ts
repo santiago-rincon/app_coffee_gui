@@ -10,6 +10,9 @@ import { ErrorComponent } from './Pages/error/error.component';
 import { NavbarComponent } from './Components/navbar/navbar.component';
 import { FooterComponent } from './Components/footer/footer.component';
 import { CardComponent } from './Components/card/card.component';
+import { RegisterComponent } from './Pages/register/register.component';
+import { RecoverComponent } from './Pages/recover/recover.component';
+import { VerifyComponent } from './Pages/verify/verify.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,10 @@ import { CardComponent } from './Components/card/card.component';
     ErrorComponent,
     NavbarComponent,
     FooterComponent,
-    CardComponent
+    CardComponent,
+    RegisterComponent,
+    RecoverComponent,
+    VerifyComponent
   ],
   imports: [
     BrowserModule,

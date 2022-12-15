@@ -1,0 +1,50 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-1"></div>
+      <div class="col-10">
+        <div class="container bgc my-5 rounded-5 shadow">
+          <div class="row align-items-stretch">
+            <div class="col bg rounded-5 d-none d-md-block"></div>
+            <div class="col px-4 py-2">
+              <div class="text-end">
+                <img src="../../../assets/main_icon.png" width="70px" alt="" />
+              </div>
+              <h2 class="fw-bold text-center py-3">
+                BIENVENIDO<br />Registrate
+              </h2>
+              <!-- Login -->
+              <form action="#">
+                <div class="mb-4">
+                  <label for="email" class="form-label">Correo Electrónico</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    name="email"
+                    placeholder="ejemplo@.gmail.com"
+                  />
+                </div>
+                <div class="mb-4">
+                  <label for="password" class="form-label">Contraseña</label>
+                  <input type="password" class="form-control" name="password" />
+                </div>
+                <div class="mb-4">
+                    <label for="repeat-password" class="form-label">Repite la contraseña</label>
+                    <input type="password" class="form-control" name="repeat-password" />
+                  </div>
+                <div class="d-grid">
+                  <button type="submit" class="btn btn-primary">
+                    Registrar
+                  </button>
+                </div>
+                <div class="col-12 text-center my-3">
+                  <span>¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a></span>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-1"></div>
+    </div>
+  </div>
+  
