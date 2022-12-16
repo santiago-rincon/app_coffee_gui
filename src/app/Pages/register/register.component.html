@@ -1,50 +1,118 @@
-<div class="container-fluid">
-    <div class="row">
-      <div class="col-1"></div>
-      <div class="col-10">
-        <div class="container bgc my-5 rounded-5 shadow">
-          <div class="row align-items-stretch">
-            <div class="col bg rounded-5 d-none d-md-block"></div>
-            <div class="col px-4 py-2">
-              <div class="text-end">
-                <img src="../../../assets/main_icon.png" width="70px" alt="" />
-              </div>
-              <h2 class="fw-bold text-center py-3">
-                BIENVENIDO<br />Registrate
-              </h2>
-              <!-- Login -->
-              <form action="#">
-                <div class="mb-4">
-                  <label for="email" class="form-label">Correo Electrónico</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    name="email"
-                    placeholder="ejemplo@.gmail.com"
-                  />
-                </div>
-                <div class="mb-4">
-                  <label for="password" class="form-label">Contraseña</label>
-                  <input type="password" class="form-control" name="password" />
-                </div>
-                <div class="mb-4">
-                    <label for="repeat-password" class="form-label">Repite la contraseña</label>
-                    <input type="password" class="form-control" name="repeat-password" />
-                  </div>
-                <div class="d-grid">
-                  <button type="submit" class="btn btn-primary">
-                    Registrar
-                  </button>
-                </div>
-                <div class="col-12 text-center my-3">
-                  <span>¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a></span>
-                </div>
-              </form>
+<app-navbar></app-navbar>
+<div class="container-fluid" *ngIf="!loading">
+  <div class="row">
+    <div class="col-1"></div>
+    <div class="col-10">
+      <div class="container bgc my-5 rounded-5 shadow">
+        <div class="row align-items-stretch">
+          <div class="col bg rounded-5 d-none d-md-block"></div>
+          <div class="col px-4 py-2">
+            <div class="text-end">
+              <img src="../../../assets/main_icon.png" width="70px" alt="" />
             </div>
+            <h2 class="fw-bold text-center py-3">BIENVENIDO<br />Registrate</h2>
+            <!-- Login -->
+            <form [formGroup]="registerUser" (ngSubmit)="registerNewUser()">
+              <div class="mb-4">
+                <label for="email" class="form-label">Correo Electrónico</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  name="email"
+                  placeholder="ejemplo@.gmail.com"
+                  formControlName="email"
+                />
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    registerUser.get('email')?.hasError('required') &&
+                    registerUser.get('email')?.touched
+                  "
+                >
+                  El <strong>correo</strong> es requerido
+                </span>
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    registerUser.get('email')?.hasError('email') &&
+                    registerUser.get('email')?.touched
+                  "
+                >
+                  El <strong>correo</strong> es invalido
+                </span>
+              </div>
+              <div class="mb-4">
+                <label for="password" class="form-label">Contraseña</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  name="password"
+                  placeholder="Establece tu contraseña"
+                  formControlName="password"
+                />
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    registerUser.get('password')?.hasError('required') &&
+                    registerUser.get('password')?.touched
+                  "
+                >
+                  La <strong>contraseña</strong> es requerida
+                </span>
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    registerUser.get('password')?.hasError('minlength') &&
+                    registerUser.get('password')?.touched
+                  "
+                >
+                  La <strong>contraseña</strong> debe tener mas de 6 caracteres
+                </span>
+              </div>
+              <div class="mb-4">
+                <label for="repeat-password" class="form-label"
+                  >Repite la contraseña</label
+                >
+                <input
+                  type="password"
+                  class="form-control"
+                  name="repeat-password"
+                  placeholder="Repite tu contraseña"
+                  formControlName="repeatPassword"
+                />
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    registerUser.get('repeatPassword')?.value!=registerUser.get('password')?.value &&
+                    registerUser.get('repeatPassword')?.touched
+                  "
+                >
+                  Las <strong>contraseñas</strong> no coinciden
+                </span>
+              </div>
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Registrar</button>
+              </div>
+              <div class="col-12 text-center my-3">
+                <span
+                  >¿Ya tienes cuenta?
+                  <a routerLink="/login">Inicia sesión</a></span
+                >
+              </div>
+            </form>
           </div>
         </div>
       </div>
-      <div class="col-1"></div>
     </div>
+    <div class="col-1"></div>
   </div>
-  
+</div>
+<!-- Spinner -->
+<div class="spinner" *ngIf="loading">
+  <div class="child">
+    <app-spinner></app-spinner>
+  </div>
+</div>
+<app-footer></app-footer>
+
+<!-- [disabled]="registerUser.invalid" Para deshabilitar un boton en un formulario-->

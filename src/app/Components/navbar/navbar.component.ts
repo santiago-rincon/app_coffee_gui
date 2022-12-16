@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AlertsService } from 'src/app/Services/alerts.service';
 
 @Component({
   selector: 'app-navbar',
@@ -7,10 +9,24 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-  sesion: boolean = false;
-  constructor(private router: Router) {}
+  sesion!: boolean;
+  currentUser!: any
+  constructor(
+    private router: Router,
+    private afAuth: AngularFireAuth,
+    private alerts: AlertsService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.afAuth.currentUser.then((user) => {
+      if (user && user.emailVerified) {
+        this.sesion = true;
+        this.currentUser = user.email;
+      } else {
+        this.sesion = false;
+      }
+    });
+  }
 
   changeMenu() {
     const checkbox = document.getElementById(
@@ -21,7 +37,18 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  logOut() {
+    this.afAuth.signOut().then(() => {
+      this.changeMenu();
+      this.router.navigate(['/login']);
+    });
+  }
+
   home() {
     this.router.navigate(['/home']);
+  }
+
+  viewProfile() {
+    this.alerts.alertProfile(this.currentUser)
   }
 }

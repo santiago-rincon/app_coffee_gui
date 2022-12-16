@@ -19,3 +19,13 @@ h6{
 a{
     text-decoration: none;
 }
+
+.spinner{
+    height: 75vh;
+}
+
+.child{
+    position: relative;
+    top: 45%;
+    text-align: center;
+}

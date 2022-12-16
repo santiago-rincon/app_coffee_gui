@@ -44,7 +44,7 @@
   font-size: 25px;
   align-self: baseline;
   border: solid 1px #fff;
-  border-radius: 25px;
+  border-radius: 50px;
   text-transform: uppercase;
 }
 
@@ -106,6 +106,15 @@
   border: none;
 }
 
+h5{
+  text-transform: uppercase;
+  margin: 0;
+  color: #fff;
+  font-size: 40px;
+  font-weight: 100;
+  margin: 10px 0px;
+}
+
 .icons-content i {
   color: #ffdbc7;
   font-size: 80px;
@@ -165,5 +174,13 @@
 
   #no-line{
     border: none;
+  }
+
+  h5 {
+    text-transform: uppercase;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 100;
+    text-align: center;
   }
 }

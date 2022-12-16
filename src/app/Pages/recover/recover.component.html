@@ -1,4 +1,5 @@
-<div class="container-fluid">
+<app-navbar></app-navbar>
+<div class="container-fluid" *ngIf="!loading">
   <div class="row">
     <div class="col-1"></div>
     <div class="col-10">
@@ -13,7 +14,7 @@
               BIENVENIDO<br />Recupera tu contraseña
             </h2>
             <!-- Login -->
-            <form action="#">
+            <form [formGroup]="recoverPassword" (ngSubmit)="recover()">
               <div class="mb-4">
                 <label for="email" class="form-label">Correo Electrónico</label>
                 <input
@@ -21,7 +22,26 @@
                   class="form-control"
                   name="email"
                   placeholder="ejemplo@.gmail.com"
+                  formControlName="email"
                 />
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    recoverPassword.get('email')?.hasError('required') &&
+                    recoverPassword.get('email')?.touched
+                  "
+                >
+                  El <strong>correo</strong> es requerido
+                </span>
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    recoverPassword.get('email')?.hasError('email') &&
+                    recoverPassword.get('email')?.touched
+                  "
+                >
+                  El <strong>correo</strong> es invalido
+                </span>
               </div>
               <div class="d-grid">
                 <button type="submit" class="btn btn-primary">Recuperar</button>
@@ -37,3 +57,10 @@
     <div class="col-1"></div>
   </div>
 </div>
+<!-- Spinner -->
+<div class="spinner" *ngIf="loading">
+  <div class="child">
+    <app-spinner></app-spinner>
+  </div>
+</div>
+<app-footer></app-footer>

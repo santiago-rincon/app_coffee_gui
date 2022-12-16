@@ -1,4 +1,5 @@
-<div class="container-fluid">
+<app-navbar></app-navbar>
+<div class="container-fluid" *ngIf="!loading">
   <div class="row">
     <div class="col-1"></div>
     <div class="col-10">
@@ -13,7 +14,7 @@
               BIENVENIDO<br />Inicia Sesión
             </h2>
             <!-- Login -->
-            <form action="#">
+            <form [formGroup]="loginUser" (ngSubmit)="login()">
               <div class="mb-4">
                 <label for="email" class="form-label">Correo Electrónico</label>
                 <input
@@ -21,11 +22,45 @@
                   class="form-control"
                   name="email"
                   placeholder="ejemplo@.gmail.com"
+                  formControlName="email"
                 />
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    loginUser.get('email')?.hasError('required') &&
+                    loginUser.get('email')?.touched
+                  "
+                >
+                  El <strong>correo</strong> es requerido
+                </span>
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    loginUser.get('email')?.hasError('email') &&
+                    loginUser.get('email')?.touched
+                  "
+                >
+                  El <strong>correo</strong> es invalido
+                </span>
               </div>
               <div class="mb-4">
                 <label for="password" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" name="password" />
+                <input
+                  type="password"
+                  class="form-control"
+                  name="password"
+                  formControlName="password"
+                  placeholder="Ingresa tu contraseña"
+                />
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    loginUser.get('password')?.hasError('required') &&
+                    loginUser.get('password')?.touched
+                  "
+                >
+                  La <strong>contraseña</strong> es requerida
+                </span>
               </div>
               <div class="d-grid">
                 <button type="submit" class="btn btn-primary">
@@ -33,9 +68,15 @@
                 </button>
               </div>
               <div class="my-3">
-                <span>¿No tienes cuenta? <a routerLink="/register">Registrate</a></span>
-                <br/><br/>
-                <span>¿Has olvidado tu contraseña?<a routerLink="/recover">Recuperar contraseña</a></span>
+                <span
+                  >¿No tienes cuenta?
+                  <a routerLink="/register">Registrate</a></span
+                >
+                <br /><br />
+                <span
+                  >¿Has olvidado tu contraseña?
+                  <a routerLink="/recover">Recuperar contraseña</a></span
+                >
               </div>
             </form>
             <!-- Inicio de sesión alternativo -->
@@ -44,8 +85,10 @@
                 <div class="col-12 mb-3"><h6>Inicia sesión con</h6></div>
               </div>
               <div class="row">
-                <div class="col">
-                  <button class="btn btn-outline-primary w-100 my-1">
+                <!-- <div class="col">
+                  <button
+                    class="btn btn-outline-primary w-100 my-1"
+                  >
                     <div class="row align-items-center">
                       <div class="col-2 d-none d-md-block">
                         <i class="fa-brands fa-facebook"></i>
@@ -53,14 +96,17 @@
                       <div class="col-10 text-center">Facebook</div>
                     </div>
                   </button>
-                </div>
+                </div> -->
                 <div class="col">
-                  <button class="btn btn-outline-danger w-100 my-1">
+                  <button
+                    class="btn btn-outline-danger w-100 my-1"
+                    (click)="loginGoogle()"
+                  >
                     <div class="row align-items-center">
-                      <div class="col-2 d-none d-md-block">
+                      <div class="col-2">
                         <i class="fa-brands fa-google"></i>
                       </div>
-                      <div class="col text-center">Google</div>
+                      <div class="col-10 text-center">Google</div>
                     </div>
                   </button>
                 </div>
@@ -74,3 +120,10 @@
     <div class="col-1"></div>
   </div>
 </div>
+<!-- Spinner -->
+<div class="spinner" *ngIf="loading">
+  <div class="child">
+    <app-spinner></app-spinner>
+  </div>
+</div>
+<app-footer></app-footer>

@@ -1,21 +1,31 @@
-.bg{
-    background-image: url(../../../assets/register_image.png);
-    background-position: center center;
-    background-size: cover;
+.bg {
+  background-image: url(../../../assets/register_image.png);
+  background-position: center center;
+  background-size: cover;
 }
 
-.bgc{
-    background: #fff;
+.bgc {
+  background: #fff;
 }
 
-h2{
-    font-size: 30px;
+h2 {
+  font-size: 30px;
 }
 
-h6{
-    font-size: 20px;
+h6 {
+  font-size: 20px;
 }
 
-a{
-    text-decoration: none;
+a {
+  text-decoration: none;
+}
+
+.spinner{
+    height: 75vh;
+}
+
+.child{
+    position: relative;
+    top: 45%;
+    text-align: center;
 }

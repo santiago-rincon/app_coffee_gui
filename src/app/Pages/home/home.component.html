@@ -1,10 +1,43 @@
+<app-navbar></app-navbar>
 <section id="banner">
   <div class="banner-content">
-    <h3>
-      <span>Empezemos:</span> Monitorea el estado de tu cultivo<br />en todo
-      momento!!
+    <h3 *ngIf="sesion">
+      <span>Bienvenido!!</span>
     </h3>
-    <a class="variables" routerLink="/variables">Monitorear</a>
+    <h3>
+      <span *ngIf="sesion">Empezemos:</span
+      ><span *ngIf="!sesion">Inicia sesión:</span> Monitorea el estado de tu
+      cultivo<br />en todo momento!!
+    </h3>
+    <a class="variables" routerLink="/variables" *ngIf="sesion">Monitorear</a>
+    <a class="variables" routerLink="/login" *ngIf="!sesion">Iniciar Sesión</a>
+  </div>
+</section>
+<section class="icons">
+  <div class="icons-content">
+    <div class="container" id="last">
+      <div class="row" id="last">
+        <h5>Podras monitorear las siguientes variables</h5>
+      </div>
+      <div class="row">
+        <div>
+          <i>🔥</i>
+          <h6>Temperatura</h6>
+        </div>
+        <div>
+          <i>💧</i>
+          <h6>Humedad</h6>
+        </div>
+        <div>
+          <i>🌲</i>
+          <h6>CO2</h6>
+        </div>
+        <div id="last">
+          <i>💤</i>
+          <h6>pH</h6>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 <section class="curious">
@@ -52,3 +85,4 @@
     </div>
   </div>
 </section>
+<app-footer></app-footer>

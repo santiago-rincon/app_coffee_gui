@@ -28,6 +28,7 @@ header{
     margin: 0 15px;
 }
 
+
 .show-menu, .hide-menu{
     font-size: 35px;
     cursor: pointer;
@@ -43,6 +44,7 @@ header{
     background: rgba(255, 255, 255, 0.8);
     color: #000;
     border-color: #000;
+    cursor: pointer;
 }
 
 .show-menu:hover, .hide-menu:hover{
@@ -91,7 +93,7 @@ header{
         display: block;
         padding: 15px;
         margin: 20px auto;
-        width: 50vw;
+        width: 60vw;
     }
 
     .hide-menu{
