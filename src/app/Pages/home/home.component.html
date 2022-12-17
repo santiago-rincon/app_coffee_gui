@@ -4,12 +4,15 @@
     <h3 *ngIf="sesion">
       <span>Bienvenido!!</span>
     </h3>
-    <h3>
-      <span *ngIf="sesion">Empezemos:</span
-      ><span *ngIf="!sesion">Inicia sesión:</span> Monitorea el estado de tu
-      cultivo<br />en todo momento!!
+    <h3 *ngIf="sesion">
+      <span>Empezemos:</span> Monitorea el estado de tu cultivo<br />en todo
+      momento!!
     </h3>
-    <a class="variables" routerLink="/variables" *ngIf="sesion">Monitorear</a>
+    <h3 *ngIf="!sesion">
+      <span>Inicia sesión</span> Para monitorear el estado de tu cultivo<br />en todo
+      momento!!
+    </h3>
+    <a class="variables" routerLink="/crop" *ngIf="sesion">Ver tu cultivo</a>
     <a class="variables" routerLink="/login" *ngIf="!sesion">Iniciar Sesión</a>
   </div>
 </section>

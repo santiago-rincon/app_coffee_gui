@@ -9,7 +9,7 @@
   position: relative;
   width: 270px;
   height: 370px;
-  margin: 20px  ;
+  margin: 20px;
 }
 
 .tarjeta .face {
@@ -48,12 +48,7 @@
 
 .tarjeta .back {
   transform: perspective(600px) rotateY(180deg);
-  /* background: #008f25; */
-  background: #bdc3c7;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to top, #2c3e50, #bdc3c7);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to top, #2c3e50, #bdc3c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-
+  background: #252525;
   padding: 15px;
   color: #f3f3f3;
   display: flex;
@@ -81,31 +76,30 @@ background: linear-gradient(to top, #2c3e50, #bdc3c7); /* W3C, IE 10+/ Edge, Fir
 }
 
 .tarjeta .back .link a:hover {
-  background: rgba(255, 219, 199, 0.6);
-  color: #fff;
+  background: rgb(255, 255, 255);
+  color: #000;
   border-color: #000;
   transition: all 0.4s;
   border: solid 1px #fff;
 }
 
-.tarjeta .back h3{
-    font-size: 35px;
-    margin-top: 20px;
-    letter-spacing: 0px;
-    color: #fff;
+.tarjeta .back h3 {
+  font-size: 35px;
+  margin-top: 20px;
+  letter-spacing: 0px;
+  color: #fff;
 }
 
-.tarjeta .back p{
-    font-size: 18px;
-    margin-top: 20px;
-    letter-spacing: 1px;
+.tarjeta .back p {
+  font-size: 18px;
+  margin-top: 20px;
+  letter-spacing: 1px;
 }
 
-.tarjeta:hover .front{
-    transform: perspective(600px) rotateY(180deg);
+.tarjeta:hover .front {
+  transform: perspective(600px) rotateY(180deg);
 }
 
-.tarjeta:hover .back{
-    transform: perspective(600px) rotateY(360deg);
+.tarjeta:hover .back {
+  transform: perspective(600px) rotateY(360deg);
 }
-

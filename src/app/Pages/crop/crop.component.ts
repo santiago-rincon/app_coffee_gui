@@ -4,15 +4,15 @@ import { Router } from '@angular/router';
 import { AlertsService } from 'src/app/Services/alerts.service';
 
 @Component({
-  selector: 'app-variables',
-  templateUrl: './variables.component.html',
-  styleUrls: ['./variables.component.css'],
+  selector: 'app-crop',
+  templateUrl: './crop.component.html',
+  styleUrls: ['./crop.component.css'],
 })
-export class VariablesComponent implements OnInit {
+export class CropComponent implements OnInit {
   constructor(
-    private router: Router,
     private afAuth: AngularFireAuth,
-    private alerts: AlertsService
+    private alerts: AlertsService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -23,8 +23,7 @@ export class VariablesComponent implements OnInit {
     //       'No disponible',
     //       'Para acceder a este apartado debes iniciar sesión'
     //     );
-    //     this.router.navigate(['/login'])
-
+    //     this.router.navigate(['/login']);
     //   }
     // });
   }

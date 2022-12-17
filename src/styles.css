@@ -1,4 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
+@font-face {
+  font-family: Aquire;
+  src: url('/src/assets/fonts/Aquire-BW0ox.otf') format("opentype");
+}
+
 .color1 {
   color: #00738d;
 }
