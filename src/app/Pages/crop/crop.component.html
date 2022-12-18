@@ -2,8 +2,7 @@
 <h3>granja la esperanza</h3>
 <div class="container-fluid mb-3">
   <div class="row">
-    <div class="col-1"></div>
-    <div class="col-10 bg-light rounded-5 p-3 shadow">
+    <div class="col-10 offset-1 bg-light rounded-5 p-3 shadow">
       <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
         <li class="nav-item" role="presentation">
           <button
@@ -47,20 +46,6 @@
             Ubicación
           </button>
         </li>
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link"
-            id="pills-variables-tab"
-            data-bs-toggle="pill"
-            data-bs-target="#pills-variables"
-            type="button"
-            role="tab"
-            aria-controls="pills-variables"
-            aria-selected="false"
-          >
-            Estado de las variables
-          </button>
-        </li>
       </ul>
       <div class="tab-content" id="pills-tabContent">
         <div
@@ -69,7 +54,43 @@
           role="tabpanel"
           aria-labelledby="pills-information-tab"
           tabindex="0"
-        ></div>
+        >
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <h5>Extensión</h5>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Repellat impedit harum quas totam adipisci vitae similique
+                  accusantium neque. Amet, aliquam eveniet. Repellat excepturi
+                  ducimus repellendus dolor deserunt voluptate, debitis at nihil
+                  dignissimos iusto soluta? Debitis, deleniti ipsum adipisci
+                  maiores expedita dolor molestias, explicabo iure voluptatibus
+                  possimus a autem rerum odit.
+                </p>
+                <h5>Mapa</h5>
+                <img src="../../../assets/mapa.png" class="mapInfo" />
+                <h5>Extensión dedicada al cultivo de café</h5>
+                <p>
+                  En la actualidad la Unidad Agroambiental la Esperanza cuenta
+                  con un área agrícola dedicada al cultivo de café con una
+                  extensión de 2.3 hectáreas, de las cuales 1.3 hectáreas, se
+                  encuentran en su tercer año de producción.
+                </p>
+                <h5>Datos sobre el cultivo de café</h5>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Error
+                  placeat nihil, aliquid, voluptates corrupti exercitationem
+                  molestiae fuga, pariatur sit optio natus ipsum. Voluptates
+                  provident perspiciatis eius eum aperiam rerum exercitationem
+                  ipsa ut quas debitis illo optio, nulla assumenda. Minima,
+                  harum odio. Atque consequuntur sint natus repellat sunt error
+                  perspiciatis? Dolore.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
         <div
           class="tab-pane fade"
           id="pills-coffee"
@@ -77,58 +98,22 @@
           aria-labelledby="pills-coffee-tab"
           tabindex="0"
         >
-          <h5>Estas son algunas fotos de la granja La Esperanza, haz clic sobre ellas para ver mas infomación</h5>
+          <div class="container">
+            <div class="row">
+              <div class="col text-start">
+                <h5>
+                  Estas son algunas fotografias y noticias de la granja La
+                  Esperanza, haz clic sobre ellas para ver mas infomación
+                </h5>
+              </div>
+            </div>
+          </div>
           <div class="container-fluid align-items-center">
             <app-pictures
-              image="../../../../assets/album1.jpg"
+              *ngFor="let picture of pictures"
+              [image]="picture.source"
               (click)="
-                showImage(
-                  '../../../../assets/album1.jpg',
-                  'UCundinamarca lanzó marca de café '
-                )
-              "
-            ></app-pictures>
-            <app-pictures
-              image="../../../../assets/album2.jpg"
-              (click)="
-                showImage(
-                  '../../../../assets/album2.jpg',
-                  'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio, ab.'
-                )
-              "
-            ></app-pictures>
-            <app-pictures
-              image="../../../../assets/album3.jpg"
-              (click)="
-                showImage(
-                  '../../../../assets/album3.jpg',
-                  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis fugiat deleniti nobis, neque vitae quas velit doloribus quis voluptatum unde! Deserunt, repudiandae laboriosam perspiciatis possimus nesciunt consequuntur totam perferendis quasi in ipsum quis saepe quia consectetur optio dicta recusandae expedita nihil! Facilis recusandae suscipit deleniti sint? Autem incidunt optio ratione ut illo, reprehenderit magni vel eum facilis accusantium mollitia deserunt ullam laudantium placeat aliquam dicta omnis maiores quidem fuga consequuntur blanditiis quos odit fugit id? Alias consequatur, rerum vitae, nisi natus, quasi nemo voluptatibus soluta illum dolorum amet quibusdam dicta. Neque error, itaque accusamus autem incidunt nisi aliquam dolorem vero alias magni sapiente ipsa nostrum. Error numquam ad laudantium asperiores ullam, explicabo sit consequuntur ducimus temporibus quis doloribus incidunt maxime, odit harum exercitationem atque repellat? Dolorem beatae cum delectus neque numquam eligendi maxime magnam, minus adipisci, fuga repudiandae, dolore facere. Vero quas, maiores nesciunt voluptatem optio alias voluptates? Nam obcaecati, doloremque cupiditate laudantium quam sunt possimus. Harum porro totam autem natus maxime temporibus, modi, sed debitis eos, tenetur quae ipsa? Distinctio culpa iusto in. Excepturi, nemo tempore cum qui adipisci similique quo esse ducimus incidunt illo rerum totam quia ratione itaque sequi! Sequi, eum doloremque eveniet labore ratione harum unde.'
-                )
-              "
-            ></app-pictures>
-            <app-pictures
-              image="../../../../assets/album4.jpg"
-              (click)="
-                showImage(
-                  '../../../../assets/album4.jpg',
-                  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis fugiat deleniti nobis, neque vitae quas velit doloribus quis voluptatum unde! Deserunt, repudiandae laboriosam perspiciatis possimus nesciunt consequuntur totam perferendis quasi in ipsum quis saepe quia consectetur optio dicta recusandae expedita nihil! Facilis recusandae suscipit deleniti sint? Autem incidunt optio ratione ut illo, reprehenderit magni vel eum facilis accusantium mollitia deserunt ullam laudantium placeat aliquam dicta omnis maiores quidem fuga consequuntur blanditiis quos odit fugit id? Alias consequatur, rerum vitae, nisi natus, quasi nemo voluptatibus soluta illum dolorum amet quibusdam dicta. Neque error, itaque accusamus autem incidunt nisi aliquam dolorem vero alias magni sapiente ipsa nostrum. Error numquam ad laudantium asperiores ullam, explicabo sit consequuntur ducimus temporibus quis doloribus incidunt maxime, odit harum exercitationem atque repellat? Dolorem beatae cum delectus neque numquam eligendi maxime magnam, minus adipisci, fuga repudiandae, dolore facere. Vero quas, maiores nesciunt voluptatem optio alias voluptates? Nam obcaecati, doloremque cupiditate laudantium quam sunt possimus. Harum porro totam autem natus maxime temporibus, modi, sed debitis eos, tenetur quae ipsa? Distinctio culpa iusto in. Excepturi, nemo tempore cum qui adipisci similique quo esse ducimus incidunt illo rerum totam quia ratione itaque sequi! Sequi, eum doloremque eveniet labore ratione harum unde.'
-                )
-              "
-            ></app-pictures>
-            <app-pictures
-              image="../../../../assets/album5.jpg"
-              (click)="
-                showImage('../../../../assets/album5.jpg', 'Texto corto')
-              "
-            ></app-pictures>
-            <app-pictures
-              image="../../../../assets/album6.png"
-              (click)="
-                showImage(
-                  '../../../../assets/album6.png',
-                  'La gerente del Instituto Colombiano Agropecuario (ICA) seccional Cundinamarca, Nely Sánchez Vargas entregó a la Granja la Esperanza de la Universidad de Cundinamarca, ubicada en la vereda Guavio de la ciudad de Fusagasugá, la certificación de Buenas Prácticas Ganaderas en la Producción de Leche, por vigencia de dos años, de conformidad con lo establecido en la reglamentación sanitaria y de inocuidad vigente.',
-                  'El Instituto Colombiano Agropecuario (ICA) otorgó certificación a la Granja La Esperanza en Buenas Prácticas Ganaderas en la Producción de Leche.'
-                )
+                showImage(picture.source, picture.caption, picture.tilte)
               "
             ></app-pictures>
           </div>
@@ -143,9 +128,11 @@
           <div class="container">
             <div class="row">
               <div class="col mb-5 infoLocation mt-1">
-                La unidad Agroambiental <i>"La Esperanza"</i> de la Universidad
-                de Cundinamarca se encuentra ubicada en la vereda Guavio Bajo
-                del municipio de Fusagasugá
+                <h5>
+                  La unidad Agroambiental <i>"La Esperanza"</i> de la
+                  Universidad de Cundinamarca se encuentra ubicada en la vereda
+                  Guavio Bajo del municipio de Fusagasugá
+                </h5>
               </div>
             </div>
             <div class="row">
@@ -194,18 +181,8 @@
             </div>
           </div>
         </div>
-        <div
-          class="tab-pane fade"
-          id="pills-variables"
-          role="tabpanel"
-          aria-labelledby="pills-variables-tab"
-          tabindex="0"
-        >
-          <app-variables></app-variables>
-        </div>
       </div>
     </div>
-    <div class="col-1"></div>
   </div>
 </div>
 <app-footer></app-footer>

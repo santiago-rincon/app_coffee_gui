@@ -90,10 +90,17 @@
   color: #fff;
 }
 
+.tarjeta .back h4 {
+  font-size: 20px;
+  letter-spacing: 1px;
+  color: #fff;
+  text-align: left;
+}
+
 .tarjeta .back p {
   font-size: 18px;
-  margin-top: 20px;
   letter-spacing: 1px;
+  text-align: left;
 }
 
 .tarjeta:hover .front {

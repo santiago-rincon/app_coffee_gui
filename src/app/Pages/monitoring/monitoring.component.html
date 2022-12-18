@@ -1,0 +1,35 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <select name="variable" (change)="select($event)">
+        <option *ngFor="let variable of variables" value={{variable}}>{{variable}}</option>
+      </select>
+    </div>
+  </div>
+  <!-- Temperatura -->
+  <div class="row" *ngIf="show=='Temperatura'">
+    <div class="col">
+      <div class="container">Temperatura</div>
+    </div>
+  </div>
+  <!-- Humedad -->
+  <div class="row" *ngIf="show=='Humedad'">
+    <div class="col">
+      <div class="container">Humedad</div>
+    </div>
+  </div>
+  <!-- CO2 -->
+  <div class="row" *ngIf="show=='CO2'">
+    <div class="col">
+      <div class="container">CO2</div>
+    </div>
+  </div>
+  <!-- Radiación solar -->
+  <div class="row" *ngIf="show=='rad'">
+    <div class="col">
+      <div class="container">Radiación Solar</div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

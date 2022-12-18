@@ -19,7 +19,7 @@ figure {
   border: 5px solid rgba(0, 0, 0, 0.65);
   display: block;
   align-items: center;
-  width: 350px;
+  width: 36vw;
 }
 
 .hanging:after {
@@ -59,6 +59,12 @@ figure {
 
 @media (max-width: 1080px) {
   .hanging img {
-    width: 240px;
+    width: 100%;
+  }
+}
+
+@media (min-width: 1900px) {
+  .hanging img {
+    width: 38vw;
   }
 }

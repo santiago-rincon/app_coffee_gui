@@ -8,9 +8,9 @@ import { Component, Input, OnInit } from '@angular/core';
 export class CardComponent implements OnInit {
   @Input() title: string=''
   @Input() img: string=''
-  @Input() content: string=''
-  @Input() button_content: string=''
-  @Input() link :string='#'
+  @Input() sensor: string=''
+  @Input() lastMeasure: string=''
+  @Input() dateAndTime: string=''
   constructor() { }
 
   ngOnInit(): void {
