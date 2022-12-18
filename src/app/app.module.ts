@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './Pages/login/login.component';
@@ -19,6 +18,9 @@ import { environment } from 'src/environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SpinnerComponent } from './Components/spinner/spinner.component';
 import { CropComponent } from './Pages/crop/crop.component';
+import { AgmCoreModule } from '@agm/core';
+import { ButtonComponent } from './Components/button/button.component';
+import { PicturesComponent } from './Components/pictures/pictures.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { CropComponent } from './Pages/crop/crop.component';
     RecoverComponent,
     VerifyComponent,
     SpinnerComponent,
-    CropComponent
+    CropComponent,
+    ButtonComponent,
+    PicturesComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +46,7 @@ import { CropComponent } from './Pages/crop/crop.component';
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     BrowserAnimationsModule,
+    AgmCoreModule.forRoot({apiKey: "AIzaSyDejP1x-AIbiDj58gKcL3XQ5BqczBcS8jU"})
   ],
   providers: [],
   bootstrap: [AppComponent]

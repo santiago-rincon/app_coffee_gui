@@ -84,4 +84,15 @@ export class AlertsService {
       }
     })
   }
+
+  alertImage(path:string, caption:string='no hay caption',title:string=''){
+    Swal.fire({
+      text: caption,
+      imageUrl: path,
+      imageWidth: 1300,
+      width: 5000,
+      title: `<h1>${title}</h1>`
+      // imageHeight: 1000,
+    })
+  }
 }

@@ -10,9 +10,36 @@ h3 {
   letter-spacing: 5px;
 }
 
+agm-map {
+  width: 100%;
+  height: 80vh;
+  border-radius: 50px;
+}
 
-@media(max-width: 1080px){
-    h3{
-        font-size: 40px;
-    }
+app-button{
+  margin: 50px;
+}
+
+app-pictures{
+  cursor: pointer;
+}
+
+.map {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.infoLocation {
+  font-size: 20px;
+}
+
+
+@media (max-width: 1080px) {
+  h3 {
+    font-size: 40px;
+  }
+
+  agm-map {
+    width: 100%;
+    height: 50vh;
+  }
 }
