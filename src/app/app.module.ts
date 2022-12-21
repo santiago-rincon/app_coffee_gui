@@ -22,6 +22,13 @@ import { AgmCoreModule } from '@agm/core';
 import { ButtonComponent } from './Components/button/button.component';
 import { PicturesComponent } from './Components/pictures/pictures.component';
 import { MonitoringComponent } from './Pages/monitoring/monitoring.component';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { DataTablesModule } from "angular-datatables";
+import { TemperaturaComponent } from './Pages/monitoring/temperatura/temperatura.component';
+import { HumedadComponent } from './Pages/monitoring/humedad/humedad.component';
+import { Co2Component } from './Pages/monitoring/co2/co2.component';
+import { RadComponent } from './Pages/monitoring/rad/rad.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +47,10 @@ import { MonitoringComponent } from './Pages/monitoring/monitoring.component';
     ButtonComponent,
     PicturesComponent,
     MonitoringComponent,
+    TemperaturaComponent,
+    HumedadComponent,
+    Co2Component,
+    RadComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,7 +59,10 @@ import { MonitoringComponent } from './Pages/monitoring/monitoring.component';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     BrowserAnimationsModule,
     AgmCoreModule.forRoot({apiKey: "AIzaSyDejP1x-AIbiDj58gKcL3XQ5BqczBcS8jU"}),
-    FormsModule
+    FormsModule,
+    AngularFirestoreModule,
+    DataTablesModule,
+    NgxChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

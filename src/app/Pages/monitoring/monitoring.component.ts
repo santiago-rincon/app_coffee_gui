@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FireStoreService } from 'src/app/Services/fire-store.service';
 
 @Component({
   selector: 'app-monitoring',
@@ -6,26 +7,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./monitoring.component.css'],
 })
 export class MonitoringComponent implements OnInit {
-  show: string = 'Temperatura';
-  variables: string[] = ['Temperatura', 'Humedad', 'CO2', 'Radiación Solar'];
-  constructor() {}
+  dataUmbral: any[] = [];
+  constructor(private firestore: FireStoreService) {
+    this.extractThreshold();
+  }
 
   ngOnInit(): void {}
 
-  select(e: any) {
-    switch (e.target.value) {
-      case 'Temperatura':
-        this.show = 'Temperatura';
-        break;
-      case 'Humedad':
-        this.show = 'Humedad';
-        break;
-      case 'CO2':
-        this.show = 'CO2';
-        break;
-      case 'Radiación Solar':
-        this.show = 'rad';
-        break;
-    }
+  extractThreshold() {
+    this.firestore.getDataThreshold().subscribe((data) => {
+      data.forEach((element) => {
+        this.dataUmbral=[]
+        this.dataUmbral.push({ ...element.payload.doc.data() });
+      });
+    });
   }
 }
