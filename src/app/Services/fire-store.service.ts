@@ -18,10 +18,16 @@ export class FireStoreService {
     return this.firestore.collection('Umbrales').snapshotChanges();
   }
 
-  arrayFilter(array: any[], date: string): any[] {
-    const filter = array.filter((element, index) => {
-      return element.date === date;
-    });
-    return filter
+  getLastData(collection: string): Observable<any[]> {
+    return this.firestore
+      .collection(collection, (ref) => ref.orderBy('dateAndTime', 'desc').limit(1))
+      .snapshotChanges();
   }
+
+  // arrayFilter(array: any[], date: string): any[] {
+  //   const filter = array.filter((element, index) => {
+  //     return element.date === date;
+  //   });
+  //   return filter
+  // }
 }

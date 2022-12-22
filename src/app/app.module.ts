@@ -29,6 +29,7 @@ import { HumedadComponent } from './Pages/monitoring/humedad/humedad.component';
 import { Co2Component } from './Pages/monitoring/co2/co2.component';
 import { RadComponent } from './Pages/monitoring/rad/rad.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { SettingsComponent } from './Pages/settings/settings.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +52,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     HumedadComponent,
     Co2Component,
     RadComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AlertsService } from 'src/app/Services/alerts.service';
@@ -9,6 +9,7 @@ import { AlertsService } from 'src/app/Services/alerts.service';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
+  @Input() showSettings:boolean=false
   sesion!: boolean;
   currentUser!: any
   constructor(

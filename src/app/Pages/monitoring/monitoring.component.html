@@ -1,4 +1,4 @@
-<app-navbar></app-navbar>
+<app-navbar [showSettings]="true"></app-navbar>
 <div class="container-fluid">
   <div class="row my-2">
     <div class="col text-center">
@@ -51,7 +51,7 @@
               aria-expanded="false"
               aria-controls="panelsStayOpen-collapseTwo"
             >
-              <strong>Humedad</strong>
+              <strong>Humedad (Ambiente y Suelo)</strong>
             </button>
           </h2>
           <div
@@ -83,7 +83,7 @@
             aria-labelledby="panelsStayOpen-headingThree"
           >
             <div class="accordion-body">
-              <!-- <app-co2 [umbral]="dataUmbral"></app-co2> -->
+              <app-co2 [umbral]="dataUmbral"></app-co2>
             </div>
           </div>
         </div>
@@ -106,7 +106,7 @@
             aria-labelledby="panelsStayOpen-headingFour"
           >
             <div class="accordion-body">
-              <!-- <app-rad [umbral]="dataUmbral"></app-rad> -->
+              <app-rad [umbral]="dataUmbral"></app-rad>
             </div>
           </div>
         </div>

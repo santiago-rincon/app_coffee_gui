@@ -14,7 +14,7 @@ h3 {
 }
 
 strong{
-    font-size: 25px;
+    font-size: 30px;
 }
 
 p{
@@ -32,4 +32,7 @@ p{
     text-transform: uppercase;
     letter-spacing: 5px;
   }
+  strong{
+    font-size: 25px;
+}
 }

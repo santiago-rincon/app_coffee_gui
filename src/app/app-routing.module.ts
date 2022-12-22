@@ -7,6 +7,7 @@ import { LoginComponent } from './Pages/login/login.component';
 import { MonitoringComponent } from './Pages/monitoring/monitoring.component';
 import { RecoverComponent } from './Pages/recover/recover.component';
 import { RegisterComponent } from './Pages/register/register.component';
+import { SettingsComponent } from './Pages/settings/settings.component';
 import { VariablesComponent } from './Pages/variables/variables.component';
 import { VerifyComponent } from './Pages/verify/verify.component';
 
@@ -18,8 +19,9 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'recover', component: RecoverComponent },
-  { path: 'monitoring', component: MonitoringComponent },
+  { path: 'variables/monitoring', component: MonitoringComponent },
   { path: 'verify', component: VerifyComponent },
+  { path: 'variables/monitoring/settings', component: SettingsComponent },
   { path: '**', component: ErrorComponent },
 ];
 
