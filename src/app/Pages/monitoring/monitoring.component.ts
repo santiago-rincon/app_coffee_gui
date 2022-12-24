@@ -17,7 +17,7 @@ export class MonitoringComponent implements OnInit {
   extractThreshold() {
     this.firestore.getDataThreshold().subscribe((data) => {
       data.forEach((element) => {
-        this.dataUmbral=[]
+        this.dataUmbral = [];
         this.dataUmbral.push({ ...element.payload.doc.data() });
       });
     });

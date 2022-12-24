@@ -2,6 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertsService } from 'src/app/Services/alerts.service';
 import { FireStoreService } from 'src/app/Services/fire-store.service';
+import * as XLSX from 'xlsx';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-humedad',
@@ -220,9 +223,9 @@ export class HumedadComponent implements OnInit {
           'No hay registros para la fecha ' + date
         );
       } else {
-        let measures:number[]=[]
+        let measures: number[] = [];
         for (const i of arrayFilter) {
-          measures.push(i.measure)
+          measures.push(i.measure);
         }
         let media: number = 0;
         for (const i of measures) {
@@ -232,24 +235,22 @@ export class HumedadComponent implements OnInit {
         media = parseFloat(media.toFixed(2));
         this.date = date;
         this.mediaOfDate = media;
-        this.maxDate=Math.max(...measures)
-        this.minDate=Math.min(...measures)
+        this.maxDate = Math.max(...measures);
+        this.minDate = Math.min(...measures);
         this.showMediaOfDate = true;
-        this.dataFilter=arrayFilter
-        this.multiFilter=[{"name":"Humedad Ambiente","series":[]}]
+        this.dataFilter = arrayFilter;
+        this.multiFilter = [{ name: 'Humedad Ambiente', series: [] }];
         for (const i of arrayFilter) {
           this.multiFilter[0].series.unshift({
             name: i.time,
             value: i.measure,
-          })
+          });
         }
 
         console.log('log');
       }
     }
   }
-
-
 
   consultDataForDate2() {
     let date2 = this.filterDate2.value.date2;
@@ -266,9 +267,9 @@ export class HumedadComponent implements OnInit {
           'No hay registros para la fecha ' + date2
         );
       } else {
-        let measures:number[]=[]
+        let measures: number[] = [];
         for (const i of arrayFilter) {
-          measures.push(i.measure)
+          measures.push(i.measure);
         }
         let media: number = 0;
         for (const i of measures) {
@@ -278,16 +279,16 @@ export class HumedadComponent implements OnInit {
         media = parseFloat(media.toFixed(2));
         this.date2 = date2;
         this.mediaOfDate2 = media;
-        this.maxDate2=Math.max(...measures)
-        this.minDate2=Math.min(...measures)
+        this.maxDate2 = Math.max(...measures);
+        this.minDate2 = Math.min(...measures);
         this.showMediaOfDate2 = true;
-        this.dataFilter2=arrayFilter
-        this.multiFilter2=[{"name":"Humedad del Suelo","series":[]}]
+        this.dataFilter2 = arrayFilter;
+        this.multiFilter2 = [{ name: 'Humedad del Suelo', series: [] }];
         for (const i of arrayFilter) {
           this.multiFilter2[0].series.unshift({
             name: i.time,
             value: i.measure,
-          })
+          });
         }
 
         console.log('log');
@@ -297,5 +298,35 @@ export class HumedadComponent implements OnInit {
 
   onSelect(data: any): void {
     console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+  }
+
+  exportExcel(id: string, nameFile: string) {
+    /* pass here the table id */
+    let element = document.getElementById(id);
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    /* save to file */
+    XLSX.writeFile(wb, nameFile + '.xlsx');
+  }
+
+  exportPDF(id: string, nameFile: string) {
+    var data = document.getElementById(id)!;
+    html2canvas(data).then((canvas) => {
+      // Few necessary setting options
+      var imgWidth = 208;
+      var pageHeight = 295;
+      var imgHeight = (canvas.height * imgWidth) / canvas.width;
+      var heightLeft = imgHeight;
+
+      const contentDataURL = canvas.toDataURL('image/png');
+      let pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF
+      var position = 0;
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
+      pdf.save(nameFile + '.pdf'); // Generated PDF
+    });
   }
 }

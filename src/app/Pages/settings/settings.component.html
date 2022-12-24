@@ -1,1 +1,59 @@
-<p>settings works!</p>
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="row">
+    <div class="col text-center my-3">
+      <h3>Modificación de Umbrales de Medida 🔨</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-xl-5">
+      <div class="col">
+        <ul>
+          <li class="head"><strong>Umbrales Actuales</strong></li>
+          <!-- <li>Temperatura: 10 °C</li>
+          <li>Humedad: 10 %</li>
+          <li>CO2: 10 ppm</li>
+          <li>Radiación Solar: 10 U</li> -->
+          <li>
+            Temperatura: {{ dataUmbral[0].Temperatura }} °C
+          </li>
+          <li>Humedad: {{ dataUmbral[0].Humedad }} %</li>
+          <li>CO2: {{ dataUmbral[0].CO2 }} ppm</li>
+          <li>Radiación Solar: {{ dataUmbral[0].Rad }} U</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-sm-12 col-xl-7">
+      <form [formGroup]="umbralSet" (submit)="updateUmbral()">
+        <div class="form-floating my-3">
+          <select
+            class="form-select"
+            id="floatingSelect"
+            aria-label="Floating label select example"
+            (change)="filter($event)"
+            formControlName="parameter"
+          >
+            <option *ngFor="let variable of variables" [value]="variable">
+              {{ variable }}
+            </option>
+          </select>
+          <label for="floatingSelect">Selecciona una variable</label>
+        </div>
+        <div class="input-group my-3">
+          <input
+            type="number"
+            class="form-control"
+            aria-label="Recipient's username"
+            aria-describedby="basic-addon2"
+            formControlName="value"
+          />
+          <span class="input-group-text" id="basic-addon2">{{ unity }}</span>
+        </div>
+        <button type="submit" class="btn btn-success w-100 mb-3">
+          Actualizar
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

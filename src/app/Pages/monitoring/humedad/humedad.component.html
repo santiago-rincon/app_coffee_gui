@@ -54,7 +54,7 @@
       </div>
       <div class="row">
         <div class="col">
-          <table class="table table-striped table-bordered border-dark">
+          <table class="table table-striped table-bordered border-dark" id="generalTableA">
             <thead>
               <tr>
                 <th scope="col">Fecha</th>
@@ -78,8 +78,26 @@
           </table>
         </div>
       </div>
+      <div class="row text-center">
+        <div class="col-sm-12 col-xl-6 my-2">
+          <app-button
+            color="green"
+            text=" Exportar Excel"
+            (click)="exportExcel('generalTableA', 'Reporte_General_Humedad_Ambiente')"
+            [showExcel]="true"
+          ></app-button>
+        </div>
+        <div class="col-sm-12 col-xl-6 my-2">
+          <app-button
+            color="red"
+            text=" Exportar PDF"
+            (click)="exportPDF('generalTableA', 'Reporte_General_Humedad_Ambiente')"
+            [showPDF]="true"
+          ></app-button>
+        </div>
+      </div>
       <div class="row">
-        <div class="col text-center">
+        <div class="col text-center my-2">
           <h3>Gráfica de Humedad Ambiente Completa</h3>
         </div>
       </div>
@@ -121,7 +139,7 @@
       </div>
       <div class="row">
         <div class="col">
-          <table class="table table-striped table-bordered border-dark">
+          <table class="table table-striped table-bordered border-dark" id="generalTableS">
             <thead>
               <tr>
                 <th scope="col">Fecha</th>
@@ -145,8 +163,26 @@
           </table>
         </div>
       </div>
+      <div class="row text-center">
+        <div class="col-sm-12 col-xl-6 my-2">
+          <app-button
+            color="green"
+            text=" Exportar Excel"
+            (click)="exportExcel('generalTableS', 'Reporte_General_Humedad_Suelo')"
+            [showExcel]="true"
+          ></app-button>
+        </div>
+        <div class="col-sm-12 col-xl-6 my-2">
+          <app-button
+            color="red"
+            text=" Exportar PDF"
+            (click)="exportPDF('generalTableS', 'Reporte_General_Humedad_Suelo')"
+            [showPDF]="true"
+          ></app-button>
+        </div>
+      </div>
       <div class="row">
-        <div class="col text-center">
+        <div class="col text-center my-2">
           <h3>Gráfica de Humedad del Suelo Completa</h3>
         </div>
       </div>
@@ -221,7 +257,7 @@
         </div>
         <div class="row">
           <div class="col">
-            <table class="table table-striped table-bordered border-dark">
+            <table class="table table-striped table-bordered border-dark" id="filterTableA">
               <thead>
                 <tr>
                   <th scope="col">Fecha</th>
@@ -245,8 +281,30 @@
             </table>
           </div>
         </div>
+        <div class="row text-center">
+          <div class="col-sm-12 col-xl-6 my-2">
+            <app-button
+              color="green"
+              text=" Exportar Excel"
+              (click)="
+                exportExcel('filterTableA', 'Reporte_' + date + '_H_Ambiente')
+              "
+              [showExcel]="true"
+            ></app-button>
+          </div>
+          <div class="col-sm-12 col-xl-6 my-2">
+            <app-button
+              color="red"
+              text=" Exportar PDF"
+              (click)="
+                exportPDF('filterTableA', 'Reporte_' + date + '_H_Ambiente')
+              "
+              [showPDF]="true"
+            ></app-button>
+          </div>
+        </div>
         <div class="row">
-          <div class="col text-center">
+          <div class="col text-center my-2">
             <h3>Gráfica de Humedad Ambiente del Día {{ date }}</h3>
           </div>
         </div>
@@ -317,7 +375,7 @@
         </div>
         <div class="row">
           <div class="col">
-            <table class="table table-striped table-bordered border-dark">
+            <table class="table table-striped table-bordered border-dark" id="filterTableS">
               <thead>
                 <tr>
                   <th scope="col">Fecha</th>
@@ -341,8 +399,30 @@
             </table>
           </div>
         </div>
+        <div class="row text-center">
+          <div class="col-sm-12 col-xl-6 my-2">
+            <app-button
+              color="green"
+              text=" Exportar Excel"
+              (click)="
+                exportExcel('filterTableS', 'Reporte_' + date2 + '_H_Suelo')
+              "
+              [showExcel]="true"
+            ></app-button>
+          </div>
+          <div class="col-sm-12 col-xl-6 my-2">
+            <app-button
+              color="red"
+              text=" Exportar PDF"
+              (click)="
+                exportPDF('filterTableS', 'Reporte_' + date2 + '_H_Suelo')
+              "
+              [showPDF]="true"
+            ></app-button>
+          </div>
+        </div>
         <div class="row">
-          <div class="col text-center">
+          <div class="col text-center my-2">
             <h3>Gráfica de Humedad del Suelo del Día {{ date2 }}</h3>
           </div>
         </div>

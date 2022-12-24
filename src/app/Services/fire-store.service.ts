@@ -24,6 +24,10 @@ export class FireStoreService {
       .snapshotChanges();
   }
 
+  updateData(id:string, data:any,colecction:string){
+    return this.firestore.collection(colecction).doc(id).update(data)
+  }
+
   // arrayFilter(array: any[], date: string): any[] {
   //   const filter = array.filter((element, index) => {
   //     return element.date === date;

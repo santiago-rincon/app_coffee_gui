@@ -54,7 +54,7 @@
         </div>
         <div class="row">
           <div class="col">
-            <table class="table table-striped table-bordered border-dark">
+            <table class="table table-striped table-bordered border-dark" id="generalTableCO2">
               <thead>
                 <tr>
                   <th scope="col">Fecha</th>
@@ -78,8 +78,26 @@
             </table>
           </div>
         </div>
+        <div class="row text-center">
+          <div class="col-sm-12 col-xl-6 my-2">
+            <app-button
+              color="green"
+              text=" Exportar Excel"
+              (click)="exportExcel('generalTableCO2', 'Reporte_General_CO2')"
+              [showExcel]="true"
+            ></app-button>
+          </div>
+          <div class="col-sm-12 col-xl-6 my-2">
+            <app-button
+              color="red"
+              text=" Exportar PDF"
+              (click)="exportPDF('generalTableCO2', 'Reporte_General_CO2')"
+              [showPDF]="true"
+            ></app-button>
+          </div>
+        </div>
         <div class="row">
-          <div class="col text-center">
+          <div class="col text-center my-2">
             <h3>Gráfica de Concentración de CO2 Completa</h3>
           </div>
         </div>
@@ -154,7 +172,7 @@
             </div>
             <div class="row">
               <div class="col">
-                  <table class="table table-striped table-bordered border-dark">
+                  <table class="table table-striped table-bordered border-dark" id="filterTableCO2">
                       <thead>
                         <tr>
                           <th scope="col">Fecha</th>
@@ -178,8 +196,30 @@
                     </table>
               </div>
             </div>
+            <div class="row text-center">
+              <div class="col-sm-12 col-xl-6 my-2">
+                <app-button
+                  color="green"
+                  text=" Exportar Excel"
+                  (click)="
+                    exportExcel('filterTableCO2', 'Reporte_' + date + '_CO2')
+                  "
+                  [showExcel]="true"
+                ></app-button>
+              </div>
+              <div class="col-sm-12 col-xl-6 my-2">
+                <app-button
+                  color="red"
+                  text=" Exportar PDF"
+                  (click)="
+                    exportPDF('filterTableCO2', 'Reporte_' + date + '_CO2')
+                  "
+                  [showPDF]="true"
+                ></app-button>
+              </div>
+            </div>
             <div class="row">
-              <div class="col text-center">
+              <div class="col text-center my-2">
                 <h3>Gráfica de Concentración de CO2 del Día {{date}}</h3>
               </div>
             </div>

@@ -54,7 +54,10 @@
       </div>
       <div class="row">
         <div class="col">
-          <table class="table table-striped table-bordered border-dark">
+          <table
+            class="table table-striped table-bordered border-dark"
+            id="generalTable"
+          >
             <thead>
               <tr>
                 <th scope="col">Fecha</th>
@@ -78,8 +81,26 @@
           </table>
         </div>
       </div>
+      <div class="row text-center">
+        <div class="col-sm-12 col-xl-6 my-2">
+          <app-button
+            color="green"
+            text=" Exportar Excel"
+            (click)="exportExcel('generalTable', 'Reporte_General_Temperatura')"
+            [showExcel]="true"
+          ></app-button>
+        </div>
+        <div class="col-sm-12 col-xl-6 my-2">
+          <app-button
+            color="red"
+            text=" Exportar PDF"
+            (click)="exportPDF('generalTable', 'Reporte_General_Temperatura')"
+            [showPDF]="true"
+          ></app-button>
+        </div>
+      </div>
       <div class="row">
-        <div class="col text-center">
+        <div class="col text-center my-2">
           <h3>Gráfica de Temperatura Completa</h3>
         </div>
       </div>
@@ -137,72 +158,97 @@
       </div>
       <div class="container-fluid" *ngIf="showMediaOfDate">
         <div class="row">
-            <div class="col">
-              <h2>
-                El promedio de temperatura el dia {{ date }} fue de:
-                {{ mediaOfDate }} °C
-              </h2>
-              <h2>
-                El valor máximo de temperatura registrado el dia {{ date }} fue de:
-                {{ maxDate }} °C
-              </h2>
-              <h2>
-                El valor mínimo de temperatura registrado el dia {{ date }} fue de:
-                {{ minDate }} °C
-              </h2>
-            </div>
+          <div class="col">
+            <h2>
+              El promedio de temperatura el dia {{ date }} fue de:
+              {{ mediaOfDate }} °C
+            </h2>
+            <h2>
+              El valor máximo de temperatura registrado el dia {{ date }} fue
+              de: {{ maxDate }} °C
+            </h2>
+            <h2>
+              El valor mínimo de temperatura registrado el dia {{ date }} fue
+              de: {{ minDate }} °C
+            </h2>
           </div>
-          <div class="row">
-            <div class="col">
-                <table class="table table-striped table-bordered border-dark">
-                    <thead>
-                      <tr>
-                        <th scope="col">Fecha</th>
-                        <th scope="col">Hora</th>
-                        <th scope="col">Medida</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr
-                        [ngClass]="{
-                          'table-danger table-bordered border-dark':
-                            data.measure >= umbral[0].Temperatura
-                        }"
-                        *ngFor="let data of dataFilter"
-                      >
-                        <td>{{ data.date }}</td>
-                        <td>{{ data.time }}</td>
-                        <td>{{ data.measure }} °C</td>
-                      </tr>
-                    </tbody>
-                  </table>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col text-center">
-              <h3>Gráfica de Temperatura del Día {{date}}</h3>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="grafic">
-                <ngx-charts-line-chart
-                  [legend]="legend"
-                  [showXAxisLabel]="showXAxisLabel"
-                  [showYAxisLabel]="showYAxisLabel"
-                  [xAxis]="xAxis"
-                  [yAxis]="yAxis"
-                  [yAxisLabel]="yAxisLabel"
-                  [timeline]="false"
-                  [results]="multiFilter"
-                  [autoScale]="autoScale"
-                  [roundDomains]="roundDomains"
-                  (select)="onSelect($event)"
+        </div>
+        <div class="row">
+          <div class="col">
+            <table
+              class="table table-striped table-bordered border-dark"
+              id="filterTable"
+            >
+              <thead>
+                <tr>
+                  <th scope="col">Fecha</th>
+                  <th scope="col">Hora</th>
+                  <th scope="col">Medida</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  [ngClass]="{
+                    'table-danger table-bordered border-dark':
+                      data.measure >= umbral[0].Temperatura
+                  }"
+                  *ngFor="let data of dataFilter"
                 >
-                </ngx-charts-line-chart>
-              </div>
+                  <td>{{ data.date }}</td>
+                  <td>{{ data.time }}</td>
+                  <td>{{ data.measure }} °C</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="row text-center">
+          <div class="col-sm-12 col-xl-6 my-2">
+            <app-button
+              color="green"
+              text=" Exportar Excel"
+              (click)="
+                exportExcel('filterTable', 'Reporte_' + date + '_Temperatura')
+              "
+              [showExcel]="true"
+            ></app-button>
+          </div>
+          <div class="col-sm-12 col-xl-6 my-2">
+            <app-button
+              color="red"
+              text=" Exportar PDF"
+              (click)="
+                exportPDF('filterTable', 'Reporte_' + date + '_Temperatura')
+              "
+              [showPDF]="true"
+            ></app-button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col text-center my-2">
+            <h3>Gráfica de Temperatura del Día {{ date }}</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="grafic">
+              <ngx-charts-line-chart
+                [legend]="legend"
+                [showXAxisLabel]="showXAxisLabel"
+                [showYAxisLabel]="showYAxisLabel"
+                [xAxis]="xAxis"
+                [yAxis]="yAxis"
+                [yAxisLabel]="yAxisLabel"
+                [timeline]="false"
+                [results]="multiFilter"
+                [autoScale]="autoScale"
+                [roundDomains]="roundDomains"
+                (select)="onSelect($event)"
+              >
+              </ngx-charts-line-chart>
             </div>
           </div>
+        </div>
       </div>
     </div>
   </div>

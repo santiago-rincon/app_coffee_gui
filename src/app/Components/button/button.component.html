@@ -1,1 +1,5 @@
-<button class="button {{color}}">{{text}}</button>
+<button class="button {{ color }}">
+  <i class="fa-solid fa-file-excel" *ngIf="showExcel"></i>
+  <i class="fa-solid fa-file-pdf" *ngIf="showPDF"></i>
+  {{ text }}
+</button>
