@@ -132,16 +132,16 @@ export class VariablesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.afAuth.currentUser.then((user) => {
-    //   if (user && user.emailVerified) {
-    //   } else {
-    //     this.alerts.alertInfo(
-    //       'No disponible',
-    //       'Para acceder a este apartado debes iniciar sesión'
-    //     );
-    //     this.router.navigate(['/login']);
-    //   }
-    // });
+    this.afAuth.currentUser.then((user) => {
+      if (user && user.emailVerified) {
+      } else {
+        this.alerts.alertInfo(
+          'No disponible',
+          'Para acceder a este apartado debes iniciar sesión'
+        );
+        this.router.navigate(['/login']);
+      }
+    });
   }
 
   parseTime(position: number, data: any[], unity: string, date: any) {

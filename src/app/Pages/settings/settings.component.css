@@ -19,3 +19,9 @@ ul{
     color: #fff;
     font-size: 35px;
 }
+
+.info{
+  list-style: none;
+  color: #fff;
+  font-size: 22px;
+}

@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AlertsService } from 'src/app/Services/alerts.service';
+import { adminHashes } from 'src/app/Data/hashes';
 
 @Component({
   selector: 'app-navbar',
@@ -9,9 +10,10 @@ import { AlertsService } from 'src/app/Services/alerts.service';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-  @Input() showSettings:boolean=false
-  sesion!: boolean;
-  currentUser!: any
+  @Input() showSettings: boolean = false;
+  sesion: boolean = false;
+  currentUser!: any;
+  userRol: string = '';
   constructor(
     private router: Router,
     private afAuth: AngularFireAuth,
@@ -23,6 +25,13 @@ export class NavbarComponent implements OnInit {
       if (user && user.emailVerified) {
         this.sesion = true;
         this.currentUser = user.email;
+        this.userRol='Invitado'
+        for (const hash of adminHashes) {
+          if (user.uid == hash) {
+            this.userRol = 'Administrador';
+            break
+          }
+        }
       } else {
         this.sesion = false;
       }
@@ -50,6 +59,6 @@ export class NavbarComponent implements OnInit {
   }
 
   viewProfile() {
-    this.alerts.alertProfile(this.currentUser)
+    this.alerts.alertProfile(this.currentUser, this.userRol);
   }
 }

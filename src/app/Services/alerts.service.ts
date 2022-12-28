@@ -55,15 +55,16 @@ export class AlertsService {
     });
   }
 
-  alertProfile(user: string) {
+  alertProfile(user: string,rol:string) {
     Swal.fire({
-      title: 'Usuario actual:',
-      text: user,
+      title: 'Usuario actual',
+      html: `<strong>Correo: </strong>${user} <br> <strong>Rol: </strong>${rol}`,
       icon: 'info',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Cerrar sesión',
+      cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
         this.logOut()

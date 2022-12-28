@@ -55,5 +55,46 @@
       </form>
     </div>
   </div>
+  <!-- ---------------------------------- -->
+  <div class="row">
+    <div class="col text-center my-3">
+      <h3>Eliminación de registros actuales 🗑</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-xl-5">
+      <div class="col">
+        <ul>
+          <li class="info">
+            En este apartado se eliminarán todos los registros tomados hasta el
+            momento de la base de datos.
+          </li>
+          <li class="info" *ngIf="registersShow">Registros actuales: {{registers}}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-sm-12 col-xl-7">
+      <form [formGroup]="deleteRegister" (submit)="deleteData()">
+        <div class="form-floating my-3">
+          <select
+            class="form-select"
+            id="floatingSelect"
+            aria-label="Floating label select example"
+            (change)="numberRegister($event)"
+            formControlName="deleteVariable"
+          >
+            <option *ngFor="let variable of variables" [value]="variable">
+              {{ variable }}
+            </option>
+          </select>
+          <label for="floatingSelect">Selecciona una variable</label>
+        </div>
+        <button type="submit" class="btn btn-danger w-100 mb-3">
+          Eliminar
+        </button>
+      </form>
+    </div>
+  </div>
+  <!-- ----------------------------- -->
 </div>
 <app-footer></app-footer>
