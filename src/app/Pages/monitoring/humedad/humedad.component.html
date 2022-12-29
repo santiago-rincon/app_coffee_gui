@@ -126,7 +126,7 @@
         <div class="col">
           <h2>
             El umbral establecido de humedad del suelo es:
-            {{ umbral[0].Humedad }} %
+            {{ umbral[0].HumedadS }} %
           </h2>
           <h2>El promedio total de humedad del suelo es: {{ mediaS }} %</h2>
           <h2>
@@ -151,7 +151,7 @@
               <tr
                 [ngClass]="{
                   'table-danger table-bordered border-dark':
-                    data.measure >= umbral[0].Humedad
+                    data.measure >= umbral[0].HumedadS
                 }"
                 *ngFor="let data of dataHumedadS"
               >
@@ -387,7 +387,7 @@
                 <tr
                   [ngClass]="{
                     'table-danger table-bordered border-dark':
-                      data.measure >= umbral[0].Humedad
+                      data.measure >= umbral[0].HumedadS
                   }"
                   *ngFor="let data of dataFilter2"
                 >

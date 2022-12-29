@@ -182,7 +182,7 @@ export class HumedadComponent implements OnInit {
         this.mediaS += i;
       }
       this.mediaS /= measures.length;
-      this.mediaS = parseFloat(this.media.toFixed(2));
+      this.mediaS = parseFloat(this.mediaS.toFixed(2));
       this.maxS = Math.max(...measures);
       this.minS = Math.min(...measures);
     });

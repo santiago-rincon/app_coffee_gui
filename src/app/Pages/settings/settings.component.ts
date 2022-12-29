@@ -196,7 +196,7 @@ export class SettingsComponent implements OnInit {
         case 'Humedad del Suelo':
           this.firestore.updateData(
             this.dataUmbral[0].id,
-            { Humedad: value },
+            { HumedadS: value },
             'Umbrales'
           );
           break;
