@@ -43,16 +43,24 @@
                   El <strong>correo</strong> es invalido
                 </span>
               </div>
-              <div class="mb-4">
-                <label for="password" class="form-label">Contraseña</label>
+              <label for="password" class="form-label">Contraseña</label>
+              <div class=" input-group mb-1">
                 <input
                   type="password"
                   class="form-control"
                   name="password"
                   formControlName="password"
                   placeholder="Ingresa tu contraseña"
+                  #inputPass
                 />
-                <span
+                <span class="input-group-text">
+                  <i class="fa-solid fa-eye" *ngIf="!showPassword" (click)="showPass()"></i>
+                  <i class="fa-solid fa-eye-slash" *ngIf="showPassword" (click)="showPass()"></i>
+                </span>
+              </div>
+              <div class="row">
+                <div class="col mb-4">
+                  <span
                   class="text-danger"
                   *ngIf="
                     loginUser.get('password')?.hasError('required') &&
@@ -61,6 +69,7 @@
                 >
                   La <strong>contraseña</strong> es requerida
                 </span>
+                </div>
               </div>
               <div class="d-grid">
                 <button type="submit" class="btn btn-primary">

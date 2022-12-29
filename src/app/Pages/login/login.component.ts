@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { GoogleAuthProvider } from '@angular/fire/auth';
@@ -11,6 +17,8 @@ import { FireBaseCodeErrorService } from 'src/app/Services/fire-base-code-error.
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
+  @ViewChild('inputPass') input!: ElementRef;
+  showPassword: boolean = false;
   loading: boolean = false;
   loginUser: FormGroup;
   constructor(
@@ -18,7 +26,8 @@ export class LoginComponent implements OnInit {
     private afAuth: AngularFireAuth,
     private router: Router,
     private alerts: AlertsService,
-    private codeError: FireBaseCodeErrorService
+    private codeError: FireBaseCodeErrorService,
+    private renderer2: Renderer2
   ) {
     this.loginUser = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -81,5 +90,16 @@ export class LoginComponent implements OnInit {
         this.loading = false;
         this.alerts.alertError(this.codeError.codeErrors(error.code), 4000);
       });
+  }
+
+  showPass(): void {
+    const input = this.input.nativeElement;
+    if (input.type === 'password') {
+      this.renderer2.setAttribute(input, 'type', 'text');
+      this.showPassword = !this.showPassword;
+    } else {
+      this.renderer2.setAttribute(input, 'type', 'password');
+      this.showPassword = !this.showPassword;
+    }
   }
 }
