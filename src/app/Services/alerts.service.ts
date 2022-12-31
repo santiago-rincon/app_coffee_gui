@@ -7,11 +7,11 @@ import Swal from 'sweetalert2';
   providedIn: 'root',
 })
 export class AlertsService {
-  constructor(private router: Router, private afAuth:AngularFireAuth) {}
+  constructor(private router: Router, private afAuth: AngularFireAuth) {}
   private logOut() {
     this.afAuth.signOut().then(() => {
       this.router.navigate(['/login']);
-      this.alertSuccess('Sesión cerrada corectamente',3000,'Muy bien')
+      this.alertSuccess('Sesión cerrada corectamente', 3000, 'Muy bien');
     });
   }
 
@@ -55,45 +55,49 @@ export class AlertsService {
     });
   }
 
-  alertProfile(user: string,rol:string) {
+  alertProfile(email: string | null, rol: string, name: string | null='Desconocido') {
     Swal.fire({
       title: 'Usuario actual',
-      html: `<strong>Correo: </strong>${user} <br> <strong>Rol: </strong>${rol}`,
+      html: `<strong>Nombre: </strong>${name} <br><strong>Correo: </strong>${email} <br> <strong>Rol: </strong>${rol}`,
       icon: 'info',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Cerrar sesión',
-      cancelButtonText: 'Cancelar'
+      cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.logOut()
+        this.logOut();
       }
     });
   }
 
-  alertInfo(title:string,menssage:string) {
+  alertInfo(title: string, menssage: string) {
     Swal.fire({
       icon: 'info',
       title: title,
       text: menssage,
       showClass: {
-        popup: 'animate__animated animate__fadeInDown'
+        popup: 'animate__animated animate__fadeInDown',
       },
       hideClass: {
-        popup: 'animate__animated animate__fadeOutUp'
-      }
-    })
+        popup: 'animate__animated animate__fadeOutUp',
+      },
+    });
   }
 
-  alertImage(path:string, caption:string='no hay caption',title:string=''){
+  alertImage(
+    path: string,
+    caption: string = 'no hay caption',
+    title: string = ''
+  ) {
     Swal.fire({
       text: caption,
       imageUrl: path,
       imageWidth: 1300,
       width: 5000,
-      title: `<h1>${title}</h1>`
+      title: `<h1>${title}</h1>`,
       // imageHeight: 1000,
-    })
+    });
   }
 }

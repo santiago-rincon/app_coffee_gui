@@ -1,11 +1,11 @@
 <app-navbar></app-navbar>
-<div class="container">
+<div class="container-xxl">
   <div class="row">
     <div class="col text-center my-3">
       <h3>Modificación de Umbrales de Medida 🔨</h3>
     </div>
   </div>
-  <div class="row">
+  <div class="row align-items-center">
     <div class="col-sm-12 col-xl-5">
       <div class="col">
         <ul>
@@ -24,7 +24,7 @@
         </ul>
       </div>
     </div>
-    <div class="col-sm-12 col-xl-7">
+    <div class="col-sm-12 col-xl-7 pe-xl-5">
       <form [formGroup]="umbralSet" (submit)="updateUmbral()">
         <div class="form-floating my-3">
           <select
@@ -57,7 +57,7 @@
     </div>
   </div>
   <!-- ---------------------------------- -->
-  <div class="row">
+  <div class="row align-items-center">
     <div class="col text-center my-3">
       <h3>Eliminación de registros actuales 🗑</h3>
     </div>
@@ -74,7 +74,7 @@
         </ul>
       </div>
     </div>
-    <div class="col-sm-12 col-xl-7">
+    <div class="col-sm-12 col-xl-7 pe-xl-5">
       <form [formGroup]="deleteRegister" (submit)="deleteData()">
         <div class="form-floating my-3">
           <select

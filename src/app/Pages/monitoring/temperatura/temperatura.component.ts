@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertsService } from 'src/app/Services/alerts.service';
 import { FireStoreService } from 'src/app/Services/fire-store.service';
 import * as XLSX from 'xlsx';
-import { jsPDF } from 'jspdf';
-import html2canvas from 'html2canvas';
+// import { jsPDF } from 'jspdf';
+// import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-temperatura',
@@ -171,7 +171,7 @@ export class TemperaturaComponent implements OnInit {
     console.log('Item clicked', JSON.parse(JSON.stringify(data)));
   }
 
-  exportExcel(id: string,nameFile:string) {
+  exportExcel(id: string, nameFile: string) {
     /* pass here the table id */
     let element = document.getElementById(id);
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
@@ -181,23 +181,23 @@ export class TemperaturaComponent implements OnInit {
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
 
     /* save to file */
-    XLSX.writeFile(wb, nameFile+'.xlsx');
+    XLSX.writeFile(wb, nameFile + '.xlsx');
   }
 
-  exportPDF(id:string,nameFile:string) {
-    var data = document.getElementById(id)!;
-    html2canvas(data).then((canvas) => {
-      // Few necessary setting options
-      var imgWidth = 208;
-      var pageHeight = 295;
-      var imgHeight = (canvas.height * imgWidth) / canvas.width;
-      var heightLeft = imgHeight;
+  // exportPDF(id: string, nameFile: string) {
+  //   var data = document.getElementById(id)!;
+  //   html2canvas(data).then((canvas) => {
+  //     // Few necessary setting options
+  //     var imgWidth = 208;
+  //     var pageHeight = 295;
+  //     var imgHeight = (canvas.height * imgWidth) / canvas.width;
+  //     var heightLeft = imgHeight;
 
-      const contentDataURL = canvas.toDataURL('image/png');
-      let pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF
-      var position = 0;
-      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
-      pdf.save(nameFile+'.pdf'); // Generated PDF
-    });
-  }
+  //     const contentDataURL = canvas.toDataURL('image/png');
+  //     let pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF
+  //     var position = 0;
+  //     pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
+  //     pdf.save(nameFile + '.pdf'); // Generated PDF
+  //   });
+  // }
 }

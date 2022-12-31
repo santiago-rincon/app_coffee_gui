@@ -12,7 +12,8 @@ import { adminHashes } from 'src/app/Data/hashes';
 export class NavbarComponent implements OnInit {
   @Input() showSettings: boolean = false;
   sesion: boolean = false;
-  currentUser!: any;
+  nameCurrentUser: string | null = '';
+  currentUser: string | null = '';
   userRol: string = '';
   constructor(
     private router: Router,
@@ -22,14 +23,17 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.afAuth.currentUser.then((user) => {
+      console.log(user);
+
       if (user && user.emailVerified) {
         this.sesion = true;
         this.currentUser = user.email;
-        this.userRol='Invitado'
+        this.nameCurrentUser = user.displayName;
+        this.userRol = 'Invitado';
         for (const hash of adminHashes) {
           if (user.uid == hash) {
             this.userRol = 'Administrador';
-            break
+            break;
           }
         }
       } else {
@@ -59,6 +63,10 @@ export class NavbarComponent implements OnInit {
   }
 
   viewProfile() {
-    this.alerts.alertProfile(this.currentUser, this.userRol);
+    if (this.nameCurrentUser != null) {
+      this.alerts.alertProfile(this.currentUser, this.userRol,this.nameCurrentUser);
+    } else {
+      this.alerts.alertProfile(this.currentUser, this.userRol);
+    }
   }
 }

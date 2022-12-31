@@ -1,7 +1,7 @@
 #banner {
   padding: 0 50px;
   background-image: url("../../../assets/coffee_background.jpg");
-  height: 50vh;
+  height: 55vh;
   background-size: cover;
   background-position: center;
 }
@@ -11,7 +11,7 @@
   background: rgba(77, 77, 92, 0.85);
   position: absolute;
   width: 100%;
-  height: 50vh;
+  height: 55vh;
   left: 0;
 }
 
@@ -40,7 +40,7 @@
 .variables {
   text-decoration: none;
   color: #fff;
-  padding: 20px 40px;
+  padding: 15px;
   font-size: 25px;
   align-self: baseline;
   border: solid 1px #fff;
@@ -80,7 +80,7 @@
 .curious div p {
   color: #fff;
   font-size: 30px;
-  padding: 20px 40px;
+  padding: 15px;
 }
 
 .icons {
