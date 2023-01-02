@@ -23,7 +23,6 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.afAuth.currentUser.then((user) => {
-      console.log(user);
 
       if (user && user.emailVerified) {
         this.sesion = true;

@@ -9,37 +9,58 @@
       momento!!
     </h3>
     <h3 *ngIf="!sesion">
-      <span>Inicia sesión</span> Para monitorear el estado de tu cultivo<br />en todo
-      momento!!
+      <span>Inicia sesión</span> Para monitorear el estado de tu cultivo<br />en
+      todo momento!!
     </h3>
     <a class="variables" routerLink="/variables" *ngIf="sesion">Monitorear</a>
     <a class="variables" routerLink="/login" *ngIf="!sesion">Iniciar Sesión</a>
   </div>
 </section>
-<section class="icons">
+<!-- <section class="icons">
   <div class="icons-content">
     <div class="container-fluid" id="last">
       <div class="row" id="last">
         <h5>Podras monitorear las siguientes variables</h5>
       </div>
       <div class="row" id="last">
-        <div>
+        <div class="col-12">
           <i>🔥</i>
           <h6>Temperatura</h6>
         </div>
-        <div>
+        <div class="col-12">
           <i>💧</i>
           <h6>Humedad</h6>
         </div>
-        <div>
+        <div class="col-12">
           <i>🌲</i>
           <h6>CO2</h6>
         </div>
-        <div id="last">
+        <div class="col-12" id="last">
           <i>🌞</i>
           <h6>Radiación Solar</h6>
         </div>
       </div>
+    </div>
+  </div>
+</section> -->
+<section class="icons">
+  <h5>Podras monitorear las siguientes variables</h5>
+  <div class="icons-content">
+    <div>
+      <i>🔥</i>
+      <h6>Temperatura</h6>
+    </div>
+    <div>
+      <i>💧</i>
+      <h6>Humedad</h6>
+    </div>
+    <div>
+      <i>🌲</i>
+      <h6>CO2</h6>
+    </div>
+    <div id="last">
+      <i>🌞</i>
+      <h6>Radiación Solar</h6>
     </div>
   </div>
 </section>
