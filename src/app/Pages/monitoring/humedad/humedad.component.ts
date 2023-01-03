@@ -41,6 +41,8 @@ export class HumedadComponent implements OnInit {
   //
   filterDate: FormGroup;
   filterDate2: FormGroup;
+  zeroData: boolean = false;
+  zeroData2: boolean = false;
   // plot options
   multi: any[] = [];
   legend: boolean = false;
@@ -77,47 +79,52 @@ export class HumedadComponent implements OnInit {
   extractInformation(collection: string) {
     this.firestore.getDataVariables(collection).subscribe((data) => {
       this.dataHumedadA = [];
-      data.forEach((element) => {
-        const date = new Date(
-          element.payload.doc.data().dateAndTime.seconds * 1000 +
-            element.payload.doc.data().dateAndTime.nanoseconds / 1000000
-        );
-        if (date.getMinutes() == 0) {
-          this.dataHumedadA.push({
-            date:
-              date.getDate() +
-              '/' +
-              (date.getMonth() + 1) +
-              '/' +
-              date.getFullYear(),
-            time: date.getHours() + ':00',
-            measure: element.payload.doc.data().measure,
-          });
-        } else {
-          this.dataHumedadA.push({
-            date:
-              date.getDate() +
-              '/' +
-              (date.getMonth() + 1) +
-              '/' +
-              date.getFullYear(),
-            time: date.getHours() + ':' + date.getMinutes(),
-            measure: element.payload.doc.data().measure,
-          });
+      if (data.length != 0) {
+        this.zeroData = false;
+        data.forEach((element) => {
+          const date = new Date(
+            element.payload.doc.data().dateAndTime.seconds * 1000 +
+              element.payload.doc.data().dateAndTime.nanoseconds / 1000000
+          );
+          if (date.getMinutes() == 0) {
+            this.dataHumedadA.push({
+              date:
+                date.getDate() +
+                '/' +
+                (date.getMonth() + 1) +
+                '/' +
+                date.getFullYear(),
+              time: date.getHours() + ':00',
+              measure: element.payload.doc.data().measure,
+            });
+          } else {
+            this.dataHumedadA.push({
+              date:
+                date.getDate() +
+                '/' +
+                (date.getMonth() + 1) +
+                '/' +
+                date.getFullYear(),
+              time: date.getHours() + ':' + date.getMinutes(),
+              measure: element.payload.doc.data().measure,
+            });
+          }
+        });
+        let measures: number[] = [];
+        for (const i of this.dataHumedadA) {
+          measures.push(i.measure);
         }
-      });
-      let measures: number[] = [];
-      for (const i of this.dataHumedadA) {
-        measures.push(i.measure);
+        this.media = 0;
+        for (const i of measures) {
+          this.media += i;
+        }
+        this.media /= measures.length;
+        this.media = parseFloat(this.media.toFixed(2));
+        this.max = Math.max(...measures);
+        this.min = Math.min(...measures);
+      } else {
+        this.zeroData = true;
       }
-      this.media = 0;
-      for (const i of measures) {
-        this.media += i;
-      }
-      this.media /= measures.length;
-      this.media = parseFloat(this.media.toFixed(2));
-      this.max = Math.max(...measures);
-      this.min = Math.min(...measures);
     });
   }
 
@@ -144,47 +151,52 @@ export class HumedadComponent implements OnInit {
   extractInformation2(collection: string) {
     this.firestore.getDataVariables(collection).subscribe((data) => {
       this.dataHumedadS = [];
-      data.forEach((element) => {
-        const date = new Date(
-          element.payload.doc.data().dateAndTime.seconds * 1000 +
-            element.payload.doc.data().dateAndTime.nanoseconds / 1000000
-        );
-        if (date.getMinutes() == 0) {
-          this.dataHumedadS.push({
-            date:
-              date.getDate() +
-              '/' +
-              (date.getMonth() + 1) +
-              '/' +
-              date.getFullYear(),
-            time: date.getHours() + ':00',
-            measure: element.payload.doc.data().measure,
-          });
-        } else {
-          this.dataHumedadS.push({
-            date:
-              date.getDate() +
-              '/' +
-              (date.getMonth() + 1) +
-              '/' +
-              date.getFullYear(),
-            time: date.getHours() + ':' + date.getMinutes(),
-            measure: element.payload.doc.data().measure,
-          });
+      if (data.length != 0) {
+        this.zeroData2 = false;
+        data.forEach((element) => {
+          const date = new Date(
+            element.payload.doc.data().dateAndTime.seconds * 1000 +
+              element.payload.doc.data().dateAndTime.nanoseconds / 1000000
+          );
+          if (date.getMinutes() == 0) {
+            this.dataHumedadS.push({
+              date:
+                date.getDate() +
+                '/' +
+                (date.getMonth() + 1) +
+                '/' +
+                date.getFullYear(),
+              time: date.getHours() + ':00',
+              measure: element.payload.doc.data().measure,
+            });
+          } else {
+            this.dataHumedadS.push({
+              date:
+                date.getDate() +
+                '/' +
+                (date.getMonth() + 1) +
+                '/' +
+                date.getFullYear(),
+              time: date.getHours() + ':' + date.getMinutes(),
+              measure: element.payload.doc.data().measure,
+            });
+          }
+        });
+        let measures: number[] = [];
+        for (const i of this.dataHumedadS) {
+          measures.push(i.measure);
         }
-      });
-      let measures: number[] = [];
-      for (const i of this.dataHumedadS) {
-        measures.push(i.measure);
+        this.mediaS = 0;
+        for (const i of measures) {
+          this.mediaS += i;
+        }
+        this.mediaS /= measures.length;
+        this.mediaS = parseFloat(this.mediaS.toFixed(2));
+        this.maxS = Math.max(...measures);
+        this.minS = Math.min(...measures);
+      } else {
+        this.zeroData2 = true;
       }
-      this.mediaS = 0;
-      for (const i of measures) {
-        this.mediaS += i;
-      }
-      this.mediaS /= measures.length;
-      this.mediaS = parseFloat(this.mediaS.toFixed(2));
-      this.maxS = Math.max(...measures);
-      this.minS = Math.min(...measures);
     });
   }
 

@@ -30,8 +30,7 @@
         </div>
         <div class="face back">
           <h3>{{ cards[1].title }}</h3>
-          <h4><strong>Sensor:</strong></h4>
-          <p>{{ cards[1].sensor }}</p>
+          <h4><strong>Sensor:</strong> {{ cards[1].sensor }}</h4>
           <h4><strong>Ultima medida registrada:</strong></h4>
           <p>
             Ambiente: {{ cards[1].lastMeasureA }}<br />
@@ -39,10 +38,9 @@
           </p>
           <h4><strong>Fecha y Hora:</strong></h4>
           <p>
-            {{ cards[1].dateAndTimeA }} (Amb..)<br />{{
+            {{ cards[1].dateAndTimeA }}(Amb..)<br />{{
               cards[1].dateAndTimeS
-            }}
-            (Sue..)
+            }}(Sue..)
           </p>
         </div>
       </div>

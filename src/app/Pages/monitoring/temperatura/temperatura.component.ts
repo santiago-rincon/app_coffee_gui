@@ -28,6 +28,7 @@ export class TemperaturaComponent implements OnInit {
   showMediaOfDate: boolean = false;
   //
   filterDate: FormGroup;
+  zeroData: boolean = false;
   // plot options
   multi: any[] = [];
   legend: boolean = false;
@@ -59,47 +60,52 @@ export class TemperaturaComponent implements OnInit {
   extractInformation(collection: string) {
     this.firestore.getDataVariables(collection).subscribe((data) => {
       this.dataTemperatura = [];
-      data.forEach((element) => {
-        const date = new Date(
-          element.payload.doc.data().dateAndTime.seconds * 1000 +
-            element.payload.doc.data().dateAndTime.nanoseconds / 1000000
-        );
-        if (date.getMinutes() == 0) {
-          this.dataTemperatura.push({
-            date:
-              date.getDate() +
-              '/' +
-              (date.getMonth() + 1) +
-              '/' +
-              date.getFullYear(),
-            time: date.getHours() + ':00',
-            measure: element.payload.doc.data().measure,
-          });
-        } else {
-          this.dataTemperatura.push({
-            date:
-              date.getDate() +
-              '/' +
-              (date.getMonth() + 1) +
-              '/' +
-              date.getFullYear(),
-            time: date.getHours() + ':' + date.getMinutes(),
-            measure: element.payload.doc.data().measure,
-          });
+      if (data.length != 0) {
+        this.zeroData = false;
+        data.forEach((element) => {
+          const date = new Date(
+            element.payload.doc.data().dateAndTime.seconds * 1000 +
+              element.payload.doc.data().dateAndTime.nanoseconds / 1000000
+          );
+          if (date.getMinutes() == 0) {
+            this.dataTemperatura.push({
+              date:
+                date.getDate() +
+                '/' +
+                (date.getMonth() + 1) +
+                '/' +
+                date.getFullYear(),
+              time: date.getHours() + ':00',
+              measure: element.payload.doc.data().measure,
+            });
+          } else {
+            this.dataTemperatura.push({
+              date:
+                date.getDate() +
+                '/' +
+                (date.getMonth() + 1) +
+                '/' +
+                date.getFullYear(),
+              time: date.getHours() + ':' + date.getMinutes(),
+              measure: element.payload.doc.data().measure,
+            });
+          }
+        });
+        let measures: number[] = [];
+        for (const i of this.dataTemperatura) {
+          measures.push(i.measure);
         }
-      });
-      let measures: number[] = [];
-      for (const i of this.dataTemperatura) {
-        measures.push(i.measure);
+        this.media = 0;
+        for (const i of measures) {
+          this.media += i;
+        }
+        this.media /= measures.length;
+        this.media = parseFloat(this.media.toFixed(2));
+        this.max = Math.max(...measures);
+        this.min = Math.min(...measures);
+      } else {
+        this.zeroData = true;
       }
-      this.media = 0;
-      for (const i of measures) {
-        this.media += i;
-      }
-      this.media /= measures.length;
-      this.media = parseFloat(this.media.toFixed(2));
-      this.max = Math.max(...measures);
-      this.min = Math.min(...measures);
     });
   }
 
