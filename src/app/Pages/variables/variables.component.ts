@@ -28,7 +28,7 @@ export class VariablesComponent implements OnInit {
       dateAndTimeS: '',
     },
     {
-      title: 'CO2',
+      title: 'CO',
       img: '../../../assets/co2.png',
       sensor: 'PT100',
       lastMeasure: '',
