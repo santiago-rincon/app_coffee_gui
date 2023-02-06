@@ -9,7 +9,7 @@
         <a routerLink="/home" (click)="changeMenu()">Inicio</a>
         <a routerLink="/crop" (click)="changeMenu()">Cultivo</a>
         <a *ngIf="!showSettings" routerLink="/variables" (click)="changeMenu()">Monitorear</a>
-        <a *ngIf="showSettings" routerLink="./settings" (click)="changeMenu()">Configurar</a>
+        <a *ngIf="showSettings" routerLink="/variables/monitoring/settings" (click)="changeMenu()">Configurar</a>
         <a routerLink="/login" (click)="changeMenu()" *ngIf="!sesion">Iniciar Sesión</a>
         <a *ngIf="sesion" (click)="viewProfile()">Perfil</a>
         <label for="check" class="hide-menu">

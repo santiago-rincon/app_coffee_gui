@@ -66,23 +66,23 @@ export class Co2Component implements OnInit {
             element.payload.doc.data().dateAndTime.seconds * 1000 +
               element.payload.doc.data().dateAndTime.nanoseconds / 1000000
           );
-          if (date.getMinutes() == 0) {
+          if (date.getMinutes() <= 9) {
             this.dataCO2.push({
               date:
-                date.getDate() +
+                ((date.getDate()<10)?'0'+date.getDate():date.getDate()) +
                 '/' +
-                (date.getMonth() + 1) +
+                ((date.getMonth() + 1<10?'0'+(date.getMonth()+1):(date.getMonth()+1))) +
                 '/' +
                 date.getFullYear(),
-              time: date.getHours() + ':00',
+              time: date.getHours() + ':0' + date.getMinutes(),
               measure: element.payload.doc.data().measure,
             });
           } else {
             this.dataCO2.push({
               date:
-                date.getDate() +
+                ((date.getDate()<10)?'0'+date.getDate():date.getDate()) +
                 '/' +
-                (date.getMonth() + 1) +
+                ((date.getMonth() + 1<10?'0'+(date.getMonth()+1):(date.getMonth()+1))) +
                 '/' +
                 date.getFullYear(),
               time: date.getHours() + ':' + date.getMinutes(),
