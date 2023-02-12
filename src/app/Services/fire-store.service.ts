@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
+import { Observable, retry } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +22,10 @@ export class FireStoreService {
     return this.firestore.collection('Umbrales').snapshotChanges();
   }
 
+  getNodes(): Observable<any[]> {
+    return this.firestore.collection('Nodos').snapshotChanges();
+  }
+
   getLastData(collection: string): Observable<any[]> {
     return this.firestore
       .collection(collection, (ref) =>
@@ -36,6 +40,10 @@ export class FireStoreService {
 
   deleteData(id: string, colecction: string) {
     return this.firestore.collection(colecction).doc(id).delete();
+  }
+
+  putData(data:any, collection:string){
+    return this.firestore.collection(collection).doc().set(data)
   }
 
   // arrayFilter(array: any[], date: string): any[] {

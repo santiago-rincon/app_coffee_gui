@@ -1,8 +1,9 @@
 <app-navbar></app-navbar>
 <div class="container-xxl">
+  <!-- Umbrales de medida-->
   <div class="row">
     <div class="col text-center my-3">
-      <h3>Modificación de Umbrales de Medida 🔨</h3>
+      <h3>Modificar de Umbrales de Medida 🔨</h3>
     </div>
   </div>
   <div class="row align-items-center">
@@ -14,9 +15,7 @@
           <li>Humedad: 10 %</li>
           <li>CO2: 10 ppm</li>
           <li>Radiación Solar: 10 U</li> -->
-          <li>
-            Temperatura: {{ dataUmbral[0].Temperatura }} °C
-          </li>
+          <li>Temperatura: {{ dataUmbral[0].Temperatura }} °C</li>
           <li>Humedad Ambiente: {{ dataUmbral[0].Humedad }} %</li>
           <li>Humedad del Suelo: {{ dataUmbral[0].HumedadS }} %</li>
           <li>CO2: {{ dataUmbral[0].CO2 }} ppm</li>
@@ -56,10 +55,10 @@
       </form>
     </div>
   </div>
-  <!-- ---------------------------------- -->
+  <!-- Eliminación de registros -->
   <div class="row align-items-center">
     <div class="col text-center my-3">
-      <h3>Eliminación de registros actuales 🗑</h3>
+      <h3>Eliminar de registros actuales 🗑</h3>
     </div>
   </div>
   <div class="row align-items-center">
@@ -67,10 +66,12 @@
       <div class="col">
         <ul>
           <li class="info">
-            En este apartado se eliminarán todos los registros tomados hasta el
+            En este módulo podrás eliminar todos los registros tomados hasta el
             momento de la base de datos.
           </li>
-          <li class="info" *ngIf="registersShow">Registros actuales: {{registers}}</li>
+          <li class="info" *ngIf="registersShow">
+            Registros actuales: {{ registers }}
+          </li>
         </ul>
       </div>
     </div>
@@ -96,6 +97,70 @@
       </form>
     </div>
   </div>
-  <!-- ----------------------------- -->
+  <!-- Agregar nodos sensores -->
+  <div class="row align-items-center">
+    <div class="col text-center my-3">
+      <h3>Agregar nodo sensor ➕</h3>
+    </div>
+  </div>
+  <div class="row align-items-center">
+    <div class="col-sm-12 col-xl-5">
+      <div class="col">
+        <ul>
+          <li class="info">
+            En este módulo podrás agregar un nuevo nodo sensor, deberás
+            especificar su dirección MAC y un identificador.
+          </li>
+          <li class="info">
+            Nodos sensores registrados: {{ nodesList.length }}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-sm-12 col-xl-7 pe-xl-5">
+      <form [formGroup]="addNode" (submit)="newNode()">
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            class="form-control"
+            id="floatingInput"
+            formControlName="mac"
+            autocomplete="off"
+            style="text-transform: uppercase"
+            maxlength="17"
+          />
+          <label for="floatingInput"
+            >Dirección MAC (Ej: 00:11:22:33:44:55)</label
+          >
+        </div>
+        <div
+          class="form-floating mb-3"
+          *ngIf="addNode.get('mac')?.invalid && addNode.get('mac')?.touched"
+        >
+          <span class="text-danger pb-2"
+            >La dirección MAC ingresada no es correcta</span
+          >
+        </div>
+        <div class="form-floating mb-3">
+          <select
+            class="form-select"
+            id="floatingSelect"
+            aria-label="Floating label select example"
+            formControlName="nodeId"
+          >
+            <option
+              *ngFor="let avaliableId of avaliableIds"
+              [value]="avaliableId"
+            >
+              {{ avaliableId }}
+            </option>
+          </select>
+          <label for="floatingSelect">Selecciona un identificador</label>
+        </div>
+        <button type="submit" class="btn btn-primary w-100 mb-3">Añadir</button>
+      </form>
+    </div>
+  </div>
 </div>
+<!-- END -->
 <app-footer></app-footer>
