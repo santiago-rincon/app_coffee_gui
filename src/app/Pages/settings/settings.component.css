@@ -8,20 +8,33 @@ h3 {
   letter-spacing: 5px;
 }
 
-ul{
-    list-style: none;
-    color: #fff;
-    font-size: 30px;
+h6 {
+  font-size: 14px;
+  font-weight: 100;
 }
 
-.head{
-    list-style: none;
-    color: #fff;
-    font-size: 35px;
+ul {
+  list-style: none;
+  color: #fff;
+  font-size: 30px;
 }
 
-.info{
+.head {
+  list-style: none;
+  color: #fff;
+  font-size: 35px;
+}
+
+.info {
   list-style: none;
   color: #fff;
   font-size: 22px;
+}
+
+.form-check-input:hover {
+  cursor: pointer;
+}
+
+.success {
+  color:rgba(0, 255, 0, 0.9);
 }

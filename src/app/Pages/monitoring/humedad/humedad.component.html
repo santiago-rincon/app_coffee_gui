@@ -1,4 +1,22 @@
 <div class="container-fluid">
+  <div class="row">
+    <div class="col my-4">
+      <div class="form-floating">
+        <select
+          class="form-select"
+          id="floatingSelect"
+          aria-label="Floating label select example"
+          (change)="nodeSelected($event)"
+        >
+          <option selected value="0">Todos</option>
+          <option *ngFor="let node of nodes" value="{{ node.nodeId }}">
+            Nodo {{ node.nodeId }}
+          </option>
+        </select>
+        <label for="floatingSelect">Selecciona un nodo</label>
+      </div>
+    </div>
+  </div>
   <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
     <li class="nav-item" role="presentation">
       <button
@@ -40,8 +58,23 @@
       <div class="col text-center">
         <h4>Humedad Ambiente</h4>
       </div>
+      <h2 *ngIf="selectedNode != 0">
+        Estado del nodo {{ selectedNode }}:
+        <span class="text text-success" *ngIf="nodeStatus">Encendido </span>
+        <span class="text text-danger" *ngIf="!nodeStatus">Apagado </span>
+        <a
+          routerLink="./settings"
+          fragment="change-nodes"
+          style="padding-left: 15px"
+          >¿cambiar estado?</a
+        >
+      </h2>
       <div class="row" *ngIf="!zeroData">
         <div class="col">
+          <h2 *ngIf="selectedNode != 0">
+            La dirección MAC del nodo {{ selectedNode }} es:
+            {{ macAddress | uppercase }}
+          </h2>
           <h2>
             El umbral establecido de humedad ambiete es:
             {{ umbral[0].Humedad }} %
@@ -66,6 +99,7 @@
                 <th scope="col">Fecha</th>
                 <th scope="col">Hora</th>
                 <th scope="col">Medida</th>
+                <th scope="col" *ngIf="selectedNode == 0">Nodo (ID)</th>
               </tr>
             </thead>
             <tbody>
@@ -74,11 +108,12 @@
                   'table-danger table-bordered border-dark':
                     data.measure >= umbral[0].Humedad
                 }"
-                *ngFor="let data of dataHumedadA"
+                *ngFor="let data of filterHumedadA"
               >
-                <td>{{ data.date }}</td>
-                <td>{{ data.time }}</td>
+                <td>{{ data.time | date : "dd/MM/yyyy" }}</td>
+                <td>{{ data.time | date : "hh:mm a" }}</td>
                 <td>{{ data.measure }} %</td>
+                <td *ngIf="selectedNode == 0">{{ data.node }}</td>
               </tr>
             </tbody>
           </table>
@@ -106,12 +141,39 @@
       </div>
       <div class="row" *ngIf="!zeroData">
         <div class="col text-center my-2">
-          <h3>Gráfica de Humedad Ambiente Completa</h3>
+          <h3 *ngIf="selectedNode == 0">Gráfica de Humedad Ambiente</h3>
+          <h3 *ngIf="selectedNode != 0">
+            Gráfica de Humedad Ambiente para el Nodo {{ selectedNode }}
+          </h3>
         </div>
       </div>
       <div class="row" *ngIf="!zeroData">
         <div class="col">
-          <div class="grafic">
+          <div class="row" *ngIf="zeroData || !(filterHumedadA.length >= 2)">
+            <div class="col-sm-10 offset-sm-1 col-xl-8 offset-xl-2">
+              <div class="card mb-3" style="max-width: 100%">
+                <div class="row g-0 align-items-center">
+                  <div class="col-md-4">
+                    <img
+                      src="../../../../assets/voidData.png"
+                      class="img-fluid rounded-start p-4"
+                      alt="..."
+                    />
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title">Lo siento 😕</h5>
+                      <p class="card-text">
+                        No hay registros suficientes aún en la base de datos
+                        para mostrar la gráfica.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="grafic" *ngIf="filterHumedadA.length >= 2">
             <ngx-charts-line-chart
               [legend]="legend"
               [showXAxisLabel]="showXAxisLabel"
@@ -157,8 +219,23 @@
       <div class="col text-center">
         <h4>Humedad del Suelo</h4>
       </div>
+      <h2 *ngIf="selectedNode != 0">
+        Estado del nodo {{ selectedNode }}:
+        <span class="text text-success" *ngIf="nodeStatus">Encendido </span>
+        <span class="text text-danger" *ngIf="!nodeStatus">Apagado </span>
+        <a
+          routerLink="./settings"
+          fragment="change-nodes"
+          style="padding-left: 15px"
+          >¿cambiar estado?</a
+        >
+      </h2>
       <div class="row mt-4" *ngIf="!zeroData2">
         <div class="col">
+          <h2 *ngIf="selectedNode != 0">
+            La dirección MAC del nodo {{ selectedNode }} es:
+            {{ macAddress | uppercase }}
+          </h2>
           <h2>
             El umbral establecido de humedad del suelo es:
             {{ umbral[0].HumedadS }} %
@@ -183,6 +260,7 @@
                 <th scope="col">Fecha</th>
                 <th scope="col">Hora</th>
                 <th scope="col">Medida</th>
+                <th scope="col" *ngIf="selectedNode == 0">Nodo (ID)</th>
               </tr>
             </thead>
             <tbody>
@@ -191,11 +269,12 @@
                   'table-danger table-bordered border-dark':
                     data.measure >= umbral[0].HumedadS
                 }"
-                *ngFor="let data of dataHumedadS"
+                *ngFor="let data of filterHumedadS"
               >
-                <td>{{ data.date }}</td>
-                <td>{{ data.time }}</td>
+                <td>{{ data.time | date : "dd/MM/yyyy" }}</td>
+                <td>{{ data.time | date : "hh:mm a" }}</td>
                 <td>{{ data.measure }} %</td>
+                <td *ngIf="selectedNode == 0">{{ data.node }}</td>
               </tr>
             </tbody>
           </table>
@@ -223,12 +302,39 @@
       </div>
       <div class="row" *ngIf="!zeroData2">
         <div class="col text-center my-2">
-          <h3>Gráfica de Humedad del Suelo Completa</h3>
+          <h3 *ngIf="selectedNode == 0">Gráfica de Humedad del Suelo</h3>
+          <h3 *ngIf="selectedNode != 0">
+            Gráfica de Humedad del Suelo para el Nodo {{ selectedNode }}
+          </h3>
         </div>
       </div>
       <div class="row" *ngIf="!zeroData2">
         <div class="col">
-          <div class="grafic">
+          <div class="row" *ngIf="zeroData || !(filterHumedadS.length >= 2)">
+            <div class="col-sm-10 offset-sm-1 col-xl-8 offset-xl-2">
+              <div class="card mb-3" style="max-width: 100%">
+                <div class="row g-0 align-items-center">
+                  <div class="col-md-4">
+                    <img
+                      src="../../../../assets/voidData.png"
+                      class="img-fluid rounded-start p-4"
+                      alt="..."
+                    />
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title">Lo siento 😕</h5>
+                      <p class="card-text">
+                        No hay registros suficientes aún en la base de datos
+                        para mostrar la gráfica.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="grafic" *ngIf="filterHumedadS.length >= 2">
             <ngx-charts-line-chart
               [legend]="legend"
               [showXAxisLabel]="showXAxisLabel"
@@ -280,6 +386,17 @@
       <div class="col text-center">
         <h4>Humedad Ambiente</h4>
       </div>
+      <h2 *ngIf="selectedNode != 0">
+        Estado del nodo {{ selectedNode }}:
+        <span class="text text-success" *ngIf="nodeStatus">Encendido </span>
+        <span class="text text-danger" *ngIf="!nodeStatus">Apagado </span>
+        <a
+          routerLink="./settings"
+          fragment="change-nodes"
+          style="padding-left: 15px"
+          >¿cambiar estado?</a
+        >
+      </h2>
       <div class="row" *ngIf="!zeroData">
         <div class="col">
           <form [formGroup]="filterDate" (submit)="consultDataForDate()">
@@ -307,6 +424,10 @@
       <div class="container-fluid" *ngIf="showMediaOfDate">
         <div class="row">
           <div class="col">
+            <h2 *ngIf="selectedNode != 0">
+              La dirección MAC del nodo {{ selectedNode }} es:
+              {{ macAddress | uppercase }}
+            </h2>
             <h2>
               El promedio de humedad ambiente el dia {{ date }} fue de:
               {{ mediaOfDate }} %
@@ -332,6 +453,7 @@
                   <th scope="col">Fecha</th>
                   <th scope="col">Hora</th>
                   <th scope="col">Medida</th>
+                  <th scope="col" *ngIf="selectedNode == 0">Nodo</th>
                 </tr>
               </thead>
               <tbody>
@@ -342,9 +464,10 @@
                   }"
                   *ngFor="let data of dataFilter"
                 >
-                  <td>{{ data.date }}</td>
-                  <td>{{ data.time }}</td>
+                  <td>{{ data.time | date : "dd/MM/yyyy" }}</td>
+                  <td>{{ data.time | date : "hh:mm a" }}</td>
                   <td>{{ data.measure }} %</td>
+                  <td *ngIf="selectedNode == 0">{{ data.node }}</td>
                 </tr>
               </tbody>
             </table>
@@ -374,12 +497,42 @@
         </div>
         <div class="row">
           <div class="col text-center my-2">
-            <h3>Gráfica de Humedad Ambiente del Día {{ date }}</h3>
+            <h3 *ngIf="selectedNode == 0">
+              Gráfica de Humedad del Suelo del Día {{ date }}
+            </h3>
+            <h3 *ngIf="selectedNode != 0">
+              Gráfica de Humedad del Suelo del Día {{ date }} para el Nodo
+              {{ selectedNode }}
+            </h3>
           </div>
         </div>
         <div class="row">
           <div class="col">
-            <div class="grafic">
+            <div class="row" *ngIf="zeroData || !(dataFilter.length >= 2)">
+              <div class="col-sm-10 offset-sm-1 col-xl-8 offset-xl-2">
+                <div class="card mb-3" style="max-width: 100%">
+                  <div class="row g-0 align-items-center">
+                    <div class="col-md-4">
+                      <img
+                        src="../../../../assets/voidData.png"
+                        class="img-fluid rounded-start p-4"
+                        alt="..."
+                      />
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <h5 class="card-title">Lo siento 😕</h5>
+                        <p class="card-text">
+                          No hay registros suficientes aún en la base de datos
+                          para mostrar la gráfica.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="grafic" *ngIf="dataFilter.length >= 2">
               <ngx-charts-line-chart
                 [legend]="legend"
                 [showXAxisLabel]="showXAxisLabel"
@@ -426,6 +579,17 @@
       <div class="col text-center">
         <h4>Humedad del Suelo</h4>
       </div>
+      <h2 *ngIf="selectedNode != 0">
+        Estado del nodo {{ selectedNode }}:
+        <span class="text text-success" *ngIf="nodeStatus">Encendido </span>
+        <span class="text text-danger" *ngIf="!nodeStatus">Apagado </span>
+        <a
+          routerLink="./settings"
+          fragment="change-nodes"
+          style="padding-left: 15px"
+          >¿cambiar estado?</a
+        >
+      </h2>
       <div class="row" *ngIf="!zeroData2">
         <div class="col">
           <form [formGroup]="filterDate2" (submit)="consultDataForDate2()">
@@ -454,6 +618,10 @@
       <div class="container-fluid" *ngIf="showMediaOfDate2">
         <div class="row">
           <div class="col">
+            <h2 *ngIf="selectedNode != 0">
+              La dirección MAC del nodo {{ selectedNode }} es:
+              {{ macAddress | uppercase }}
+            </h2>
             <h2>
               El promedio de humedad del suelo el dia {{ date2 }} fue de:
               {{ mediaOfDate2 }} %
@@ -479,6 +647,7 @@
                   <th scope="col">Fecha</th>
                   <th scope="col">Hora</th>
                   <th scope="col">Medida</th>
+                  <th scope="col" *ngIf="selectedNode == 0">Nodo</th>
                 </tr>
               </thead>
               <tbody>
@@ -489,9 +658,10 @@
                   }"
                   *ngFor="let data of dataFilter2"
                 >
-                  <td>{{ data.date }}</td>
-                  <td>{{ data.time }}</td>
+                  <td>{{ data.time | date : "dd/MM/yyyy" }}</td>
+                  <td>{{ data.time | date : "hh:mm a" }}</td>
                   <td>{{ data.measure }} %</td>
+                  <td *ngIf="selectedNode == 0">{{ data.node }}</td>
                 </tr>
               </tbody>
             </table>
@@ -521,12 +691,42 @@
         </div>
         <div class="row">
           <div class="col text-center my-2">
-            <h3>Gráfica de Humedad del Suelo del Día {{ date2 }}</h3>
+            <h3 *ngIf="selectedNode == 0">
+              Gráfica de Humedad del Suelo del Día {{ date }}
+            </h3>
+            <h3 *ngIf="selectedNode != 0">
+              Gráfica de Humedad del Suelo del Día {{ date }} para el Nodo
+              {{ selectedNode }}
+            </h3>
           </div>
         </div>
         <div class="row">
           <div class="col">
-            <div class="grafic">
+            <div class="row" *ngIf="zeroData2 || !(dataFilter.length >= 2)">
+              <div class="col-sm-10 offset-sm-1 col-xl-8 offset-xl-2">
+                <div class="card mb-3" style="max-width: 100%">
+                  <div class="row g-0 align-items-center">
+                    <div class="col-md-4">
+                      <img
+                        src="../../../../assets/voidData.png"
+                        class="img-fluid rounded-start p-4"
+                        alt="..."
+                      />
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <h5 class="card-title">Lo siento 😕</h5>
+                        <p class="card-text">
+                          No hay registros suficientes aún en la base de datos
+                          para mostrar la gráfica.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="grafic" *ngIf="dataFilter2.length >= 2">
               <ngx-charts-line-chart
                 [legend]="legend"
                 [showXAxisLabel]="showXAxisLabel"

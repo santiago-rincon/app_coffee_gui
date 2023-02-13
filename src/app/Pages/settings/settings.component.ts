@@ -6,7 +6,6 @@ import { AlertsService } from 'src/app/Services/alerts.service';
 import { FireStoreService } from 'src/app/Services/fire-store.service';
 import Swal from 'sweetalert2';
 import { adminHashes } from 'src/app/Data/hashes';
-import { bootstrapApplication } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-settings',
@@ -21,9 +20,14 @@ export class SettingsComponent implements OnInit {
   variableData: any[] = [];
   nodesList: any[] = [];
   avaliableIds: any[] = [];
+  unavaliableIds: any[] = [];
+  actualState: boolean = true;
+  select: boolean = false;
+  idNodeSensor: string = '';
   umbralSet: FormGroup;
   deleteRegister: FormGroup;
   addNode: FormGroup;
+  changeNode: FormGroup;
   variables = [
     'Temperatura',
     'Humedad Ambiente',
@@ -52,27 +56,31 @@ export class SettingsComponent implements OnInit {
         '',
         [Validators.pattern(/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/)],
       ],
+      nodeStatus: ['', [Validators.required]],
+    });
+    this.changeNode = fb.group({
+      nodeIdChange: ['', [Validators.required]],
     });
     this.extractThreshold();
     this.extractNode();
   }
 
   ngOnInit(): void {
-    // this.afAuth.currentUser.then((user) => {
-    //   for (const hash of adminHashes) {
-    //     if (user?.uid == hash) {
-    //       this.userAdmin = true;
-    //     }
-    //   }
-    //   if (user && user.emailVerified && this.userAdmin) {
-    //   } else {
-    //     this.alerts.alertInfo(
-    //       'No disponible',
-    //       'Para acceder a este apartado debes ser un usuario administrador'
-    //     );
-    //     this.router.navigate(['/variables/monitoring']);
-    //   }
-    // });
+    this.afAuth.currentUser.then((user) => {
+      for (const hash of adminHashes) {
+        if (user?.uid == hash) {
+          this.userAdmin = true;
+        }
+      }
+      if (user && user.emailVerified && this.userAdmin) {
+      } else {
+        this.alerts.alertInfo(
+          'No disponible',
+          'Para acceder a este apartado debes ser un usuario administrador'
+        );
+        this.router.navigate(['/variables/monitoring']);
+      }
+    });
   }
 
   extractThreshold() {
@@ -295,14 +303,19 @@ export class SettingsComponent implements OnInit {
     this.firestore.getNodes().subscribe((nodes) => {
       this.nodesList = [];
       nodes.forEach((element) => {
-        this.nodesList.push(element.payload.doc.data());
+        this.nodesList.push({
+          id: element.payload.doc.id,
+          ...element.payload.doc.data(),
+        });
       });
+      this.unavaliableIds = [];
       this.avaliableIds = [];
       for (let i = 1; i <= 100; i++) {
         let match: boolean = false;
         for (const id of this.nodesList) {
           if (id.nodeId == i) {
             match = true;
+            this.unavaliableIds.push(i);
             break;
           }
         }
@@ -316,26 +329,38 @@ export class SettingsComponent implements OnInit {
   newNode() {
     let id = this.addNode.value.nodeId;
     let mac = this.addNode.value.mac;
+    let nodeStatus = this.addNode.value.nodeStatus;
     let regex = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/;
     if (!mac || !regex.test(mac)) {
       this.alerts.alertError('La dirección MAC ingresada es incorrecta');
     } else if (id === '') {
       this.alerts.alertError('Selecciona un identificador valido');
+    } else if (nodeStatus == '') {
+      this.alerts.alertError('¿Cómo deseas registrar el nodo sensor?');
     } else {
       for (const node of this.nodesList) {
         if (node.mac == mac) {
           var existMac: boolean = true;
-          break
+          break;
         }
       }
       if (existMac!) {
-        this.alerts.alertError('La dirección MAC ingresada ya se encuentra registrada');
+        this.alerts.alertError(
+          'La dirección MAC ingresada ya se encuentra registrada'
+        );
       } else {
         this.firestore
-          .putData({ mac: mac.toLowerCase(), nodeId: parseInt(id) }, 'Nodos')
+          .putData(
+            {
+              mac: mac.toLowerCase(),
+              nodeId: parseInt(id),
+              nodeStatus: nodeStatus == 'true' ? true : false,
+            },
+            'Nodos'
+          )
           .then(() => {
-            this.addNode.get('mac')?.setValue('')
-            this.addNode.get('nodeId')?.setValue('')
+            this.addNode.get('mac')?.setValue('');
+            this.addNode.get('nodeId')?.setValue('');
             this.alerts.alertSuccess(
               'El nodo con dirección MAC ' +
                 mac.toLowerCase() +
@@ -347,5 +372,48 @@ export class SettingsComponent implements OnInit {
           .catch((e) => console.log('se tenso', e));
       }
     }
+  }
+
+  changeStatus() {
+    let node = this.changeNode.value.nodeIdChange;
+    if (node == '') {
+      this.alerts.alertError('Selecciona un nodo sensor');
+    } else {
+      let action = '';
+      this.actualState ? (action = 'apagar') : (action = 'encender');
+      Swal.fire({
+        title: '¿Estas seguro?',
+        text: `Vas a ${action} el nodo ${node}`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: `Si, ${action}!`,
+        cancelButtonText: 'Cancelar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.firestore.updateData(
+            this.idNodeSensor,
+            { nodeStatus: !this.actualState },
+            'Nodos'
+          );
+          Swal.fire(
+            `${this.actualState ? 'Apagado' : 'Encendido'}`,
+            'El cambio de estado fue exitoso',
+            'success'
+          );
+          this.select = false;
+          this.changeNode.get('nodeIdChange')?.setValue('')
+        }
+      });
+    }
+  }
+
+  verifyStatus(e: any) {
+    let selection = e.target.value;
+    let data = this.nodesList.filter((n) => n.nodeId == selection);
+    this.actualState = data[0].nodeStatus;
+    this.idNodeSensor = data[0].id;
+    this.select = true;
   }
 }

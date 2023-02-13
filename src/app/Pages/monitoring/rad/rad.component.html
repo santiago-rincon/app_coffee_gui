@@ -1,4 +1,22 @@
 <div class="container-fluid">
+  <div class="row">
+    <div class="col my-4">
+      <div class="form-floating">
+        <select
+          class="form-select"
+          id="floatingSelect"
+          aria-label="Floating label select example"
+          (change)="nodeSelected($event)"
+        >
+          <option selected value="0">Todos</option>
+          <option *ngFor="let node of nodes" value="{{ node.nodeId }}">
+            Nodo {{ node.nodeId }}
+          </option>
+        </select>
+        <label for="floatingSelect">Selecciona un nodo</label>
+      </div>
+    </div>
+  </div>
   <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
     <li class="nav-item" role="presentation">
       <button
@@ -37,8 +55,23 @@
       aria-labelledby="pills-rad-tab"
       tabindex="0"
     >
+      <h2 *ngIf="selectedNode != 0">
+        Estado del nodo {{ selectedNode }}:
+        <span class="text text-success" *ngIf="nodeStatus">Encendido </span>
+        <span class="text text-danger" *ngIf="!nodeStatus">Apagado </span>
+        <a
+          routerLink="./settings"
+          fragment="change-nodes"
+          style="padding-left: 15px"
+          >¿cambiar estado?</a
+        >
+      </h2>
       <div class="row" *ngIf="!zeroData">
         <div class="col">
+          <h2 *ngIf="selectedNode != 0">
+            La dirección MAC del nodo {{ selectedNode }} es:
+            {{ macAddress | uppercase }}
+          </h2>
           <h2>
             El umbral establecido de radiación solar es:
             {{ umbral[0].Rad }} U
@@ -63,6 +96,7 @@
                 <th scope="col">Fecha</th>
                 <th scope="col">Hora</th>
                 <th scope="col">Medida</th>
+                <th scope="col" *ngIf="selectedNode == 0">Nodo (ID)</th>
               </tr>
             </thead>
             <tbody>
@@ -71,11 +105,12 @@
                   'table-danger table-bordered border-dark':
                     data.measure >= umbral[0].Rad
                 }"
-                *ngFor="let data of dataRad"
+                *ngFor="let data of filterRad"
               >
-                <td>{{ data.date }}</td>
-                <td>{{ data.time }}</td>
+                <td>{{ data.time | date : "dd/MM/yyyy" }}</td>
+                <td>{{ data.time | date : "hh:mm a" }}</td>
                 <td>{{ data.measure }} U</td>
+                <td *ngIf="selectedNode == 0">{{ data.node }}</td>
               </tr>
             </tbody>
           </table>
@@ -101,12 +136,39 @@
       </div>
       <div class="row" *ngIf="!zeroData">
         <div class="col text-center my-2">
-          <h3>Gráfica de Radiación Solar Completa</h3>
+          <h3 *ngIf="selectedNode == 0">Gráfica de Radiación Solar</h3>
+          <h3 *ngIf="selectedNode != 0">
+            Gráfica de Radiación Solar para el Nodo {{ selectedNode }}
+          </h3>
         </div>
       </div>
       <div class="row" *ngIf="!zeroData">
         <div class="col">
-          <div class="grafic">
+          <div class="row" *ngIf="zeroData || !(filterRad.length >= 2)">
+            <div class="col-sm-10 offset-sm-1 col-xl-8 offset-xl-2">
+              <div class="card mb-3" style="max-width: 100%">
+                <div class="row g-0 align-items-center">
+                  <div class="col-md-4">
+                    <img
+                      src="../../../../assets/voidData.png"
+                      class="img-fluid rounded-start p-4"
+                      alt="..."
+                    />
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title">Lo siento 😕</h5>
+                      <p class="card-text">
+                        No hay registros suficientes aún en la base de datos
+                        para mostrar la gráfica.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="grafic" *ngIf="filterRad.length >= 2">
             <ngx-charts-line-chart
               [legend]="legend"
               [showXAxisLabel]="showXAxisLabel"
@@ -157,6 +219,17 @@
       aria-labelledby="pills-rad2-tab"
       tabindex="0"
     >
+      <h2 *ngIf="selectedNode != 0">
+        Estado del nodo {{ selectedNode }}:
+        <span class="text text-success" *ngIf="nodeStatus">Encendido </span>
+        <span class="text text-danger" *ngIf="!nodeStatus">Apagado </span>
+        <a
+          routerLink="./settings"
+          fragment="change-nodes"
+          style="padding-left: 15px"
+          >¿cambiar estado?</a
+        >
+      </h2>
       <div class="row" *ngIf="!zeroData">
         <div class="col">
           <form [formGroup]="filterDate" (submit)="consultDataForDate()">
@@ -184,6 +257,10 @@
       <div class="container-fluid" *ngIf="showMediaOfDate">
         <div class="row">
           <div class="col">
+            <h2 *ngIf="selectedNode != 0">
+              La dirección MAC del nodo {{ selectedNode }} es:
+              {{ macAddress | uppercase }}
+            </h2>
             <h2>
               El promedio de radiación solar el dia {{ date }} fue de:
               {{ mediaOfDate }} U
@@ -209,6 +286,7 @@
                   <th scope="col">Fecha</th>
                   <th scope="col">Hora</th>
                   <th scope="col">Medida</th>
+                  <th scope="col" *ngIf="selectedNode == 0">Nodo</th>
                 </tr>
               </thead>
               <tbody>
@@ -219,9 +297,10 @@
                   }"
                   *ngFor="let data of dataFilter"
                 >
-                  <td>{{ data.date }}</td>
-                  <td>{{ data.time }}</td>
+                  <td>{{ data.time | date : "dd/MM/yyyy" }}</td>
+                  <td>{{ data.time | date : "hh:mm a" }}</td>
                   <td>{{ data.measure }} U</td>
+                  <td *ngIf="selectedNode == 0">{{ data.node }}</td>
                 </tr>
               </tbody>
             </table>
@@ -251,12 +330,42 @@
         </div>
         <div class="row">
           <div class="col text-center my-2">
-            <h3>Gráfica de Radiación Solar del Día {{ date }}</h3>
+            <h3 *ngIf="selectedNode == 0">
+              Gráfica de Radiación Solar del Día {{ date }}
+            </h3>
+            <h3 *ngIf="selectedNode != 0">
+              Gráfica de Radiación Solar del Día {{ date }} para el Nodo
+              {{ selectedNode }}
+            </h3>
           </div>
         </div>
         <div class="row">
           <div class="col">
-            <div class="grafic">
+            <div class="row" *ngIf="zeroData || !(dataFilter.length >= 2)">
+              <div class="col-sm-10 offset-sm-1 col-xl-8 offset-xl-2">
+                <div class="card mb-3" style="max-width: 100%">
+                  <div class="row g-0 align-items-center">
+                    <div class="col-md-4">
+                      <img
+                        src="../../../../assets/voidData.png"
+                        class="img-fluid rounded-start p-4"
+                        alt="..."
+                      />
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <h5 class="card-title">Lo siento 😕</h5>
+                        <p class="card-text">
+                          No hay registros suficientes aún en la base de datos
+                          para mostrar la gráfica.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="grafic" *ngIf="dataFilter.length >= 2">
               <ngx-charts-line-chart
                 [legend]="legend"
                 [showXAxisLabel]="showXAxisLabel"

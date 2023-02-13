@@ -42,13 +42,18 @@ export class Co2Component implements OnInit {
   timeline: boolean = true;
   autoScale: boolean = true;
   roundDomains: boolean = false;
+  // Nodos habilitados
+  @Input() nodes: any[] = [];
+  selectedNode: number = 0;
+  macAddress: string = '';
+  filterCO2: any[] = [];
+  nodeStatus: boolean = true;
   constructor(
     private firestore: FireStoreService,
     private fb: FormBuilder,
     private alerts: AlertsService
   ) {
     this.extractInformation('CO2');
-    this.plotFormat('CO2');
     this.filterDate = this.fb.group({
       date: ['', Validators.required],
     });
@@ -61,35 +66,29 @@ export class Co2Component implements OnInit {
       this.dataCO2 = [];
       if (data.length != 0) {
         this.zeroData = false;
+        this.multi = [
+          {
+            name: 'Temperatura',
+            series: [],
+          },
+        ];
         data.forEach((element) => {
           const date = new Date(
             element.payload.doc.data().dateAndTime.seconds * 1000 +
               element.payload.doc.data().dateAndTime.nanoseconds / 1000000
           );
-          if (date.getMinutes() <= 9) {
-            this.dataCO2.push({
-              date:
-                ((date.getDate()<10)?'0'+date.getDate():date.getDate()) +
-                '/' +
-                ((date.getMonth() + 1<10?'0'+(date.getMonth()+1):(date.getMonth()+1))) +
-                '/' +
-                date.getFullYear(),
-              time: date.getHours() + ':0' + date.getMinutes(),
-              measure: element.payload.doc.data().measure,
-            });
-          } else {
-            this.dataCO2.push({
-              date:
-                ((date.getDate()<10)?'0'+date.getDate():date.getDate()) +
-                '/' +
-                ((date.getMonth() + 1<10?'0'+(date.getMonth()+1):(date.getMonth()+1))) +
-                '/' +
-                date.getFullYear(),
-              time: date.getHours() + ':' + date.getMinutes(),
-              measure: element.payload.doc.data().measure,
-            });
-          }
+          this.dataCO2.push({
+            time: date,
+            measure: element.payload.doc.data().measure,
+            node: element.payload.doc.data().node,
+          });
+          this.multi[0].series.push({
+            name: date,
+            value: element.payload.doc.data().measure,
+          });
         });
+        this.filterCO2 = [];
+        this.filterCO2 = this.dataCO2;
         let measures: number[] = [];
         for (const i of this.dataCO2) {
           measures.push(i.measure);
@@ -108,34 +107,15 @@ export class Co2Component implements OnInit {
     });
   }
 
-  plotFormat(collection: string) {
-    this.firestore.getDataVariables(collection).subscribe((data) => {
-      this.multi = [
-        {
-          name: 'Temperatura',
-          series: [],
-        },
-      ];
-      data.forEach((element) => {
-        this.multi[0].series.push({
-          name: new Date(
-            element.payload.doc.data().dateAndTime.seconds * 1000 +
-              element.payload.doc.data().dateAndTime.nanoseconds / 1000000
-          ),
-          value: element.payload.doc.data().measure,
-        });
-      });
-    });
-  }
-
   consultDataForDate() {
     let date = this.filterDate.value.date;
     if (date === '') {
       this.alerts.alertError('Por favor ingresa una fecha');
     } else {
-      date = date.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
-      const arrayFilter = this.dataCO2.filter((element, index) => {
-        return element.date === date;
+      date = [date.slice(0, 8), '0', date.slice(8)].join('');
+      date = new Date(date).toLocaleDateString();
+      const arrayFilter = this.filterCO2.filter((element) => {
+        return element.time.toLocaleDateString() === date;
       });
       if (arrayFilter.length == 0) {
         this.alerts.alertInfo(
@@ -166,8 +146,6 @@ export class Co2Component implements OnInit {
             value: i.measure,
           });
         }
-
-        console.log('log');
       }
     }
   }
@@ -187,6 +165,56 @@ export class Co2Component implements OnInit {
 
     /* save to file */
     XLSX.writeFile(wb, nameFile + '.xlsx');
+  }
+
+  nodeSelected(e: any) {
+    this.selectedNode = e.target.value;
+    if (this.selectedNode == 0) {
+      this.macAddress = '';
+      this.filterCO2 = [];
+      this.filterCO2 = this.dataCO2;
+    } else {
+      this.macAddress = this.nodes.filter(
+        (n) => n.nodeId == e.target.value
+      )[0].mac;
+      this.nodeStatus = this.nodes.filter(
+        (n) => n.nodeId == e.target.value
+      )[0].nodeStatus;
+      this.filterCO2 = [];
+      this.filterCO2 = this.dataCO2.filter(
+        (n) => n.node == e.target.value
+      );
+    }
+    this.multi = [
+      {
+        name: 'CO2',
+        series: [],
+      },
+    ];
+    this.filterCO2.forEach((element) => {
+      this.multi[0].series.push({
+        name: element.time,
+        value: element.measure,
+      });
+    });
+    this.showMediaOfDate = false;
+    if (this.filterCO2.length != 0) {
+      this.zeroData = false;
+      let measures: number[] = [];
+      this.filterCO2.forEach((element) => {
+        measures.push(element.measure);
+      });
+      this.media = 0;
+      for (const i of measures) {
+        this.media += i;
+      }
+      this.media /= measures.length;
+      this.media = parseFloat(this.media.toFixed(2));
+      this.max = Math.max(...measures);
+      this.min = Math.min(...measures);
+    } else {
+      this.zeroData = true;
+    }
   }
 
   // exportPDF(id:string,nameFile:string) {

@@ -11,6 +11,7 @@ import { FireStoreService } from 'src/app/Services/fire-store.service';
 })
 export class MonitoringComponent implements OnInit {
   dataUmbral: any[] = [];
+  nodes: any[] = [];
   constructor(
     private firestore: FireStoreService,
     private router: Router,
@@ -18,6 +19,7 @@ export class MonitoringComponent implements OnInit {
     private alerts: AlertsService
   ) {
     this.extractThreshold();
+    this.extractNode();
   }
 
   ngOnInit(): void {
@@ -39,6 +41,16 @@ export class MonitoringComponent implements OnInit {
         this.dataUmbral = [];
         this.dataUmbral.push({ ...element.payload.doc.data() });
       });
+    });
+  }
+
+  extractNode() {
+    this.firestore.getNodes().subscribe((nodesList) => {
+      this.nodes = [];
+      nodesList.forEach((element) => {
+        this.nodes.push(element.payload.doc.data());
+      });
+      this.nodes.sort((a, b) => a.nodeId - b.nodeId);
     });
   }
 }

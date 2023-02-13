@@ -37,7 +37,7 @@
             aria-labelledby="panelsStayOpen-headingOne"
           >
             <div class="accordion-body">
-              <app-temperatura [umbral]="dataUmbral"></app-temperatura>
+              <app-temperatura [umbral]="dataUmbral" [nodes]="nodes"></app-temperatura>
             </div>
           </div>
         </div>
@@ -60,7 +60,7 @@
             aria-labelledby="panelsStayOpen-headingTwo"
           >
             <div class="accordion-body">
-              <app-humedad [umbral]="dataUmbral"></app-humedad>
+              <app-humedad [umbral]="dataUmbral" [nodes]="nodes"></app-humedad>
             </div>
           </div>
         </div>
@@ -83,7 +83,7 @@
             aria-labelledby="panelsStayOpen-headingThree"
           >
             <div class="accordion-body">
-              <app-co2 [umbral]="dataUmbral"></app-co2>
+              <app-co2 [umbral]="dataUmbral" [nodes]="nodes"></app-co2>
             </div>
           </div>
         </div>
@@ -106,7 +106,7 @@
             aria-labelledby="panelsStayOpen-headingFour"
           >
             <div class="accordion-body">
-              <app-rad [umbral]="dataUmbral"></app-rad>
+              <app-rad [umbral]="dataUmbral" [nodes]="nodes"></app-rad>
             </div>
           </div>
         </div>

@@ -157,7 +157,83 @@
           </select>
           <label for="floatingSelect">Selecciona un identificador</label>
         </div>
+        <!--  -->
+        <div class="bg-light mb-3 rounded-2 pb-1">
+          <h6 class="text-secondary pt-2 ps-3">
+            ¿Cómo deseas registrar el nodo sensor?
+          </h6>
+          <div class="form-check form-check-inline ms-3">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="inlineRadioOptions"
+              value="true"
+              formControlName="nodeStatus"
+            />
+            <label class="form-check-label" for="inlineRadio1">Encendido</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="inlineRadioOptions"
+              value="false"
+              formControlName="nodeStatus"
+            />
+            <label class="form-check-label" for="inlineRadio2">Apagado</label>
+          </div>
+        </div>
+        <!--  -->
         <button type="submit" class="btn btn-primary w-100 mb-3">Añadir</button>
+      </form>
+    </div>
+  </div>
+  <!-- Cambiar estado de los nodos sensores -->
+  <div class="row align-items-center" id="change-nodes">
+    <div class="col text-center my-3">
+      <h3>Modificar estado de los nodo sensor ⚒</h3>
+    </div>
+  </div>
+  <div class="row align-items-center">
+    <div class="col-sm-12 col-xl-5">
+      <div class="col">
+        <ul>
+          <li class="info">
+            En este módulo podrás encender o apagar cada uno de los nodo sensor
+            registrados
+          </li>
+          <li class="info">
+            Nodos sensores registrados: {{ nodesList.length }}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-sm-12 col-xl-7 pe-xl-5">
+      <form [formGroup]="changeNode" (submit)="changeStatus()">
+        <div class="form-floating mb-3">
+          <select
+            class="form-select"
+            id="floatingSelect"
+            aria-label="Floating label select example"
+            formControlName="nodeIdChange"
+            (change)="verifyStatus($event)"
+          >
+            <option
+              *ngFor="let unavaliableId of unavaliableIds"
+              [value]="unavaliableId"
+            >
+              Nodo sensor {{ unavaliableId }}
+            </option>
+          </select>
+          <label for="floatingSelect">Selecciona un nodo sensor</label>
+        </div>
+        <div class="form-floating mb-3">
+          <span class="text-light">Estado actual: </span>
+          <span class="success pb-2" *ngIf="select && actualState">Encendido</span>
+          <span class="text-danger pb-2" *ngIf="select && !actualState">Apagado</span>
+        </div>
+        <button type="submit" class="btn btn-success w-100 mb-3" *ngIf="!actualState">Encender</button>
+        <button type="submit" class="btn btn-danger w-100 mb-3" *ngIf="actualState">Apagar</button>
       </form>
     </div>
   </div>
