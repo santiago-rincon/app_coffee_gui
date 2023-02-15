@@ -1,0 +1,15 @@
+h1 {
+  text-align: center;
+  font-weight: bold;
+  font-size: 40px;
+  color: #ffdbc7;
+  text-shadow: -1px 0 #000, 0 1px #000, 4px 0 #000, 0 -1px #000;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+}
+
+@media (max-width: 1080px) {
+  h1 {
+    font-size: 30px;
+  }
+}

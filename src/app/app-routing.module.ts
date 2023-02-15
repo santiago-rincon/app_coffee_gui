@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CropComponent } from './Pages/crop/crop.component';
 import { ErrorComponent } from './Pages/error/error.component';
+import { HelpComponent } from './Pages/help/help.component';
 import { HomeComponent } from './Pages/home/home.component';
 import { LoginComponent } from './Pages/login/login.component';
 import { MonitoringComponent } from './Pages/monitoring/monitoring.component';
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'recover', component: RecoverComponent },
   { path: 'variables/monitoring', component: MonitoringComponent },
   { path: 'verify', component: VerifyComponent },
+  { path: 'help', component: HelpComponent },
   { path: 'variables/monitoring/settings', component: SettingsComponent },
   { path: '**', component: ErrorComponent },
 ];

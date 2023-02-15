@@ -8,13 +8,13 @@ h3 {
   letter-spacing: 5px;
 }
 
-strong{
-    font-size: 30px;
+strong {
+  font-size: 30px;
 }
 
-p{
-    font-size: 20px;
-    color: #fff;
+p {
+  font-size: 20px;
+  color: #fff;
 }
 
 @media (max-width: 1080px) {
@@ -27,7 +27,7 @@ p{
     text-transform: uppercase;
     letter-spacing: 5px;
   }
-  strong{
+  strong {
     font-size: 25px;
-}
+  }
 }

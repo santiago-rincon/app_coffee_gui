@@ -30,6 +30,7 @@ import { Co2Component } from './Pages/monitoring/co2/co2.component';
 import { RadComponent } from './Pages/monitoring/rad/rad.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { SettingsComponent } from './Pages/settings/settings.component';
+import { HelpComponent } from './Pages/help/help.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,6 +54,7 @@ import { SettingsComponent } from './Pages/settings/settings.component';
     Co2Component,
     RadComponent,
     SettingsComponent,
+    HelpComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,7 +66,7 @@ import { SettingsComponent } from './Pages/settings/settings.component';
     FormsModule,
     AngularFirestoreModule,
     DataTablesModule,
-    NgxChartsModule
+    NgxChartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

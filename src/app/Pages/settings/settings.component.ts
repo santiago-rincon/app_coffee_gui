@@ -70,6 +70,7 @@ export class SettingsComponent implements OnInit {
       for (const hash of adminHashes) {
         if (user?.uid == hash) {
           this.userAdmin = true;
+          break
         }
       }
       if (user && user.emailVerified && this.userAdmin) {
