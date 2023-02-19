@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ProofComponent } from './Components/proof/proof.component';
 import { CropComponent } from './Pages/crop/crop.component';
 import { ErrorComponent } from './Pages/error/error.component';
 import { HelpComponent } from './Pages/help/help.component';
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'verify', component: VerifyComponent },
   { path: 'help', component: HelpComponent },
   { path: 'variables/monitoring/settings', component: SettingsComponent },
+  { path: 'proof', component: ProofComponent },
   { path: '**', component: ErrorComponent },
 ];
 

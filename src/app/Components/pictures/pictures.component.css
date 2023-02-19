@@ -63,6 +63,12 @@ figure {
   }
 }
 
+@media (min-width: 1080px) {
+  .hanging img {
+    width: 35vw;
+  }
+}
+
 @media (min-width: 1900px) {
   .hanging img {
     width: 38vw;

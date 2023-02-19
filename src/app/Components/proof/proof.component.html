@@ -1,0 +1,4 @@
+<div *ngFor="let variable of variables;let i=index" >
+    <span>{{variable}}</span>
+    <input type="checkbox" (change)="selected(i,$event)">
+</div>

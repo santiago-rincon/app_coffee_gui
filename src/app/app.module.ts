@@ -31,6 +31,8 @@ import { RadComponent } from './Pages/monitoring/rad/rad.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { SettingsComponent } from './Pages/settings/settings.component';
 import { HelpComponent } from './Pages/help/help.component';
+import { ProofComponent } from './Components/proof/proof.component';
+import { NoDataComponent } from './Components/no-data/no-data.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,6 +57,8 @@ import { HelpComponent } from './Pages/help/help.component';
     RadComponent,
     SettingsComponent,
     HelpComponent,
+    ProofComponent,
+    NoDataComponent,
   ],
   imports: [
     BrowserModule,
