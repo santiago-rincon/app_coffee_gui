@@ -24,15 +24,14 @@ import { PicturesComponent } from './Components/pictures/pictures.component';
 import { MonitoringComponent } from './Pages/monitoring/monitoring.component';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { DataTablesModule } from "angular-datatables";
-import { TemperaturaComponent } from './Pages/monitoring/temperatura/temperatura.component';
-import { HumedadComponent } from './Pages/monitoring/humedad/humedad.component';
-import { Co2Component } from './Pages/monitoring/co2/co2.component';
-import { RadComponent } from './Pages/monitoring/rad/rad.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { SettingsComponent } from './Pages/settings/settings.component';
 import { HelpComponent } from './Pages/help/help.component';
 import { ProofComponent } from './Components/proof/proof.component';
 import { NoDataComponent } from './Components/no-data/no-data.component';
+import { FullInformationComponent } from './Pages/full-information/full-information.component';
+import { InformationForDateComponent } from './Pages/information-for-date/information-for-date.component';
+import { InformationVariableComponent } from './Pages/information-variable/information-variable.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,14 +50,13 @@ import { NoDataComponent } from './Components/no-data/no-data.component';
     ButtonComponent,
     PicturesComponent,
     MonitoringComponent,
-    TemperaturaComponent,
-    HumedadComponent,
-    Co2Component,
-    RadComponent,
     SettingsComponent,
     HelpComponent,
     ProofComponent,
     NoDataComponent,
+    FullInformationComponent,
+    InformationForDateComponent,
+    InformationVariableComponent,
   ],
   imports: [
     BrowserModule,
