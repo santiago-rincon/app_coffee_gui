@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { AlertsService } from 'src/app/Services/alerts.service';
+import { info } from '../../Data/informationCrop';
 
 @Component({
   selector: 'app-crop',
@@ -42,6 +43,7 @@ export class CropComponent implements OnInit {
         'El Instituto Colombiano Agropecuario (ICA) otorgó certificación a la Granja La Esperanza en Buenas Prácticas Ganaderas en la Producción de Leche.',
     },
   ];
+  info: any[] = info;
   constructor(
     private afAuth: AngularFireAuth,
     private alerts: AlertsService,

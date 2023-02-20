@@ -16,7 +16,7 @@
           <li>CO2: 10 ppm</li>
           <li>Radiación Solar: 10 U</li> -->
           <li>Temperatura: {{ dataUmbral[0].Temperatura }} °C</li>
-          <li>Humedad Ambiente: {{ dataUmbral[0].Humedad }} %</li>
+          <li>Humedad Ambiente: {{ dataUmbral[0].HumedadA }} %</li>
           <li>Humedad del Suelo: {{ dataUmbral[0].HumedadS }} %</li>
           <li>CO2: {{ dataUmbral[0].CO2 }} ppm</li>
           <li>Radiación Solar: {{ dataUmbral[0].Rad }} U</li>
@@ -157,8 +157,22 @@
           </select>
           <label for="floatingSelect">Selecciona un identificador</label>
         </div>
+        <div class="row g-2">
+          <div class="col-md">
+            <div class="form-floating">
+              <input type="number" class="form-control" id="lat" formControlName="lat">
+              <label for="lat">Latitud</label>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="form-floating">
+              <input type="number" class="form-control" id="lon" formControlName="lon">
+              <label for="lon">Lonngitud</label>
+            </div>
+          </div>
+        </div>
         <!--  -->
-        <div class="bg-light mb-3 rounded-2 pb-1">
+        <div class="bg-light my-3 rounded-2 pb-1">
           <h6 class="text-secondary pt-2 ps-3">
             ¿Cómo deseas registrar el nodo sensor?
           </h6>

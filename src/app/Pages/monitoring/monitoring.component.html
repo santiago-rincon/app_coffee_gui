@@ -60,6 +60,20 @@
             Comparación entre Variables
           </button>
         </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="comparacion-fecha"
+            data-bs-toggle="tab"
+            data-bs-target="#comparacion-fecha-pane"
+            type="button"
+            role="tab"
+            aria-controls="comparacion-fecha-pane"
+            aria-selected="false"
+          >
+            Comparación entre Variables (Fecha)
+          </button>
+        </li>
       </ul>
       <!-- CONTENIDO -->
       <div class="tab-content">
@@ -106,6 +120,20 @@
             [dataVariables]="dataVariables"
           ></app-information-variable>
           <!-- FIN DE COMPARACIÓN -->
+        </div>
+        <!-- COMPARACIÓN POR FECHA -->
+        <div
+          class="tab-pane fade"
+          id="comparacion-fecha-pane"
+          role="tabpanel"
+          aria-labelledby="comparacion-fecha"
+          tabindex="0"
+        >
+          <app-information-variable-date
+            [nodes]="nodes"
+            [dataVariables]="dataVariables"
+          ></app-information-variable-date>
+          <!-- FIN DE COMPARACIÓN POR FECHA -->
         </div>
         <!-- CONTENIDO -->
       </div>

@@ -136,7 +136,6 @@ export class InformationForDateComponent implements OnInit {
       ) {
         this.options.forEach((z) => (z.selected = true));
       }
-      console.log(this.options);
       for (const option of this.options) {
         if (option.selected) {
           let series: any[] = [];

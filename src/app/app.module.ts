@@ -32,6 +32,7 @@ import { NoDataComponent } from './Components/no-data/no-data.component';
 import { FullInformationComponent } from './Pages/full-information/full-information.component';
 import { InformationForDateComponent } from './Pages/information-for-date/information-for-date.component';
 import { InformationVariableComponent } from './Pages/information-variable/information-variable.component';
+import { InformationVariableDateComponent } from './Pages/information-variable-date/information-variable-date.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,6 +58,7 @@ import { InformationVariableComponent } from './Pages/information-variable/infor
     FullInformationComponent,
     InformationForDateComponent,
     InformationVariableComponent,
+    InformationVariableDateComponent,
   ],
   imports: [
     BrowserModule,

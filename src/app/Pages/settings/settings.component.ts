@@ -57,6 +57,8 @@ export class SettingsComponent implements OnInit {
         [Validators.pattern(/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/)],
       ],
       nodeStatus: ['', [Validators.required]],
+      lat: ['', [Validators.required]],
+      lon: ['', [Validators.required]],
     });
     this.changeNode = fb.group({
       nodeIdChange: ['', [Validators.required]],
@@ -66,22 +68,22 @@ export class SettingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.afAuth.currentUser.then((user) => {
-      for (const hash of adminHashes) {
-        if (user?.uid == hash) {
-          this.userAdmin = true;
-          break
-        }
-      }
-      if (user && user.emailVerified && this.userAdmin) {
-      } else {
-        this.alerts.alertInfo(
-          'No disponible',
-          'Para acceder a este apartado debes ser un usuario administrador'
-        );
-        this.router.navigate(['/variables/monitoring']);
-      }
-    });
+    // this.afAuth.currentUser.then((user) => {
+    //   for (const hash of adminHashes) {
+    //     if (user?.uid == hash) {
+    //       this.userAdmin = true;
+    //       break
+    //     }
+    //   }
+    //   if (user && user.emailVerified && this.userAdmin) {
+    //   } else {
+    //     this.alerts.alertInfo(
+    //       'No disponible',
+    //       'Para acceder a este apartado debes ser un usuario administrador'
+    //     );
+    //     this.router.navigate(['/variables/monitoring']);
+    //   }
+    // });
   }
 
   extractThreshold() {
@@ -331,6 +333,8 @@ export class SettingsComponent implements OnInit {
     let id = this.addNode.value.nodeId;
     let mac = this.addNode.value.mac;
     let nodeStatus = this.addNode.value.nodeStatus;
+    let lat = this.addNode.value.lat
+    let lon = this.addNode.value.lon
     let regex = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/;
     if (!mac || !regex.test(mac)) {
       this.alerts.alertError('La dirección MAC ingresada es incorrecta');
@@ -356,12 +360,17 @@ export class SettingsComponent implements OnInit {
               mac: mac.toLowerCase(),
               nodeId: parseInt(id),
               nodeStatus: nodeStatus == 'true' ? true : false,
+              latitude: lat,
+              longitude: lon
             },
             'Nodos'
           )
           .then(() => {
             this.addNode.get('mac')?.setValue('');
             this.addNode.get('nodeId')?.setValue('');
+            this.addNode.get('nodeStatus')?.setValue('');
+            this.addNode.get('lat')?.setValue('');
+            this.addNode.get('lon')?.setValue('');
             this.alerts.alertSuccess(
               'El nodo con dirección MAC ' +
                 mac.toLowerCase() +

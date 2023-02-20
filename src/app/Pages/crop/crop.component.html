@@ -58,18 +58,6 @@
           <div class="container-fluid">
             <div class="row">
               <div class="col">
-                <h5>Extensión</h5>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Repellat impedit harum quas totam adipisci vitae similique
-                  accusantium neque. Amet, aliquam eveniet. Repellat excepturi
-                  ducimus repellendus dolor deserunt voluptate, debitis at nihil
-                  dignissimos iusto soluta? Debitis, deleniti ipsum adipisci
-                  maiores expedita dolor molestias, explicabo iure voluptatibus
-                  possimus a autem rerum odit.
-                </p>
-                <h5>Mapa</h5>
-                <img src="../../../assets/mapa.png" class="mapInfo" />
                 <h5>Extensión dedicada al cultivo de café</h5>
                 <p>
                   En la actualidad la Unidad Agroambiental la Esperanza cuenta
@@ -78,15 +66,17 @@
                   encuentran en su tercer año de producción.
                 </p>
                 <h5>Datos sobre el cultivo de café</h5>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Error
-                  placeat nihil, aliquid, voluptates corrupti exercitationem
-                  molestiae fuga, pariatur sit optio natus ipsum. Voluptates
-                  provident perspiciatis eius eum aperiam rerum exercitationem
-                  ipsa ut quas debitis illo optio, nulla assumenda. Minima,
-                  harum odio. Atque consequuntur sint natus repellat sunt error
-                  perspiciatis? Dolore.
-                </p>
+                <ul class="list-group mb-3">
+                  <li class="list-group-item d-flex justify-content-between align-items-start" *ngFor="let inf of info">
+                    <div class="ms-2 me-auto">
+                      <div class="fw-bold" style="font-size: 17px;">{{inf.bold}}</div>
+                      <div [innerHTML]="inf.content"></div>
+                    </div>
+                    <span [innerHTML]="inf.number" class="badge bg-primary rounded-pill" style="font-size: 14px;"></span>
+                  </li>
+                </ul>
+                <h5>Mapa</h5>
+                <img src="../../../assets/mapa.png" class="mapInfo" />
               </div>
             </div>
           </div>

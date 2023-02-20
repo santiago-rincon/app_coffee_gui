@@ -1,0 +1,18 @@
+export var info: any[] = [
+  { bold: 'Área total', number: '3750 m<sup>2</sup>' },
+  {bold: 'Altura sobre el nivel del mar', number: '1557 m.s.n.m.'},
+  {bold: 'Número de plantas de café sembradas', number:'1350 plantas'},
+  {bold: 'Variedades', content: 'Típica (zoca), Maragogype y Tabí'},
+  {bold: 'Distancia de siembra', content: '1.8 metros entre plantas por 2 metros entre surcos'},
+  {bold: 'Tipo de siembra', number:'Hileras'},
+  {bold: 'Riego', content: 'No se implementa riego en el lote'},
+  {bold: 'Edad del cultivo', number:'8 años', content: 'Siembra en marzo de 2014'},
+  {bold: 'Producción vigencia 2022', number:'177.9 kilogramos', content: '<strong>Margogype:</strong> 98.5 kilogramos<br><strong>Tabí:</strong> 79.5 kilogramos'},
+  {bold: 'Tipo y número de plantas de sombrío', number:'Arboles forestales', content: '3 guamos, 2 ceiba bonga, 3 cedros y 1 nogal cafetero'},
+  {bold: 'Reporte análisis de suelo lote #1 de café vigencia', content: '28 de Octubre de 2022'},
+  {bold: 'Clima', content: 'Clima templado'},
+  {bold: 'Temperatura promedio', number:'20 a 23 °C'},
+  {bold: 'Humedad relativa', number:'80%'},
+  {bold: 'Presipitación media mensual', number:'161.9 ml/mes'},
+  {bold: 'Límites del lote', content: '<strong>Norte:</strong> Carretera - Lote 1 U.A.A La Esperanza y avícola vecina<br><strong>Oeste:</strong> Bosque<br><strong>Sur:</strong> Bosque y potreros de pastoreo vecinos<br><strong>Este:</strong> Potreros de pastoreo vecinos'},
+];

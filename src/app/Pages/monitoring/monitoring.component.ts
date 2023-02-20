@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
+import { AlertsService } from 'src/app/Services/alerts.service';
 import { FireStoreService } from 'src/app/Services/fire-store.service';
 
 @Component({
@@ -37,22 +38,23 @@ export class MonitoringComponent implements OnInit {
   constructor(
     private firestore: FireStoreService,
     private router: Router,
-    private afAuth: AngularFireAuth
+    private afAuth: AngularFireAuth,
+    private alerts: AlertsService
   ) {
     this.extractInformation();
   }
 
   ngOnInit(): void {
-    // this.afAuth.currentUser.then((user) => {
-    //   if (user && user.emailVerified) {
-    //   } else {
-    //     this.alerts.alertInfo(
-    //       'No disponible',
-    //       'Para acceder a este apartado debes iniciar sesión'
-    //     );
-    //     this.router.navigate(['/login']);
-    //   }
-    // });
+    this.afAuth.currentUser.then((user) => {
+      if (user && user.emailVerified) {
+      } else {
+        this.alerts.alertInfo(
+          'No disponible',
+          'Para acceder a este apartado debes iniciar sesión'
+        );
+        this.router.navigate(['/login']);
+      }
+    });
   }
 
   extractInformation() {
