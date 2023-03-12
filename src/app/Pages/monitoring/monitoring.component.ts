@@ -33,7 +33,7 @@ export class MonitoringComponent implements OnInit {
       data: [],
     },
     { unity: '(ppm)', collection: 'CO2', variable: 'CO2', data: [] },
-    { unity: '(U)', collection: 'Rad', variable: 'Radiación Solar', data: [] },
+    { unity: '(&#956;mol/s.m&#178;)', collection: 'Rad', variable: 'Radiación Solar', data: [] },
   ];
   constructor(
     private firestore: FireStoreService,

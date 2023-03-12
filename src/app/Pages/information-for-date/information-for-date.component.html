@@ -1,149 +1,171 @@
 <div class="row">
-    <div class="col p-3">
-      <form [formGroup]="filterDate" (submit)="consultDataForDate()">
-        <div class="form-floating mb-3">
-          <select
-            class="form-select"
-            id="floatingSelect"
-            formControlName="variableDate"
-            (change)="hideInformation()"
-          >
-            <option *ngFor="let variable of variables" [value]="variable">
-              {{ variable }}
-            </option>
-          </select>
-          <label for="floatingSelect">Selecciona una variable</label>
-        </div>
-        <div class="row g-2">
-          <div class="col-md">
-            <div class="form-floating">
-              <input type="date" class="form-control" id="floatingInputGrid" formControlName="initialDate">
-              <label for="floatingInputGrid">Fecha Inicial</label>
-            </div>
-          </div>
-          <div class="col-md">
-            <div class="form-floating">
-              <input type="date" class="form-control" id="floatingInputGrid" formControlName="finalDate">
-              <label for="floatingInputGrid">Fecha Final</label>
-            </div>
-          </div>
-        </div>
-        <button class="btn btn-outline-success w-100 mt-3" type="submit">Consultar</button>
-      </form>
-      <div *ngIf="information">
-        <div class="row mt-2" *ngIf="showDate && graficDate">
-          <div class="col text-center my-2">
-            <h3>Gráfica de {{ actualVariableDate }}</h3>
-          </div>
-        </div>
-        <div *ngIf="nodeCheckboxesDate" class="mt-3">
-          <div
-            class="form-check form-switch form-check-inline"
-            *ngFor="let option of options"
-          >
+  <div class="col p-3">
+    <form [formGroup]="filterDate" (submit)="consultDataForDate()">
+      <div class="form-floating mb-3">
+        <select
+          class="form-select"
+          id="floatingSelect"
+          formControlName="variableDate"
+          (change)="hideInformation()"
+        >
+          <option *ngFor="let variable of variables" [value]="variable">
+            {{ variable }}
+          </option>
+        </select>
+        <label for="floatingSelect">Selecciona una variable</label>
+      </div>
+      <div class="row g-2">
+        <div class="col-md">
+          <div class="form-floating">
             <input
-              [(ngModel)]="option.selected"
-              (ngModelChange)="consultDataForDate()"
-              class="form-check-input"
-              type="checkbox"
-              role="switch"
-              id="nodo {{ option.id }}"
-              checked
-              [disabled]="option.disabled"
+              type="date"
+              class="form-control"
+              id="floatingInputGrid"
+              formControlName="initialDate"
             />
-            <label class="form-check-label" for="nodo {{ option.id }}"
-              >Nodo {{ option.id }}</label
-            >
+            <label for="floatingInputGrid">Fecha Inicial</label>
           </div>
         </div>
-        <div class="my-3" *ngIf="showDate">
-          <button type="button" class="btn btn-outline-primary btn-sm" (click)="allNodesDate()">Ver todos los nodos</button>
-        </div>
-        <div class="grafic" *ngIf="showDate && graficDate">
-          <ngx-charts-line-chart
-            [legend]="true"
-            [showXAxisLabel]="false"
-            [showYAxisLabel]="true"
-            [xAxis]="true"
-            [yAxis]="true"
-            [yAxisLabel]="YlabelDate"
-            [timeline]="true"
-            [results]="filterDataDate"
-            [autoScale]="true"
-            legendTitle="Nodos"
-            [legendPosition]="legendPosition"
-            [scheme]="colorScheme"
-          >
-          </ngx-charts-line-chart>
-        </div>
-        <div class="row mt-2" *ngIf="showDate && graficDate">
-          <div class="col text-center my-2">
-            <h3>Datos de {{ actualVariableDate }}</h3>
-          </div>
-        </div>
-        <div class="row my-3" *ngIf="showDate && graficDate">
-          <div class="col">
-            <h2>
-              El umbral establecido de
-              {{ actualVariableDate | lowercase }} es: {{ umbralDate }}
-              {{ unityDate }}
-            </h2>
-            <h2>
-              El promedio total de {{ actualVariableDate | lowercase }} es:
-              {{ mediaMeasureDate }} {{ unityDate }}
-            </h2>
-            <h2>
-              El valor máximo de
-              {{ actualVariableDate | lowercase }} registrado fue de:
-              {{ maxMeasureDate }} {{ unityDate }}
-            </h2>
-            <h2>
-              El valor mínimo de
-              {{ actualVariableDate | lowercase }} registrado fue de:
-              {{ minMeasureDate }} {{ unityDate }}
-            </h2>
-            <table
-              class="table table-striped table-bordered border-dark mt-3"
-              id="variableTableForDate"
-            >
-              <thead>
-                <tr>
-                  <th scope="col">Fecha</th>
-                  <th scope="col">Hora</th>
-                  <th scope="col">Medida {{ unityDate }}</th>
-                  <th scope="col">Nodo (ID)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  [ngClass]="{
-                    'table-danger table-bordered border-dark':
-                      vari.measure >= umbralDate
-                  }"
-                  *ngFor="let vari of dataTableDate"
-                >
-                  <td>{{ vari.dateAndTime | date : "dd/MM/yyyy" }}</td>
-                  <td>{{ vari.dateAndTime | date : "hh:mm a" }}</td>
-                  <td>{{ vari.measure }}</td>
-                  <td>{{ vari.node }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="row text-center" *ngIf="showDate && graficDate">
-          <div class="col">
-            <app-button
-              color="green"
-              text=" Exportar Excel"
-              (click)="
-                exportExcel('variableTableForDate', 'Reporte_de_variables_por_fecha')
-              "
-              [showExcel]="true"
-            ></app-button>
+        <div class="col-md">
+          <div class="form-floating">
+            <input
+              type="date"
+              class="form-control"
+              id="floatingInputGrid"
+              formControlName="finalDate"
+            />
+            <label for="floatingInputGrid">Fecha Final</label>
           </div>
         </div>
       </div>
-      <app-no-data *ngIf="noData" text="No hay datos para mostrar"></app-no-data>
+      <button class="btn btn-outline-success w-100 mt-3" type="submit">
+        Consultar
+      </button>
+    </form>
+    <div *ngIf="information">
+      <div class="row mt-2" *ngIf="showDate && graficDate">
+        <div class="col text-center my-2">
+          <h3>Gráfica de {{ actualVariableDate }}</h3>
+        </div>
+      </div>
+      <div *ngIf="nodeCheckboxesDate" class="mt-3">
+        <div
+          class="form-check form-switch form-check-inline"
+          *ngFor="let option of options"
+        >
+          <input
+            [(ngModel)]="option.selected"
+            (ngModelChange)="consultDataForDate()"
+            class="form-check-input"
+            type="checkbox"
+            role="switch"
+            id="nodo {{ option.id }}"
+            checked
+            [disabled]="option.disabled"
+          />
+          <label class="form-check-label" for="nodo {{ option.id }}"
+            >Nodo {{ option.id }}</label
+          >
+        </div>
+      </div>
+      <div class="my-3" *ngIf="showDate">
+        <button
+          type="button"
+          class="btn btn-outline-primary btn-sm"
+          (click)="allNodesDate()"
+        >
+          Ver todos los nodos
+        </button>
+      </div>
+      <div class="grafic" *ngIf="showDate && graficDate">
+        <ngx-charts-line-chart
+          [legend]="true"
+          [showXAxisLabel]="false"
+          [showYAxisLabel]="true"
+          [xAxis]="true"
+          [yAxis]="true"
+          [yAxisLabel]="YlabelDate"
+          [timeline]="true"
+          [results]="filterDataDate"
+          [autoScale]="true"
+          legendTitle="Nodos"
+          [legendPosition]="legendPosition"
+          [scheme]="colorScheme"
+        >
+        </ngx-charts-line-chart>
+      </div>
+      <div class="row mt-2" *ngIf="showDate && graficDate">
+        <div class="col text-center my-2">
+          <h3>Datos de {{ actualVariableDate }}</h3>
+        </div>
+      </div>
+      <div class="row my-3" *ngIf="showDate && graficDate">
+        <div class="col">
+          <h2
+            innerHTML="El umbral establecido de {{
+              actualVariableDate | lowercase
+            }} es: {{ umbralDate }} {{ unityDate }}"
+          ></h2>
+          <h2
+            innerHTML="El promedio total de {{
+              actualVariableDate | lowercase
+            }} es:  {{ mediaMeasureDate }} {{ unityDate }}"
+          ></h2>
+          <h2
+            innerHTML="El valor máximo de {{
+              actualVariableDate | lowercase
+            }} registrado fue de: {{ maxMeasureDate }} {{ unityDate }}"
+          ></h2>
+          <h2
+            innerHTML="El valor mínimo de {{
+              actualVariableDate | lowercase
+            }} registrado fue de: {{ minMeasureDate }} {{ unityDate }}"
+          ></h2>
+          <table
+            class="table table-striped table-bordered border-dark mt-3"
+            id="variableTableForDate"
+          >
+            <thead>
+              <tr>
+                <th scope="col">Fecha</th>
+                <th scope="col">Hora</th>
+                <th scope="col" innerHTML="Medida {{ unityDate }}"></th>
+                <th scope="col">Nodo (ID)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                [ngClass]="{
+                  'table-danger table-bordered border-dark':
+                    vari.measure >= umbralDate
+                }"
+                *ngFor="let vari of dataTableDate"
+              >
+                <td>{{ vari.dateAndTime | date : "dd/MM/yyyy" }}</td>
+                <td>{{ vari.dateAndTime | date : "hh:mm a" }}</td>
+                <td>{{ vari.measure }}</td>
+                <td>{{ vari.node }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row text-center" *ngIf="showDate && graficDate">
+        <div class="col">
+          <app-button
+            color="green"
+            text=" Exportar Excel"
+            (click)="
+              exportExcel(
+                'variableTableForDate',
+                'Reporte_de_variables_por_fecha'
+              )
+            "
+            [showExcel]="true"
+          ></app-button>
+        </div>
+      </div>
     </div>
+    <app-no-data *ngIf="noData" text="No hay datos para mostrar"></app-no-data>
   </div>
+</div>

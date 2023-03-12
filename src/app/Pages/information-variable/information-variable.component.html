@@ -95,7 +95,7 @@
             <td>{{ vari.dateAndTime | date : "dd/MM/yyyy" }}</td>
             <td>{{ vari.dateAndTime | date : "hh:mm a" }}</td>
             <td>{{ vari.measure }}</td>
-            <td>{{ vari.variable }}</td>
+            <td innerHTML="{{ vari.variable }}"></td>
           </tr>
         </tbody>
       </table>

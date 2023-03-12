@@ -14,14 +14,14 @@ export class VariablesComponent implements OnInit {
     {
       title: 'Temperatura',
       img: '../../../assets/temperatura.png',
-      sensor: 'PT100',
+      sensor: 'SHT 40',
       lastMeasure: '',
       dateAndTime: '',
     },
     {
       title: 'Humedad',
       img: '../../../assets/humedad.png',
-      sensor: 'PT100',
+      sensor: 'SHT 31',
       lastMeasureA: '',
       lastMeasureS: '',
       dateAndTimeA: '',
@@ -30,14 +30,14 @@ export class VariablesComponent implements OnInit {
     {
       title: 'CO',
       img: '../../../assets/co2.png',
-      sensor: 'PT100',
+      sensor: 'NDIR',
       lastMeasure: '',
       dateAndTime: '',
     },
     {
-      title: 'Radiación Solar',
+      title: 'Radiación solar',
       img: '../../../assets/rd.png',
-      sensor: 'PT100',
+      sensor: 'GY 30',
       lastMeasure: '',
       dateAndTime: '',
     },
@@ -60,8 +60,7 @@ export class VariablesComponent implements OnInit {
         data[0].payload.doc.data().dateAndTime.seconds * 1000 +
           data[0].payload.doc.data().dateAndTime.nanoseconds / 1000000
       );
-      this.cards[1].lastMeasureA =
-        data[0].payload.doc.data().measure + ' %';
+      this.cards[1].lastMeasureA = data[0].payload.doc.data().measure + ' %';
       if (date.getMinutes() == 0) {
         this.cards[1].dateAndTimeA =
           date.getDate() +
@@ -90,8 +89,7 @@ export class VariablesComponent implements OnInit {
         data[0].payload.doc.data().dateAndTime.seconds * 1000 +
           data[0].payload.doc.data().dateAndTime.nanoseconds / 1000000
       );
-      this.cards[1].lastMeasureS =
-        data[0].payload.doc.data().measure + ' %';
+      this.cards[1].lastMeasureS = data[0].payload.doc.data().measure + ' %';
       if (date.getMinutes() == 0) {
         this.cards[1].dateAndTimeS =
           date.getDate() +
@@ -127,7 +125,7 @@ export class VariablesComponent implements OnInit {
         data[0].payload.doc.data().dateAndTime.seconds * 1000 +
           data[0].payload.doc.data().dateAndTime.nanoseconds / 1000000
       );
-      this.parseTime(3, data, 'U', date);
+      this.parseTime(3, data, ' &#956;mol/s.m&#178;', date);
     });
   }
 

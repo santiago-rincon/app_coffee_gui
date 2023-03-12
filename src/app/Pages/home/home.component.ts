@@ -8,8 +8,8 @@ import Swal from 'sweetalert2';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  sesion!: boolean;
-  constructor(private afAuth: AngularFireAuth,private router:Router) {}
+  sesion: boolean = false;
+  constructor(private afAuth: AngularFireAuth, private router: Router) {}
 
   ngOnInit(): void {
     this.afAuth.currentUser.then((user) => {
@@ -22,19 +22,21 @@ export class HomeComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    Swal.fire({
-      icon: 'info',
-      title: '¿No sabes como navegar en la aplicación?',
-      text: 'Descargar la guía de usario, o ve a la sección de preguntas frecuentes',
-      footer:
-        '<a href="/assets/album1.jpg" download="gía_de_usuario.jpg">Click aquí para descargar</a>',
+    if (!this.sesion) {
+      Swal.fire({
+        icon: 'info',
+        title: '¿No sabes como navegar en la aplicación?',
+        text: 'Descargar la guía de usuario, o ve a la sección de preguntas frecuentes',
+        footer:
+          '<a href="/assets/album1.jpg" download="gía_de_usuario.jpg">Click aquí para descargar</a>',
         confirmButtonText: 'Ir a preguntas frecuentes',
         confirmButtonColor: '#3085d6',
-      showCloseButton: true
-    }).then(result=>{
-      if (result.isConfirmed) {
-        this.router.navigate(['/help']);
-      }
-    })
+        showCloseButton: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/help']);
+        }
+      });
+    }
   }
 }

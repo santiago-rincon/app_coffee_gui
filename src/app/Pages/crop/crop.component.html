@@ -46,6 +46,20 @@
             Ubicación
           </button>
         </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="pills-ubication-nodos-tab"
+            data-bs-toggle="pill"
+            data-bs-target="#pills-ubication-nodos"
+            type="button"
+            role="tab"
+            aria-controls="pills-ubication-nodos"
+            aria-selected="false"
+          >
+            Ubicación de los nodos
+          </button>
+        </li>
       </ul>
       <div class="tab-content" id="pills-tabContent">
         <div
@@ -167,6 +181,40 @@
                   text="¿Como Llegar?"
                   (click)="redirect(latMe, longMe)"
                 ></app-button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="tab-pane fade"
+          id="pills-ubication-nodos"
+          role="tabpanel"
+          aria-labelledby="pills-ubication-nodos-tab"
+          tabindex="0"
+        >
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col mb-5 infoLocation mt-1">
+                <h5>
+                  El cultivo de café de la unidad Agroambiental <i>"La Esperanza"</i> de la
+                  Universidad de Cundinamarca cuenta actualmente con {{nodes.length}} nodos, míralos en el siguiente mapa.
+                </h5>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-10 offset-1 px-1 py-1 rounded map">
+                <agm-map
+                  [latitude]="4.277872"
+                  [longitude]="-74.387325"
+                  [zoom]="23"
+                  [mapTypeId]="'satellite'"
+                >
+                  <agm-marker *ngFor="let node of nodes" [latitude]="node.latitude" [longitude]="node.longitude">
+                    <agm-info-window [isOpen]="false"
+                      >Nodo {{node.nodeId}}
+                    </agm-info-window>
+                  </agm-marker>
+                </agm-map>
               </div>
             </div>
           </div>

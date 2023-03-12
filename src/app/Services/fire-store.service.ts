@@ -22,6 +22,10 @@ export class FireStoreService {
     return this.firestore.collection('Umbrales').snapshotChanges();
   }
 
+  getDataIntervals(): Observable<any[]> {
+    return this.firestore.collection('Umbrales/yB1NAzpx0V3m5BfLzuEJ/interval').snapshotChanges();
+  }
+
   getNodes(): Observable<any[]> {
     return this.firestore.collection('Nodos').snapshotChanges();
   }
@@ -45,11 +49,4 @@ export class FireStoreService {
   putData(data:any, collection:string){
     return this.firestore.collection(collection).doc().set(data)
   }
-
-  // arrayFilter(array: any[], date: string): any[] {
-  //   const filter = array.filter((element, index) => {
-  //     return element.date === date;
-  //   });
-  //   return filter
-  // }
 }

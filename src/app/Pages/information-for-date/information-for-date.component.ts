@@ -123,7 +123,11 @@ export class InformationForDateComponent implements OnInit {
       let filter = this.dataVariables.filter((a) => a.variable == variableDate);
       let allData = filter[0].data;
       this.unityDate = filter[0].unity;
-      this.YlabelDate = variableDate + ' ' + this.unityDate;
+      if (this.unityDate=='(&#956;mol/s.m&#178;)') {
+        this.YlabelDate = variableDate + ' (μmol/s.m2)';
+      } else {
+        this.YlabelDate = variableDate + ' ' + this.unityDate; 
+      }
       this.umbralDate = this.dataUmbral[0][`${filter[0].collection}`];
       this.filterDataDate = [];
       let maxDate = 0;

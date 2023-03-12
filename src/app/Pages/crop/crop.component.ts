@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Router } from '@angular/router';
 import { AlertsService } from 'src/app/Services/alerts.service';
+import { FireStoreService } from 'src/app/Services/fire-store.service';
 import { info } from '../../Data/informationCrop';
 
 @Component({
@@ -10,6 +9,7 @@ import { info } from '../../Data/informationCrop';
   styleUrls: ['./crop.component.css'],
 })
 export class CropComponent implements OnInit {
+  nodes: any[] = [];
   latFarm: number = 4.276781237312783;
   longFarm: number = -74.38679698232124;
   latMe: number = 0;
@@ -45,23 +45,19 @@ export class CropComponent implements OnInit {
   ];
   info: any[] = info;
   constructor(
-    private afAuth: AngularFireAuth,
     private alerts: AlertsService,
-    private router: Router
+    private firestore: FireStoreService
   ) {}
 
   ngOnInit(): void {
-    // this.afAuth.currentUser.then((user) => {
-    //   if (user && user.emailVerified) {
-    //   } else {
-    //     this.alerts.alertInfo(
-    //       'No disponible',
-    //       'Para acceder a este apartado debes iniciar sesión'
-    //     );
-    //     this.router.navigate(['/login']);
-    //   }
-    // });
+    this.firestore.getNodes().subscribe((nodesList) => {
+      this.nodes = [];
+      nodesList.forEach((element) => {
+        this.nodes.push(element.payload.doc.data());
+      });
+    });
   }
+
 
   getLocation() {
     navigator.geolocation.getCurrentPosition((position) => {

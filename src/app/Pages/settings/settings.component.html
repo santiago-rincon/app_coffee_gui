@@ -11,15 +11,11 @@
       <div class="col">
         <ul>
           <li class="head"><strong>Umbrales Actuales</strong></li>
-          <!-- <li>Temperatura: 10 °C</li>
-          <li>Humedad: 10 %</li>
-          <li>CO2: 10 ppm</li>
-          <li>Radiación Solar: 10 U</li> -->
           <li>Temperatura: {{ dataUmbral[0].Temperatura }} °C</li>
           <li>Humedad Ambiente: {{ dataUmbral[0].HumedadA }} %</li>
           <li>Humedad del Suelo: {{ dataUmbral[0].HumedadS }} %</li>
-          <li>CO2: {{ dataUmbral[0].CO2 }} ppm</li>
-          <li>Radiación Solar: {{ dataUmbral[0].Rad }} U</li>
+          <li>CO<sub>2</sub>: {{ dataUmbral[0].CO2 }} ppm</li>
+          <li>Radiación Solar: {{ dataUmbral[0].Rad }} &#956;mol/s.m&#178;</li>
         </ul>
       </div>
     </div>
@@ -49,6 +45,69 @@
           />
           <span class="input-group-text" id="basic-addon2">{{ unity }}</span>
         </div>
+        <button type="submit" class="btn btn-success w-100 mb-3">
+          Actualizar
+        </button>
+      </form>
+    </div>
+  </div>
+  <!-- Modificación de intervalos -->
+  <div class="row align-items-center">
+    <div class="col text-center my-3">
+      <h3>Modificar intervalos de medida ⏱</h3>
+    </div>
+  </div>
+  <div class="row align-items-center">
+    <div class="col-sm-12 col-xl-5">
+      <div class="col">
+        <ul>
+          <li class="info">
+            En este módulo podrás modificar el intervalo de tiempo en el cual se
+            toman medidas de cada nodo, deberás especificar un número y una
+            unidad de tiempo.
+          </li>
+          <li class="info">
+            Intervalo de medidas actual: {{ dataIntervals[0].minutes>59?dataIntervals[0].minutes/60:dataIntervals[0].minutes }} {{dataIntervals[0].minutes>59?'Horas':'Minutos'}}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-sm-12 col-xl-7 pe-xl-5">
+      <form [formGroup]="updateIntervals" (submit)="updateInterval()">
+        <div class="form-floating my-3">
+          <select
+            class="form-select"
+            id="floatingSelect"
+            aria-label="Floating label select example"
+            (change)="formInterval($event)"
+            formControlName="timeUnity"
+          >
+            <option>Minutos</option>
+            <option>Horas</option>
+          </select>
+          <label for="floatingSelect"
+            >¿En que unidad de tiempo quieres actualizar el intervalo de
+            medidas?</label
+          >
+        </div>
+        <div class="bg-light my-3 rounded-2 pb-1">
+          <h6 class="text-secondary pt-2 ps-3">
+            ¿Cada cuanto deseas tomar medidas?
+          </h6>
+          <input
+            #interval
+            type="range"
+            class="form-range px-2"
+            min="1"
+            max="59"
+            formControlName="time"
+            (change)="formInterval($event)"
+          />
+          <h6 class="text-secondary pt-2 ps-3">
+            {{ valueInterval }} {{ unityTimeShow+(valueInterval>1?'s':'') }}
+          </h6>
+        </div>
+        <!--  -->
         <button type="submit" class="btn btn-success w-100 mb-3">
           Actualizar
         </button>
@@ -100,7 +159,7 @@
   <!-- Agregar nodos sensores -->
   <div class="row align-items-center">
     <div class="col text-center my-3">
-      <h3>Agregar nodo sensor ➕</h3>
+      <h3>Agregar nodo ➕</h3>
     </div>
   </div>
   <div class="row align-items-center">
@@ -108,11 +167,11 @@
       <div class="col">
         <ul>
           <li class="info">
-            En este módulo podrás agregar un nuevo nodo sensor, deberás
+            En este módulo podrás agregar un nuevo nodo, deberás
             especificar su dirección MAC y un identificador.
           </li>
           <li class="info">
-            Nodos sensores registrados: {{ nodesList.length }}
+            Nodos registrados: {{ nodesList.length }}
           </li>
         </ul>
       </div>
@@ -128,6 +187,8 @@
             autocomplete="off"
             style="text-transform: uppercase"
             maxlength="17"
+            (keyup)="addDots($event)"
+            #macInput
           />
           <label for="floatingInput"
             >Dirección MAC (Ej: 00:11:22:33:44:55)</label
@@ -160,13 +221,23 @@
         <div class="row g-2">
           <div class="col-md">
             <div class="form-floating">
-              <input type="number" class="form-control" id="lat" formControlName="lat">
+              <input
+                type="number"
+                class="form-control"
+                id="lat"
+                formControlName="lat"
+              />
               <label for="lat">Latitud</label>
             </div>
           </div>
           <div class="col-md">
             <div class="form-floating">
-              <input type="number" class="form-control" id="lon" formControlName="lon">
+              <input
+                type="number"
+                class="form-control"
+                id="lon"
+                formControlName="lon"
+              />
               <label for="lon">Lonngitud</label>
             </div>
           </div>
@@ -174,7 +245,7 @@
         <!--  -->
         <div class="bg-light my-3 rounded-2 pb-1">
           <h6 class="text-secondary pt-2 ps-3">
-            ¿Cómo deseas registrar el nodo sensor?
+            ¿Cómo deseas registrar el nodo?
           </h6>
           <div class="form-check form-check-inline ms-3">
             <input
@@ -205,7 +276,7 @@
   <!-- Cambiar estado de los nodos sensores -->
   <div class="row align-items-center" id="change-nodes">
     <div class="col text-center my-3">
-      <h3>Modificar estado de los nodo sensor ⚒</h3>
+      <h3>Modificar estado de los nodos ⚒</h3>
     </div>
   </div>
   <div class="row align-items-center">
@@ -213,11 +284,11 @@
       <div class="col">
         <ul>
           <li class="info">
-            En este módulo podrás encender o apagar cada uno de los nodo sensor
+            En este módulo podrás encender o apagar cada uno de los nodos
             registrados
           </li>
           <li class="info">
-            Nodos sensores registrados: {{ nodesList.length }}
+            Nodos registrados: {{ nodesList.length }}
           </li>
         </ul>
       </div>
@@ -236,18 +307,34 @@
               *ngFor="let unavaliableId of unavaliableIds"
               [value]="unavaliableId"
             >
-              Nodo sensor {{ unavaliableId }}
+              Nodo {{ unavaliableId }}
             </option>
           </select>
-          <label for="floatingSelect">Selecciona un nodo sensor</label>
+          <label for="floatingSelect">Selecciona un nodo</label>
         </div>
         <div class="form-floating mb-3">
           <span class="text-light">Estado actual: </span>
-          <span class="success pb-2" *ngIf="select && actualState">Encendido</span>
-          <span class="text-danger pb-2" *ngIf="select && !actualState">Apagado</span>
+          <span class="success pb-2" *ngIf="select && actualState"
+            >Encendido</span
+          >
+          <span class="text-danger pb-2" *ngIf="select && !actualState"
+            >Apagado</span
+          >
         </div>
-        <button type="submit" class="btn btn-success w-100 mb-3" *ngIf="!actualState">Encender</button>
-        <button type="submit" class="btn btn-danger w-100 mb-3" *ngIf="actualState">Apagar</button>
+        <button
+          type="submit"
+          class="btn btn-success w-100 mb-3"
+          *ngIf="!actualState"
+        >
+          Encender
+        </button>
+        <button
+          type="submit"
+          class="btn btn-danger w-100 mb-3"
+          *ngIf="actualState"
+        >
+          Apagar
+        </button>
       </form>
     </div>
   </div>

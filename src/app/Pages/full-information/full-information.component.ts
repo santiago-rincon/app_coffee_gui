@@ -57,7 +57,7 @@ export class FullInformationComponent implements OnInit {
       data: [],
     },
     { unity: '(ppm)', collection: 'CO2', variable: 'CO2', data: [] },
-    { unity: '(U)', collection: 'Rad', variable: 'Radiación Solar', data: [] },
+    { unity: '(&#956;mol/s.m&#178;)', collection: 'Rad', variable: 'Radiación Solar', data: [] },
   ];
   @Input() options: any[] = [];
 
@@ -84,7 +84,11 @@ export class FullInformationComponent implements OnInit {
     let filter = this.dataVariables.filter((a) => a.variable == variable);
     let allData = filter[0].data;
     this.unity = filter[0].unity;
-    this.Ylabel = variable + ' ' + this.unity;
+    if (this.unity=='(&#956;mol/s.m&#178;)') {
+      this.Ylabel = variable + ' (μmol/s.m2)';
+    } else {
+      this.Ylabel = variable + ' ' + this.unity; 
+    }
     this.umbral = this.dataUmbral[0][`${filter[0].collection}`];
     this.filterData = [];
     let maxDate = 0;

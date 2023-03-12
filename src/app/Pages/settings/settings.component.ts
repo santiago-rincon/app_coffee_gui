@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -6,6 +6,7 @@ import { AlertsService } from 'src/app/Services/alerts.service';
 import { FireStoreService } from 'src/app/Services/fire-store.service';
 import Swal from 'sweetalert2';
 import { adminHashes } from 'src/app/Data/hashes';
+import { data } from 'jquery';
 
 @Component({
   selector: 'app-settings',
@@ -13,10 +14,14 @@ import { adminHashes } from 'src/app/Data/hashes';
   styleUrls: ['./settings.component.css'],
 })
 export class SettingsComponent implements OnInit {
+  unityTimeShow: string = 'Minuto';
+  valueInterval: number = 1;
+  unityIntervalSelected: boolean = false;
   userAdmin: boolean = false;
   registersShow: boolean = false;
   registers: number = 0;
   dataUmbral: any[] = [];
+  dataIntervals: any[] = [];
   variableData: any[] = [];
   nodesList: any[] = [];
   avaliableIds: any[] = [];
@@ -28,6 +33,7 @@ export class SettingsComponent implements OnInit {
   deleteRegister: FormGroup;
   addNode: FormGroup;
   changeNode: FormGroup;
+  updateIntervals: FormGroup;
   variables = [
     'Temperatura',
     'Humedad Ambiente',
@@ -63,6 +69,10 @@ export class SettingsComponent implements OnInit {
     this.changeNode = fb.group({
       nodeIdChange: ['', [Validators.required]],
     });
+    this.updateIntervals = fb.group({
+      timeUnity: ['Minutos', [Validators.required]],
+      time: [1, [Validators.required, Validators.pattern(/^([1-59]+)$/)]],
+    });
     this.extractThreshold();
     this.extractNode();
   }
@@ -86,11 +96,23 @@ export class SettingsComponent implements OnInit {
     // });
   }
 
+  @ViewChild('interval') interval!: ElementRef;
+  @ViewChild('macInput') macInput!: ElementRef;
+
   extractThreshold() {
     this.firestore.getDataThreshold().subscribe((data) => {
       data.forEach((element) => {
         this.dataUmbral = [];
         this.dataUmbral.push({
+          id: element.payload.doc.id,
+          ...element.payload.doc.data(),
+        });
+      });
+    });
+    this.firestore.getDataIntervals().subscribe((data) => {
+      data.forEach((element) => {
+        this.dataIntervals = [];
+        this.dataIntervals.push({
           id: element.payload.doc.id,
           ...element.payload.doc.data(),
         });
@@ -244,6 +266,43 @@ export class SettingsComponent implements OnInit {
     }
   }
 
+  updateInterval() {
+    const timeUnity = this.updateIntervals.value.timeUnity;
+    const time = this.updateIntervals.value.time;
+    console.log(time, timeUnity);
+    if (timeUnity == '' || time == '') {
+      this.alerts.alertError('Completa todos los campos del formulario');
+    } else {
+      let timeSend = 0;
+      if (timeUnity == 'Horas') {
+        timeSend = time * 60;
+      } else {
+        timeSend = time;
+      }
+      this.firestore
+        .updateData(
+          this.dataIntervals[0].id,
+          { minutes: timeSend },
+          'Umbrales/yB1NAzpx0V3m5BfLzuEJ/interval'
+        )
+        .then(() => {
+          this.alerts.alertSuccess(
+            'El intervalo de medida fue cambiado a ' +
+              time +
+              ' ' +
+              timeUnity.toLowerCase(),
+            4000,
+            'Actualizado'
+          );
+        })
+        .catch((e) => {
+          this.alerts.alertError(
+            'Ha ocurrido un error al intentar actualiar el intervalo de medidas'
+          );
+        });
+    }
+  }
+
   deleteData() {
     const variable = this.deleteRegister.value.deleteVariable;
     if (variable == '') {
@@ -333,8 +392,8 @@ export class SettingsComponent implements OnInit {
     let id = this.addNode.value.nodeId;
     let mac = this.addNode.value.mac;
     let nodeStatus = this.addNode.value.nodeStatus;
-    let lat = this.addNode.value.lat
-    let lon = this.addNode.value.lon
+    let lat = this.addNode.value.lat;
+    let lon = this.addNode.value.lon;
     let regex = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/;
     if (!mac || !regex.test(mac)) {
       this.alerts.alertError('La dirección MAC ingresada es incorrecta');
@@ -342,6 +401,8 @@ export class SettingsComponent implements OnInit {
       this.alerts.alertError('Selecciona un identificador valido');
     } else if (nodeStatus == '') {
       this.alerts.alertError('¿Cómo deseas registrar el nodo sensor?');
+    } else if (lat == '' || lon == '') {
+      this.alerts.alertError('Debes ingresar las coodenadas del nodo')
     } else {
       for (const node of this.nodesList) {
         if (node.mac == mac) {
@@ -361,7 +422,7 @@ export class SettingsComponent implements OnInit {
               nodeId: parseInt(id),
               nodeStatus: nodeStatus == 'true' ? true : false,
               latitude: lat,
-              longitude: lon
+              longitude: lon,
             },
             'Nodos'
           )
@@ -413,7 +474,7 @@ export class SettingsComponent implements OnInit {
             'success'
           );
           this.select = false;
-          this.changeNode.get('nodeIdChange')?.setValue('')
+          this.changeNode.get('nodeIdChange')?.setValue('');
         }
       });
     }
@@ -425,5 +486,34 @@ export class SettingsComponent implements OnInit {
     this.actualState = data[0].nodeStatus;
     this.idNodeSensor = data[0].id;
     this.select = true;
+  }
+
+  data(e: any) {
+    this.valueInterval = e.target.value;
+  }
+
+  formInterval(e: any) {
+    if (e.target.value == 'Minutos') {
+      this.interval.nativeElement.min = 1;
+      this.interval.nativeElement.max = 59;
+      this.updateIntervals.get('time')?.setValue(1);
+      this.valueInterval = 1;
+      this.unityTimeShow = 'Minuto';
+    } else if (e.target.value == 'Horas') {
+      this.interval.nativeElement.min = 1;
+      this.interval.nativeElement.max = 24;
+      this.updateIntervals.get('time')?.setValue(1);
+      this.valueInterval = 1;
+      this.unityTimeShow = 'Hora';
+    } else {
+      this.valueInterval = e.target.value;
+    }
+  }
+
+  addDots(e:any){
+    let mac = e.target.value
+    if(mac.length==2 || mac.length==5 || mac.length==8 || mac.length==11 || mac.length==14){
+      this.macInput.nativeElement.value=mac+':'
+    }
   }
 }
