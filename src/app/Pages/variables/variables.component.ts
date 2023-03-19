@@ -16,7 +16,7 @@ export class VariablesComponent implements OnInit {
       img: '../../../assets/temperatura.png',
       sensor: 'SHT 40',
       lastMeasure: '',
-      dateAndTime: '',
+      dateAndTime: new Date(),
     },
     {
       title: 'Humedad',
@@ -24,22 +24,22 @@ export class VariablesComponent implements OnInit {
       sensor: 'SHT 31',
       lastMeasureA: '',
       lastMeasureS: '',
-      dateAndTimeA: '',
-      dateAndTimeS: '',
+      dateAndTimeA: new Date(),
+      dateAndTimeS: new Date(),
     },
     {
       title: 'CO',
       img: '../../../assets/co2.png',
       sensor: 'NDIR',
       lastMeasure: '',
-      dateAndTime: '',
+      dateAndTime: new Date(),
     },
     {
       title: 'Radiación solar',
       img: '../../../assets/rd.png',
       sensor: 'GY 30',
       lastMeasure: '',
-      dateAndTime: '',
+      dateAndTime: new Date(),
     },
   ];
   constructor(
@@ -49,83 +49,39 @@ export class VariablesComponent implements OnInit {
     private firestore: FireStoreService
   ) {
     this.firestore.getLastData('Temperatura').subscribe((data) => {
-      const date = new Date(
+      this.cards[0].dateAndTime = new Date(
         data[0].payload.doc.data().dateAndTime.seconds * 1000 +
           data[0].payload.doc.data().dateAndTime.nanoseconds / 1000000
       );
-      this.parseTime(0, data, '°C', date);
+      this.cards[0].lastMeasure=data[0].payload.doc.data().measure + ' °C'
     });
     this.firestore.getLastData('HumedadA').subscribe((data) => {
-      const date = new Date(
+      this.cards[1].dateAndTimeA = new Date(
         data[0].payload.doc.data().dateAndTime.seconds * 1000 +
           data[0].payload.doc.data().dateAndTime.nanoseconds / 1000000
       );
       this.cards[1].lastMeasureA = data[0].payload.doc.data().measure + ' %';
-      if (date.getMinutes() == 0) {
-        this.cards[1].dateAndTimeA =
-          date.getDate() +
-          '/' +
-          (date.getMonth() + 1) +
-          '/' +
-          date.getFullYear() +
-          '-' +
-          date.getHours() +
-          ':00';
-      } else {
-        this.cards[1].dateAndTimeA =
-          date.getDate() +
-          '/' +
-          (date.getMonth() + 1) +
-          '/' +
-          date.getFullYear() +
-          '-' +
-          date.getHours() +
-          ':' +
-          date.getMinutes();
-      }
     });
     this.firestore.getLastData('HumedadS').subscribe((data) => {
-      const date = new Date(
+      this.cards[1].dateAndTimeS = new Date(
         data[0].payload.doc.data().dateAndTime.seconds * 1000 +
           data[0].payload.doc.data().dateAndTime.nanoseconds / 1000000
       );
       this.cards[1].lastMeasureS = data[0].payload.doc.data().measure + ' %';
-      if (date.getMinutes() == 0) {
-        this.cards[1].dateAndTimeS =
-          date.getDate() +
-          '/' +
-          (date.getMonth() + 1) +
-          '/' +
-          date.getFullYear() +
-          '-' +
-          date.getHours() +
-          ':00';
-      } else {
-        this.cards[1].dateAndTimeS =
-          date.getDate() +
-          '/' +
-          (date.getMonth() + 1) +
-          '/' +
-          date.getFullYear() +
-          '-' +
-          date.getHours() +
-          ':' +
-          date.getMinutes();
-      }
     });
     this.firestore.getLastData('CO2').subscribe((data) => {
-      const date = new Date(
+      this.cards[2].dateAndTime = new Date(
         data[0].payload.doc.data().dateAndTime.seconds * 1000 +
           data[0].payload.doc.data().dateAndTime.nanoseconds / 1000000
       );
-      this.parseTime(2, data, 'ppm', date);
+      this.cards[2].lastMeasure = data[0].payload.doc.data().measure + ' ppm';
     });
     this.firestore.getLastData('Rad').subscribe((data) => {
-      const date = new Date(
+      this.cards[3].dateAndTimeS = new Date(
         data[0].payload.doc.data().dateAndTime.seconds * 1000 +
           data[0].payload.doc.data().dateAndTime.nanoseconds / 1000000
       );
-      this.parseTime(3, data, ' &#956;mol/s.m&#178;', date);
+      this.cards[3].lastMeasureS = data[0].payload.doc.data().measure + ' &#956;mol/s.m&#178;';
     });
   }
 
@@ -140,32 +96,5 @@ export class VariablesComponent implements OnInit {
         this.router.navigate(['/login']);
       }
     });
-  }
-
-  parseTime(position: number, data: any[], unity: string, date: any) {
-    this.cards[position].lastMeasure =
-      data[0].payload.doc.data().measure + ' ' + unity;
-    if (date.getMinutes() == 0) {
-      this.cards[position].dateAndTime =
-        date.getDate() +
-        '/' +
-        (date.getMonth() + 1) +
-        '/' +
-        date.getFullYear() +
-        '-' +
-        date.getHours() +
-        ':00';
-    } else {
-      this.cards[position].dateAndTime =
-        date.getDate() +
-        '/' +
-        (date.getMonth() + 1) +
-        '/' +
-        date.getFullYear() +
-        '-' +
-        date.getHours() +
-        ':' +
-        date.getMinutes();
-    }
   }
 }

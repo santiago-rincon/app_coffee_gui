@@ -19,7 +19,7 @@
           <h4><strong>Ultima medida registrada:</strong></h4>
           <p>{{ cards[0].lastMeasure }}</p>
           <h4><strong>Fecha y Hora:</strong></h4>
-          <p>{{ cards[0].dateAndTime }}</p>
+          <p>{{ cards[0].dateAndTime | date:'dd/MM/yyyy-hh:mm a' }}</p>
         </div>
       </div>
 
@@ -31,16 +31,16 @@
         <div class="face back">
           <h3>{{ cards[1].title }}</h3>
           <h4><strong>Sensor:</strong> {{ cards[1].sensor }}</h4>
-          <h4><strong>Ultima medida registrada:</strong></h4>
+          <h4><strong>Ultimas medidas:</strong></h4>
           <p>
             Ambiente: {{ cards[1].lastMeasureA }}<br />
             Suelo: {{ cards[1].lastMeasureS }}
           </p>
           <h4><strong>Fecha y Hora:</strong></h4>
           <p>
-            {{ cards[1].dateAndTimeA }}(Amb..)<br />{{
-              cards[1].dateAndTimeS
-            }}(Sue..)
+            {{ cards[1].dateAndTimeA | date:'dd/MM/yyyy-hh:mm a' }} (Amb..)<br />{{
+              cards[1].dateAndTimeS | date:'dd/MM/yyyy-hh:mm a'
+            }} (Sue..)
           </p>
         </div>
       </div>
@@ -57,7 +57,7 @@
           <h4><strong>Ultima medida registrada:</strong></h4>
           <p>{{ cards[2].lastMeasure }}</p>
           <h4><strong>Fecha y Hora:</strong></h4>
-          <p>{{ cards[2].dateAndTime }}</p>
+          <p>{{ cards[2].dateAndTime | date:'dd/MM/yyyy-hh:mm a' }}</p>
         </div>
       </div>
 
@@ -73,7 +73,7 @@
           <h4><strong>Ultima medida registrada:</strong></h4>
           <p innerHTML="{{ cards[3].lastMeasure }}"></p>
           <h4><strong>Fecha y Hora:</strong></h4>
-          <p>{{ cards[3].dateAndTime }}</p>
+          <p>{{ cards[3].dateAndTime | date:'dd/MM/yyyy-hh:mm a' }}</p>
         </div>
       </div>
     </div>
