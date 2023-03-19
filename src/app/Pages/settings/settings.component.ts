@@ -38,7 +38,7 @@ export class SettingsComponent implements OnInit {
     'Temperatura',
     'Humedad Ambiente',
     'Humedad del Suelo',
-    'CO2',
+    'CO<sub>2</sub>',
     'Radiación Solar',
   ];
   unity: string = '-';
@@ -78,22 +78,22 @@ export class SettingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.afAuth.currentUser.then((user) => {
-    //   for (const hash of adminHashes) {
-    //     if (user?.uid == hash) {
-    //       this.userAdmin = true;
-    //       break
-    //     }
-    //   }
-    //   if (user && user.emailVerified && this.userAdmin) {
-    //   } else {
-    //     this.alerts.alertInfo(
-    //       'No disponible',
-    //       'Para acceder a este apartado debes ser un usuario administrador'
-    //     );
-    //     this.router.navigate(['/variables/monitoring']);
-    //   }
-    // });
+    this.afAuth.currentUser.then((user) => {
+      for (const hash of adminHashes) {
+        if (user?.uid == hash) {
+          this.userAdmin = true;
+          break
+        }
+      }
+      if (user && user.emailVerified && this.userAdmin) {
+      } else {
+        this.alerts.alertInfo(
+          'No disponible',
+          'Para acceder a este apartado debes ser un usuario administrador'
+        );
+        this.router.navigate(['/variables/monitoring']);
+      }
+    });
   }
 
   @ViewChild('interval') interval!: ElementRef;
@@ -136,7 +136,7 @@ export class SettingsComponent implements OnInit {
         this.unity = 'ppm';
         break;
       case 'Radiación Solar':
-        this.unity = 'U';
+        this.unity = '&#956;mol/s.m&#178;';
         break;
     }
   }

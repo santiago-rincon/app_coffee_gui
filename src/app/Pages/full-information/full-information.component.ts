@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Color, LegendPosition, ScaleType } from '@swimlane/ngx-charts';
 import { colors } from 'src/app/Data/colorsScheme';
+import { FireStoreService } from 'src/app/Services/fire-store.service';
 import * as XLSX from 'xlsx';
 
 @Component({
@@ -37,31 +38,33 @@ export class FullInformationComponent implements OnInit {
     'Radiación Solar',
   ];
   @Input() dataUmbral: any[] = [];
-  @Input() dataVariables: any[] = [
+  graphicData: any[] = [];
+  dataVariables: any[] = [
     {
       unity: '(°C)',
       collection: 'Temperatura',
       variable: 'Temperatura',
-      data: [],
     },
     {
       unity: '(%)',
       collection: 'HumedadA',
       variable: 'Humedad Ambiente',
-      data: [],
     },
     {
       unity: '(%)',
       collection: 'HumedadS',
       variable: 'Humedad del Suelo',
-      data: [],
     },
     { unity: '(ppm)', collection: 'CO2', variable: 'CO2', data: [] },
-    { unity: '(&#956;mol/s.m&#178;)', collection: 'Rad', variable: 'Radiación Solar', data: [] },
+    {
+      unity: '(&#956;mol/s.m&#178;)',
+      collection: 'Rad',
+      variable: 'Radiación Solar',
+    },
   ];
   @Input() options: any[] = [];
 
-  constructor() {}
+  constructor(private firestore: FireStoreService) {}
 
   ngOnInit(): void {}
 
@@ -81,78 +84,94 @@ export class FullInformationComponent implements OnInit {
   }
 
   newFilterData(variable: string) {
-    let filter = this.dataVariables.filter((a) => a.variable == variable);
-    let allData = filter[0].data;
-    this.unity = filter[0].unity;
-    if (this.unity=='(&#956;mol/s.m&#178;)') {
+    const object = this.dataVariables.find((e) => e.variable == variable);
+    const collection = object.collection;
+    this.unity = object.unity;
+    if (this.unity == '(&#956;mol/s.m&#178;)') {
       this.Ylabel = variable + ' (μmol/s.m2)';
     } else {
-      this.Ylabel = variable + ' ' + this.unity; 
+      this.Ylabel = variable + ' ' + this.unity;
     }
-    this.umbral = this.dataUmbral[0][`${filter[0].collection}`];
-    this.filterData = [];
-    let maxDate = 0;
-    let minDate = 0;
-    this.dataTable = [];
-    for (const option of this.options) {
-      if (option.selected) {
-        let series: any[] = [];
-        let nodeData = allData.filter((e: any) => e.node == option.id);
-        let index = this.options.findIndex((h) => h.id == option.id);
-        if (nodeData.length > 0) {
-          this.dataTable.push(...nodeData);
-          nodeData.forEach((element: any) => {
-            if (minDate == 0) {
-              minDate = element.dateAndTime.getTime();
-            }
-            if (element.dateAndTime.getTime() > maxDate) {
-              maxDate = element.dateAndTime.getTime();
-            }
-            if (element.dateAndTime.getTime() < minDate) {
-              minDate = element.dateAndTime.getTime();
-            }
-            series.push({
-              name: element.dateAndTime,
-              value: element.measure,
+    this.umbral = this.dataUmbral[0][collection];
+    this.firestore.getDataVariables(collection).subscribe((data) => {
+      this.filterData = [];
+      data.forEach((n) => {
+        const date = new Date(
+          n.payload.doc.data().dateAndTime.seconds * 1000 +
+            n.payload.doc.data().dateAndTime.nanoseconds / 1000000
+        );
+        this.filterData.push({
+          dateAndTime: date,
+          measure: n.payload.doc.data().measure,
+          node: n.payload.doc.data().node,
+        });
+      });
+      let maxDate = 0;
+      let minDate = 0;
+      this.dataTable = [];
+      this.graphicData=[]
+      for (const option of this.options) {
+        if (option.selected) {
+          let series: any[] = [];
+          let nodeData = this.filterData.filter(
+            (e: any) => e.node == option.id
+          );
+          let index = this.options.findIndex((h) => h.id == option.id);
+          if (nodeData.length > 0) {
+            this.dataTable.push(...nodeData);
+            nodeData.forEach((element: any) => {
+              if (minDate == 0) {
+                minDate = element.dateAndTime.getTime();
+              }
+              if (element.dateAndTime.getTime() > maxDate) {
+                maxDate = element.dateAndTime.getTime();
+              }
+              if (element.dateAndTime.getTime() < minDate) {
+                minDate = element.dateAndTime.getTime();
+              }
+              series.push({
+                name: element.dateAndTime,
+                value: element.measure,
+              });
             });
-          });
-          this.filterData.push({
-            name: 'Nodo ' + option.id,
-            series: series,
-          });
-          this.options[index].disabled = false;
-        } else {
-          this.options[index].disabled = true;
+            this.graphicData.push({
+              name: 'Nodo ' + option.id,
+              series: series,
+            });
+            this.options[index].disabled = false;
+          } else {
+            this.options[index].disabled = true;
+          }
         }
       }
-    }
-    let measures: number[] = [];
-    for (const i of this.dataTable) {
-      measures.push(i.measure);
-    }
-    this.mediaMeasure = 0;
-    for (const i of measures) {
-      this.mediaMeasure += i;
-    }
-    this.mediaMeasure /= measures.length;
-    this.mediaMeasure = parseFloat(this.mediaMeasure.toFixed(2));
-    this.maxMeasure = Math.max(...measures);
-    this.minMeasure = Math.min(...measures);
-    this.selectOption = false;
-    this.filterData.push({
-      name: 'Umbral',
-      series: [
-        { name: new Date(maxDate), value: this.umbral },
-        { name: new Date(minDate), value: this.umbral },
-      ],
+      let measures: number[] = [];
+      for (const i of this.dataTable) {
+        measures.push(i.measure);
+      }
+      this.mediaMeasure = 0;
+      for (const i of measures) {
+        this.mediaMeasure += i;
+      }
+      this.mediaMeasure /= measures.length;
+      this.mediaMeasure = parseFloat(this.mediaMeasure.toFixed(2));
+      this.maxMeasure = Math.max(...measures);
+      this.minMeasure = Math.min(...measures);
+      this.selectOption = false;
+      this.graphicData.push({
+        name: 'Umbral',
+        series: [
+          { name: new Date(maxDate), value: this.umbral },
+          { name: new Date(minDate), value: this.umbral },
+        ],
+      });
+      if (this.graphicData.length > 1) {
+        this.grafic = true;
+        this.onlyData = false;
+      } else {
+        this.grafic = false;
+        this.onlyData = true;
+      }
     });
-    if (this.filterData.length > 1) {
-      this.grafic = true;
-      this.onlyData = false;
-    } else {
-      this.grafic = false;
-      this.onlyData = true;
-    }
   }
 
   exportExcel(id: string, nameFile: string) {

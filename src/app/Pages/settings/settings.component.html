@@ -29,9 +29,11 @@
             (change)="filter($event)"
             formControlName="parameter"
           >
-            <option *ngFor="let variable of variables" [value]="variable">
-              {{ variable }}
-            </option>
+            <option
+              *ngFor="let variable of variables"
+              [value]="variable"
+              innerHTML="{{ variable }}"
+            ></option>
           </select>
           <label for="floatingSelect">Selecciona una variable</label>
         </div>
@@ -43,7 +45,11 @@
             aria-describedby="basic-addon2"
             formControlName="value"
           />
-          <span class="input-group-text" id="basic-addon2">{{ unity }}</span>
+          <span
+            class="input-group-text"
+            id="basic-addon2"
+            innerHTML="{{ unity }}"
+          ></span>
         </div>
         <button type="submit" class="btn btn-success w-100 mb-3">
           Actualizar
@@ -67,7 +73,13 @@
             unidad de tiempo.
           </li>
           <li class="info">
-            Intervalo de medidas actual: {{ dataIntervals[0].minutes>59?dataIntervals[0].minutes/60:dataIntervals[0].minutes }} {{dataIntervals[0].minutes>59?'Horas':'Minutos'}}
+            Intervalo de medidas actual:
+            {{
+              dataIntervals[0].minutes > 59
+                ? dataIntervals[0].minutes / 60
+                : dataIntervals[0].minutes
+            }}
+            {{ dataIntervals[0].minutes > 59 ? "Horas" : "Minutos" }}
           </li>
         </ul>
       </div>
@@ -104,7 +116,8 @@
             (change)="formInterval($event)"
           />
           <h6 class="text-secondary pt-2 ps-3">
-            {{ valueInterval }} {{ unityTimeShow+(valueInterval>1?'s':'') }}
+            {{ valueInterval }}
+            {{ unityTimeShow + (valueInterval > 1 ? "s" : "") }}
           </h6>
         </div>
         <!--  -->
@@ -167,12 +180,10 @@
       <div class="col">
         <ul>
           <li class="info">
-            En este módulo podrás agregar un nuevo nodo, deberás
-            especificar su dirección MAC y un identificador.
+            En este módulo podrás agregar un nuevo nodo, deberás especificar su
+            dirección MAC y un identificador.
           </li>
-          <li class="info">
-            Nodos registrados: {{ nodesList.length }}
-          </li>
+          <li class="info">Nodos registrados: {{ nodesList.length }}</li>
         </ul>
       </div>
     </div>
@@ -287,9 +298,7 @@
             En este módulo podrás encender o apagar cada uno de los nodos
             registrados
           </li>
-          <li class="info">
-            Nodos registrados: {{ nodesList.length }}
-          </li>
+          <li class="info">Nodos registrados: {{ nodesList.length }}</li>
         </ul>
       </div>
     </div>

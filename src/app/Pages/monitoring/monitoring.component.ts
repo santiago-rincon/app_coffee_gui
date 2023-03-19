@@ -79,21 +79,5 @@ export class MonitoringComponent implements OnInit {
         this.dataUmbral.push({ ...element.payload.doc.data() });
       });
     });
-    this.dataVariables.forEach((element) => {
-      this.firestore.getDataVariables(element.collection).subscribe((info) => {
-        element.data = [];
-        info.forEach((e) => {
-          const date = new Date(
-            e.payload.doc.data().dateAndTime.seconds * 1000 +
-              e.payload.doc.data().dateAndTime.nanoseconds / 1000000
-          );
-          element.data.push({
-            dateAndTime: date,
-            measure: e.payload.doc.data().measure,
-            node: e.payload.doc.data().node,
-          });
-        });
-      });
-    });
   }
 }
