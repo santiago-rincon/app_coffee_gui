@@ -5,7 +5,7 @@
     "terminal.integrated.fontFamily": "Hack Nerd Font Mono",
     "terminal.integrated.cursorStyle": "line",
     "terminal.integrated.defaultProfile.windows": "PowerShell",
-    "editor.fontFamily": "FiraCode",
+    "editor.fontFamily": "Fira Code",
     "editor.fontLigatures": true,
     "workbench.iconTheme": "material-icon-theme",
     "[css]": {

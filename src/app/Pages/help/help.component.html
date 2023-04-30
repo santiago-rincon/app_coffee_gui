@@ -31,7 +31,7 @@
               <div [innerHTML]="question.answer"></div>
               <a [routerLink]="question.path" *ngIf="!question.ref && !(question.path && question.text)">click aquí</a>
               <a [routerLink]="question.path" *ngIf="!question.ref &&  question.path && question.text">{{question.text}}</a>
-              <a [href]="question.path" *ngIf="question.ref" download="gía_de_usuario.jpg">{{question.text}}</a>
+              <a [href]="question.path" *ngIf="question.ref" download="manual_de_usuario.pdf">{{question.text}}</a>
             </div>
           </div>
         </div>

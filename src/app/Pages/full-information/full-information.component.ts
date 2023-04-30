@@ -88,12 +88,13 @@ export class FullInformationComponent implements OnInit {
     const collection = object.collection;
     this.unity = object.unity;
     if (this.unity == '(&#956;mol/s.m&#178;)') {
-      this.Ylabel = variable + ' (μmol/s.m2)';
+      this.Ylabel = variable + ' (μmol/s.m²)';
     } else {
       this.Ylabel = variable + ' ' + this.unity;
     }
     this.umbral = this.dataUmbral[0][collection];
     this.firestore.getDataVariables(collection).subscribe((data) => {
+      console.log(collection);
       this.filterData = [];
       data.forEach((n) => {
         const date = new Date(

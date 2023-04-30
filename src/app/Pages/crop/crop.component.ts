@@ -71,7 +71,7 @@ export class CropComponent implements OnInit {
     if (this.latMe == 0 || this.longMe == 0) {
       this.alerts.alertInfo(
         'No conozco tu ubicación aún',
-        'Presiona primero el boton "Ubicame"'
+        'Presiona primero el boton verde "Ubícame"'
       );
     } else {
       var url: string =

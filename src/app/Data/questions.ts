@@ -23,7 +23,7 @@ export var listOfQuestions = [
   {
     question: '¿Hay algún manual o guía de usuario?',
     answer: 'Si, puedues descargar a la guía de usuario haciendo click en el enlace de la parte inferior, en esta guía encoontrarás los diferentes módulos de la página web y como navegar en ellos.',
-    path: '/assets/album1.jpg',
+    path: '/assets/user_manual.pdf',
     text: 'Click aquí para descargar la guía de usuario',
     ref: true
   },

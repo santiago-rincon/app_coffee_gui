@@ -25,10 +25,10 @@ export class HomeComponent implements OnInit {
     if (!this.sesion) {
       Swal.fire({
         icon: 'info',
-        title: '¿No sabes como navegar en la aplicación?',
-        text: 'Descargar la guía de usuario, o ve a la sección de preguntas frecuentes',
+        title: '¿No sabes cómo navegar en la aplicación?',
+        text: 'Descarga el manual de usuario de usuario, o ve a la sección de preguntas frecuentes',
         footer:
-          '<a href="/assets/album1.jpg" download="gía_de_usuario.jpg">Click aquí para descargar</a>',
+          '<a href="/assets/user_manual.pdf" download="manual_de_usuario.pdf">Click aquí para descargar</a>',
         confirmButtonText: 'Ir a preguntas frecuentes',
         confirmButtonColor: '#3085d6',
         showCloseButton: true,

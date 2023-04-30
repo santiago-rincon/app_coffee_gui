@@ -33,7 +33,7 @@ export class MonitoringComponent implements OnInit {
       data: [],
     },
     { unity: '(ppm)', collection: 'CO2', variable: 'CO2', data: [] },
-    { unity: '(&#956;mol/s.m&#178;)', collection: 'Rad', variable: 'Radiación Solar', data: [] },
+    { unity: '(μmol/s.m²)', collection: 'Rad', variable: 'Radiación Solar', data: [] },
   ];
   constructor(
     private firestore: FireStoreService,
@@ -77,6 +77,22 @@ export class MonitoringComponent implements OnInit {
       this.dataUmbral = [];
       data.forEach((element) => {
         this.dataUmbral.push({ ...element.payload.doc.data() });
+      });
+    });
+    this.dataVariables.forEach((element) => {
+      this.firestore.getDataVariables(element.collection).subscribe((info) => {
+        element.data = [];
+        info.forEach((e) => {
+          const date = new Date(
+            e.payload.doc.data().dateAndTime.seconds * 1000 +
+              e.payload.doc.data().dateAndTime.nanoseconds / 1000000
+          );
+          element.data.push({
+            dateAndTime: date,
+            measure: e.payload.doc.data().measure,
+            node: e.payload.doc.data().node,
+          });
+        });
       });
     });
   }

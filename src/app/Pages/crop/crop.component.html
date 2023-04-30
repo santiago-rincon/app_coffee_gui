@@ -159,7 +159,7 @@
                     *ngIf="showPositionMe"
                   >
                     <agm-info-window [isOpen]="true"
-                      >Tu estas aquí!! 🙋‍♂️<br />
+                      >Tú estas aquí!! 🙋‍♂️<br />
                       Latitud: {{ latMe }}<br />
                       Longitud: {{ longMe }}
                     </agm-info-window>
@@ -171,14 +171,14 @@
               <div class="col text-center py-3">
                 <app-button
                   color="green"
-                  text="Ubicame"
+                  text="Ubícame"
                   (click)="getLocation()"
                 ></app-button>
               </div>
               <div class="col text-center py-3">
                 <app-button
                   color="blue"
-                  text="¿Como Llegar?"
+                  text="¿Cómo Llegar?"
                   (click)="redirect(latMe, longMe)"
                 ></app-button>
               </div>

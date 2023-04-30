@@ -157,8 +157,7 @@
             (change)="numberRegister($event)"
             formControlName="deleteVariable"
           >
-            <option *ngFor="let variable of variables" [value]="variable">
-              {{ variable }}
+            <option *ngFor="let variable of variables" [value]="variable" innerHTML="{{variable}}">
             </option>
           </select>
           <label for="floatingSelect">Selecciona una variable</label>

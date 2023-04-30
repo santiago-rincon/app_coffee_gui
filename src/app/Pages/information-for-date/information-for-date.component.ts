@@ -121,6 +121,8 @@ export class InformationForDateComponent implements OnInit {
         finalDate = temp;
       }
       let filter = this.dataVariables.filter((a) => a.variable == variableDate);
+      console.log(this.dataVariables);
+      console.log(filter);
       let allData = filter[0].data;
       this.unityDate = filter[0].unity;
       if (this.unityDate=='(&#956;mol/s.m&#178;)') {
